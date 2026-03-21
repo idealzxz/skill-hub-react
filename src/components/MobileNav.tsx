@@ -16,10 +16,10 @@ export default function MobileNav() {
 
   return (
     <>
-      <header className="md:hidden flex items-center justify-between p-4 border-b border-gray-200 dark:border-white/10 bg-white/80 dark:bg-surface-dark/80 backdrop-blur-xl">
+      <header className="md:hidden flex items-center justify-between p-4 glass border-0 border-b border-white/20 dark:border-white/8">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-            <Zap className="w-4 h-4 text-white" />
+          <div className="w-8 h-8 rounded-xl glass-icon flex items-center justify-center">
+            <Zap className="w-4 h-4 text-primary dark:text-primary-light" />
           </div>
           <span className="font-bold text-primary dark:text-primary-light font-mono">
             Skill Hub
@@ -27,13 +27,13 @@ export default function MobileNav() {
         </div>
         <button
           onClick={toggleTheme}
-          className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-white/10 cursor-pointer"
+          className="p-2 rounded-xl hover:bg-white/30 dark:hover:bg-white/10 cursor-pointer transition-all"
         >
           {state.theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
         </button>
       </header>
 
-      <nav className="md:hidden flex border-t border-gray-200 dark:border-white/10 bg-white/80 dark:bg-surface-dark/80 backdrop-blur-xl">
+      <nav className="md:hidden flex glass border-0 border-t border-white/20 dark:border-white/8">
         {visibleTabs.map((tab) => {
           const Icon = ICON_MAP[tab.icon]
           const active = state.currentTab === tab.id

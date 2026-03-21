@@ -105,16 +105,16 @@ export default function SkillEditorPage() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-3">
-            <button onClick={handleBack} className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-white/10 cursor-pointer transition-colors">
+            <button onClick={handleBack} className="p-2 rounded-xl hover:bg-white/30 dark:hover:bg-white/10 cursor-pointer transition-all">
               <ArrowLeft className="w-5 h-5" />
             </button>
             <h2 className="text-2xl font-bold">{skill ? '编辑技能' : '新建技能'}</h2>
           </div>
           <div className="flex gap-2">
-            <button onClick={() => handleSave(false)} disabled={saving} className="flex items-center gap-2 px-4 py-2 rounded-xl border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5 text-sm cursor-pointer transition-colors disabled:opacity-50">
+            <button onClick={() => handleSave(false)} disabled={saving} className="flex items-center gap-2 px-4 py-2 rounded-2xl glass-subtle hover:bg-white/40 dark:hover:bg-white/10 text-sm cursor-pointer transition-all disabled:opacity-50">
               <Save className="w-4 h-4" />仅保存本地
             </button>
-            <button onClick={() => handleSave(true)} disabled={saving} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-primary text-white text-sm cursor-pointer hover:bg-primary-dark transition-colors disabled:opacity-50">
+            <button onClick={() => handleSave(true)} disabled={saving} className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-primary/90 backdrop-blur-sm text-white text-sm cursor-pointer hover:bg-primary transition-all shadow-lg shadow-primary/20 disabled:opacity-50">
               <Cloud className={`w-4 h-4 ${saving ? 'animate-pulse' : ''}`} />
               {saving ? '同步中...' : '保存并同步'}
             </button>
@@ -124,30 +124,30 @@ export default function SkillEditorPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Metadata Form */}
           <div className="space-y-4">
-            <div className="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl p-6 space-y-4">
+            <div className="glass-elevated rounded-2xl p-6 space-y-4">
               <h3 className="font-semibold text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wide">基本信息</h3>
 
               <div>
                 <label className="block text-sm font-medium mb-1.5">技能名称 <span className="text-red-500">*</span></label>
-                <input type="text" value={form.name} onChange={(e) => updateField('name', e.target.value.replace(/[^a-zA-Z0-9_-]/g, ''))} placeholder="my-awesome-skill" className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all" />
+                <input type="text" value={form.name} onChange={(e) => updateField('name', e.target.value.replace(/[^a-zA-Z0-9_-]/g, ''))} placeholder="my-awesome-skill" className="w-full px-4 py-2.5 rounded-xl glass-subtle text-sm font-mono focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all" />
                 <p className="text-xs text-gray-400 mt-1">只能包含字母、数字、连字符和下划线</p>
               </div>
 
               <div>
                 <label className="block text-sm font-medium mb-1.5">描述</label>
-                <textarea value={form.description} onChange={(e) => updateField('description', e.target.value)} placeholder="简要描述这个技能的用途..." rows={2} className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all resize-none" />
+                <textarea value={form.description} onChange={(e) => updateField('description', e.target.value)} placeholder="简要描述这个技能的用途..." rows={2} className="w-full px-4 py-2.5 rounded-xl glass-subtle text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all resize-none" />
               </div>
 
               <div>
                 <label className="block text-sm font-medium mb-1.5">分类</label>
-                <select value={form.category} onChange={(e) => updateField('category', e.target.value)} className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 cursor-pointer transition-all">
+                <select value={form.category} onChange={(e) => updateField('category', e.target.value)} className="w-full px-4 py-2.5 rounded-xl glass-subtle text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 cursor-pointer transition-all">
                   {CATEGORIES.map((cat) => <option key={cat} value={cat}>{cat}</option>)}
                 </select>
               </div>
 
               <div>
                 <label className="block text-sm font-medium mb-1.5">版本</label>
-                <input type="text" value={form.version} onChange={(e) => updateField('version', e.target.value)} placeholder="1.0.0" className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all" />
+                <input type="text" value={form.version} onChange={(e) => updateField('version', e.target.value)} placeholder="1.0.0" className="w-full px-4 py-2.5 rounded-xl glass-subtle text-sm font-mono focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all" />
               </div>
 
               <div>
@@ -161,22 +161,22 @@ export default function SkillEditorPage() {
                   ))}
                 </div>
                 <div className="flex gap-2">
-                  <input type="text" value={tagInput} onChange={(e) => setTagInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addTag())} placeholder="输入标签后回车" className="flex-1 px-4 py-2 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all" />
-                  <button onClick={addTag} className="px-4 py-2 rounded-xl bg-gray-100 dark:bg-white/10 text-sm cursor-pointer hover:bg-gray-200 dark:hover:bg-white/20 transition-colors">添加</button>
+                  <input type="text" value={tagInput} onChange={(e) => setTagInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addTag())} placeholder="输入标签后回车" className="flex-1 px-4 py-2 rounded-xl glass-subtle text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all" />
+                  <button onClick={addTag} className="px-4 py-2 rounded-xl glass-subtle text-sm cursor-pointer hover:bg-white/50 dark:hover:bg-white/10 transition-all">添加</button>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Markdown Editor */}
-          <div className="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl overflow-hidden flex flex-col" style={{ minHeight: '500px' }}>
-            <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-white/10">
+          <div className="glass-elevated rounded-2xl overflow-hidden flex flex-col" style={{ minHeight: '500px' }}>
+            <div className="flex items-center justify-between px-4 py-3 border-b border-white/20 dark:border-white/8">
               <h3 className="font-semibold text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wide">SKILL.md</h3>
               <div className="flex gap-1">
-                <button onClick={() => setPreview(false)} className={`p-1.5 rounded-lg cursor-pointer transition-colors ${!preview ? 'bg-primary/10 text-primary' : 'text-gray-400 hover:bg-gray-100 dark:hover:bg-white/10'}`}>
+                <button onClick={() => setPreview(false)} className={`p-1.5 rounded-xl border cursor-pointer transition-all ${!preview ? 'glass-subtle text-primary' : 'border-transparent text-gray-400 hover:bg-white/30 dark:hover:bg-white/10'}`}>
                   <Edit3 className="w-4 h-4" />
                 </button>
-                <button onClick={() => setPreview(true)} className={`p-1.5 rounded-lg cursor-pointer transition-colors ${preview ? 'bg-primary/10 text-primary' : 'text-gray-400 hover:bg-gray-100 dark:hover:bg-white/10'}`}>
+                <button onClick={() => setPreview(true)} className={`p-1.5 rounded-xl border cursor-pointer transition-all ${preview ? 'glass-subtle text-primary' : 'border-transparent text-gray-400 hover:bg-white/30 dark:hover:bg-white/10'}`}>
                   <Eye className="w-4 h-4" />
                 </button>
               </div>

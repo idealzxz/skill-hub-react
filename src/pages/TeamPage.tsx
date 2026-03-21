@@ -162,7 +162,7 @@ export default function TeamPage() {
     return (
       <div className="fade-in">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
-          <div className="w-20 h-20 rounded-2xl bg-primary/10 dark:bg-primary/20 flex items-center justify-center mx-auto mb-6">
+          <div className="w-20 h-20 rounded-2xl glass-icon flex items-center justify-center mx-auto mb-6">
             <Users className="w-10 h-10 text-primary dark:text-primary-light" />
           </div>
           <h2 className="text-2xl font-bold mb-3">尚未订阅团队仓库</h2>
@@ -173,7 +173,7 @@ export default function TeamPage() {
           </p>
           <button
             onClick={() => dispatch({ type: 'SET_TAB', tab: 'settings' })}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-white font-medium cursor-pointer hover:bg-primary-dark transition-colors"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-primary/90 backdrop-blur-sm text-white font-medium cursor-pointer hover:bg-primary transition-all shadow-lg shadow-primary/20"
           >
             <Settings className="w-4 h-4" />
             前往设置添加团队仓库
@@ -200,7 +200,7 @@ export default function TeamPage() {
           <button
             onClick={syncTeamRepos}
             disabled={state.teamSyncStatus === 'syncing'}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-white text-sm font-medium cursor-pointer hover:bg-primary-dark transition-colors disabled:opacity-50"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-primary/90 backdrop-blur-sm text-white text-sm font-medium cursor-pointer hover:bg-primary transition-all shadow-lg shadow-primary/20 disabled:opacity-50"
           >
             <RefreshCw className={`w-4 h-4 ${state.teamSyncStatus === 'syncing' ? 'animate-spin' : ''}`} />
             {state.teamSyncStatus === 'syncing' ? '同步中...' : '同步所有仓库'}
@@ -216,13 +216,13 @@ export default function TeamPage() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="搜索团队技能..."
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all"
+              className="w-full pl-10 pr-4 py-2.5 rounded-2xl glass-subtle text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
             />
           </div>
           <select
             value={selectedRepo}
             onChange={(e) => setSelectedRepo(e.target.value)}
-            className="px-4 py-2.5 rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 text-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/40"
+            className="px-4 py-2.5 rounded-2xl glass-subtle text-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/30"
           >
             <option value="all">所有仓库</option>
             {state.teamRepos.map((r) => (
@@ -232,7 +232,7 @@ export default function TeamPage() {
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="px-4 py-2.5 rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 text-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/40"
+            className="px-4 py-2.5 rounded-2xl glass-subtle text-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/30"
           >
             <option value="all">所有分类</option>
             {CATEGORIES.filter((c) => usedCategories.includes(c)).map((c) => (
@@ -259,12 +259,12 @@ export default function TeamPage() {
                 return (
                   <div
                     key={bundle.id}
-                    className="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-primary/5"
+                    className="glass-elevated rounded-2xl overflow-hidden transition-all duration-300 glass-hover"
                   >
                     <div className="p-5">
                       <div className="flex items-start justify-between mb-2">
                         <div className="flex items-center gap-2">
-                          <div className="w-9 h-9 rounded-xl bg-primary/10 dark:bg-primary/20 flex items-center justify-center">
+                          <div className="w-9 h-9 rounded-xl glass-icon flex items-center justify-center">
                             <Package className="w-4 h-4 text-primary dark:text-primary-light" />
                           </div>
                           <div>
@@ -299,14 +299,14 @@ export default function TeamPage() {
                       <div className="flex gap-2">
                         <button
                           onClick={() => setExpandedBundle(isExpanded ? null : bundle.id)}
-                          className="flex-1 flex items-center justify-center gap-1 py-2 rounded-lg border border-gray-200 dark:border-white/10 text-xs font-medium cursor-pointer hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
+                          className="flex-1 flex items-center justify-center gap-1 py-2 rounded-xl glass-subtle text-xs font-medium cursor-pointer hover:bg-white/40 dark:hover:bg-white/10 transition-all"
                         >
                           {isExpanded ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
                           {isExpanded ? '收起' : '展开'}
                         </button>
                         <button
                           onClick={() => handleCopyInstall(installCmd, bundle.id)}
-                          className="flex-1 flex items-center justify-center gap-1 py-2 rounded-lg bg-primary text-white text-xs font-medium cursor-pointer hover:bg-primary-dark transition-colors"
+                          className="flex-1 flex items-center justify-center gap-1 py-2 rounded-xl bg-primary/90 backdrop-blur-sm text-white text-xs font-medium cursor-pointer hover:bg-primary transition-all shadow-md shadow-primary/20"
                         >
                           {copiedId === bundle.id ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
                           {copiedId === bundle.id ? '已复制' : '批量安装'}
@@ -315,13 +315,13 @@ export default function TeamPage() {
                     </div>
 
                     {isExpanded && (
-                      <div className="border-t border-gray-200 dark:border-white/10 p-4 bg-gray-50/50 dark:bg-white/[0.02] space-y-2">
+                      <div className="border-t border-white/20 dark:border-white/8 p-4 bg-white/20 dark:bg-white/[0.02] space-y-2">
                         {bundle.skillNames.map((name) => {
                           const s = state.teamSkills.find((sk) => sk.name === name)
                           return (
                             <div
                               key={name}
-                              className="flex items-center justify-between py-2 px-3 rounded-lg bg-white dark:bg-white/5"
+                              className="flex items-center justify-between py-2 px-3 rounded-xl glass-subtle"
                             >
                               <div className="flex items-center gap-2 min-w-0">
                                 {s && (
@@ -337,7 +337,7 @@ export default function TeamPage() {
                               {s && (
                                 <button
                                   onClick={() => handleCopyInstall(s.installCommand, s.id)}
-                                  className="p-1 rounded hover:bg-gray-100 dark:hover:bg-white/10 cursor-pointer transition-colors shrink-0"
+                                  className="p-1 rounded-lg hover:bg-white/40 dark:hover:bg-white/10 cursor-pointer transition-all shrink-0"
                                 >
                                   {copiedId === s.id ? <Check className="w-3.5 h-3.5 text-green-500" /> : <Copy className="w-3.5 h-3.5 text-gray-400" />}
                                 </button>
@@ -379,7 +379,7 @@ export default function TeamPage() {
             <button
               onClick={syncTeamRepos}
               disabled={state.teamSyncStatus === 'syncing'}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-white text-sm font-medium cursor-pointer hover:bg-primary-dark transition-colors disabled:opacity-50"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-primary/90 backdrop-blur-sm text-white text-sm font-medium cursor-pointer hover:bg-primary transition-all shadow-lg shadow-primary/20 disabled:opacity-50"
             >
               <RefreshCw className={`w-4 h-4 ${state.teamSyncStatus === 'syncing' ? 'animate-spin' : ''}`} />
               立即同步

@@ -41,7 +41,7 @@ export default function InstallPage() {
 
         <div className="flex gap-2 mb-6">
           {['Windows', 'macOS', 'Linux'].map((p) => (
-            <button key={p} onClick={() => setPlatform(p)} className={`px-4 py-2 rounded-xl text-sm font-medium cursor-pointer transition-all ${platform === p ? 'bg-primary text-white' : 'bg-white dark:bg-white/5 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-white/10'}`}>
+            <button key={p} onClick={() => setPlatform(p)} className={`px-4 py-2 rounded-2xl text-sm font-medium cursor-pointer transition-all duration-300 ${platform === p ? 'bg-primary/90 backdrop-blur-sm text-white shadow-lg shadow-primary/20 border border-transparent' : 'glass-subtle text-gray-600 dark:text-gray-400 hover:bg-white/50 dark:hover:bg-white/10'}`}>
               {p}
             </button>
           ))}
@@ -49,16 +49,16 @@ export default function InstallPage() {
 
         <div className="space-y-6">
           {steps.map((step, idx) => (
-            <div key={idx} className="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl p-6">
+            <div key={idx} className="glass-elevated rounded-2xl p-6">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-8 h-8 rounded-full bg-primary/10 dark:bg-primary/20 text-primary dark:text-primary-light flex items-center justify-center text-sm font-bold">{idx + 1}</div>
+                <div className="w-8 h-8 rounded-full glass-subtle text-primary dark:text-primary-light flex items-center justify-center text-sm font-bold">{idx + 1}</div>
                 <h3 className="font-semibold">{step.title}</h3>
               </div>
               <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">{step.desc}</p>
               {step.command && (
                 <div className="relative group/code">
-                  <pre className="bg-gray-900 dark:bg-black/40 text-green-400 rounded-xl p-4 text-sm font-mono overflow-x-auto"><code>{step.command}</code></pre>
-                  <button onClick={() => handleCopy(step.command!)} className="absolute top-3 right-3 p-2 rounded-lg bg-white/10 hover:bg-white/20 text-gray-400 hover:text-white cursor-pointer transition-all opacity-0 group-hover/code:opacity-100">
+                  <pre className="bg-gray-900/90 dark:bg-black/60 backdrop-blur-sm text-green-400 rounded-2xl border border-white/5 p-4 text-sm font-mono overflow-x-auto"><code>{step.command}</code></pre>
+                  <button onClick={() => handleCopy(step.command!)} className="absolute top-3 right-3 p-2 rounded-xl bg-white/10 hover:bg-white/20 text-gray-400 hover:text-white cursor-pointer transition-all opacity-0 group-hover/code:opacity-100">
                     {copiedCmd === step.command ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
                   </button>
                 </div>
@@ -70,11 +70,11 @@ export default function InstallPage() {
         {favoriteSkills.length > 0 && (
           <div className="mt-10">
             <h3 className="text-lg font-bold mb-4">批量安装收藏的技能</h3>
-            <div className="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl p-6">
+            <div className="glass-elevated rounded-2xl p-6">
               <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">一键复制以下命令安装所有收藏的技能</p>
               <div className="relative group/code">
-                <pre className="bg-gray-900 dark:bg-black/40 text-green-400 rounded-xl p-4 text-sm font-mono overflow-x-auto whitespace-pre-wrap"><code>{batchCommand}</code></pre>
-                <button onClick={() => handleCopy(batchCommand)} className="absolute top-3 right-3 p-2 rounded-lg bg-white/10 hover:bg-white/20 text-gray-400 hover:text-white cursor-pointer transition-all opacity-0 group-hover/code:opacity-100">
+                <pre className="bg-gray-900/90 dark:bg-black/60 backdrop-blur-sm text-green-400 rounded-2xl border border-white/5 p-4 text-sm font-mono overflow-x-auto whitespace-pre-wrap"><code>{batchCommand}</code></pre>
+                <button onClick={() => handleCopy(batchCommand)} className="absolute top-3 right-3 p-2 rounded-xl bg-white/10 hover:bg-white/20 text-gray-400 hover:text-white cursor-pointer transition-all opacity-0 group-hover/code:opacity-100">
                   {copiedCmd === batchCommand ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
                 </button>
               </div>

@@ -55,10 +55,10 @@ export default function FavoritesPage() {
           </div>
           {state.favorites.length > 0 && (
             <div className="flex gap-2">
-              <button onClick={exportFavorites} className="flex items-center gap-2 px-4 py-2 rounded-xl border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5 text-sm cursor-pointer transition-colors">
+              <button onClick={exportFavorites} className="flex items-center gap-2 px-4 py-2 rounded-2xl glass-subtle hover:bg-white/40 dark:hover:bg-white/10 text-sm cursor-pointer transition-all">
                 <Download className="w-4 h-4" />导出
               </button>
-              <label className="flex items-center gap-2 px-4 py-2 rounded-xl border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5 text-sm cursor-pointer transition-colors">
+              <label className="flex items-center gap-2 px-4 py-2 rounded-2xl glass-subtle hover:bg-white/40 dark:hover:bg-white/10 text-sm cursor-pointer transition-all">
                 <Upload className="w-4 h-4" />导入
                 <input ref={fileRef} type="file" accept=".json" onChange={importFavorites} className="hidden" />
               </label>
@@ -72,12 +72,12 @@ export default function FavoritesPage() {
           </div>
         ) : (
           <div className="text-center py-20">
-            <div className="w-24 h-24 mx-auto mb-6 rounded-3xl bg-gray-100 dark:bg-white/5 flex items-center justify-center">
+            <div className="w-24 h-24 mx-auto mb-6 rounded-3xl glass-elevated flex items-center justify-center">
               <Heart className="w-10 h-10 text-gray-300 dark:text-gray-600" />
             </div>
             <p className="text-gray-500 dark:text-gray-400 text-lg mb-2">还没有收藏任何技能</p>
             <p className="text-gray-400 dark:text-gray-500 text-sm mb-6">去技能市场发现感兴趣的技能吧</p>
-            <button onClick={() => dispatch({ type: 'SET_TAB', tab: 'market' })} className="px-6 py-3 rounded-xl bg-primary text-white cursor-pointer hover:bg-primary-dark transition-colors">
+            <button onClick={() => dispatch({ type: 'SET_TAB', tab: 'market' })} className="px-6 py-3 rounded-2xl bg-primary/90 backdrop-blur-sm text-white cursor-pointer hover:bg-primary transition-all shadow-lg shadow-primary/20">
               去逛逛
             </button>
           </div>

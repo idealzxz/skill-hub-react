@@ -35,7 +35,7 @@ export default function RecentPage() {
             <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{recentSkills.length} 个技能</p>
           </div>
           {recentSkills.length > 0 && (
-            <button onClick={() => dispatch({ type: 'CLEAR_RECENT' })} className="flex items-center gap-2 px-4 py-2 rounded-xl border border-red-200 dark:border-red-500/30 text-red-500 text-sm cursor-pointer hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors">
+            <button onClick={() => dispatch({ type: 'CLEAR_RECENT' })} className="flex items-center gap-2 px-4 py-2 rounded-2xl glass-subtle !border-red-200/60 dark:!border-red-500/20 text-red-500 text-sm cursor-pointer hover:bg-red-50/60 dark:hover:bg-red-500/10 transition-all">
               <Trash2 className="w-4 h-4" />清空历史
             </button>
           )}
@@ -55,12 +55,12 @@ export default function RecentPage() {
           </div>
         ) : (
           <div className="text-center py-20">
-            <div className="w-24 h-24 mx-auto mb-6 rounded-3xl bg-gray-100 dark:bg-white/5 flex items-center justify-center">
+            <div className="w-24 h-24 mx-auto mb-6 rounded-3xl glass-elevated flex items-center justify-center">
               <Clock className="w-10 h-10 text-gray-300 dark:text-gray-600" />
             </div>
             <p className="text-gray-500 dark:text-gray-400 text-lg mb-2">还没有浏览过任何技能</p>
             <p className="text-gray-400 dark:text-gray-500 text-sm mb-6">去技能市场看看吧</p>
-            <button onClick={() => dispatch({ type: 'SET_TAB', tab: 'market' })} className="px-6 py-3 rounded-xl bg-primary text-white cursor-pointer hover:bg-primary-dark transition-colors">
+            <button onClick={() => dispatch({ type: 'SET_TAB', tab: 'market' })} className="px-6 py-3 rounded-2xl bg-primary/90 backdrop-blur-sm text-white cursor-pointer hover:bg-primary transition-all shadow-lg shadow-primary/20">
               去逛逛
             </button>
           </div>

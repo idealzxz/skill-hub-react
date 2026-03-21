@@ -34,7 +34,7 @@ function AppContent() {
   }
 
   return (
-    <div className="flex h-screen overflow-hidden bg-base-light dark:bg-base-dark text-gray-900 dark:text-gray-100 font-sans transition-colors duration-300">
+    <div className="flex h-screen overflow-hidden liquid-bg text-gray-800 dark:text-gray-100 font-sans transition-colors duration-500 p-0 md:p-3 gap-0 md:gap-3">
       <Sidebar />
       <main className="flex-1 flex flex-col overflow-hidden">
         <MobileNav />

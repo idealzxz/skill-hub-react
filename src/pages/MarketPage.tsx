@@ -74,13 +74,13 @@ export default function MarketPage() {
               value={searchQuery}
               onChange={(e) => handleSearch(e.target.value)}
               placeholder="搜索技能名称、作者、标签..."
-              className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition-all shadow-lg shadow-primary/5"
+              className="w-full pl-12 pr-4 py-4 rounded-2xl glass-elevated text-gray-800 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
             />
           </div>
           <div className="mt-4 flex flex-wrap justify-center gap-2">
             <span className="text-xs text-gray-400">热门搜索:</span>
             {POPULAR_TAGS.map((tag) => (
-              <button key={tag} onClick={() => handleSearch(tag)} className="text-xs px-3 py-1 rounded-full bg-primary/10 dark:bg-primary/20 text-primary dark:text-primary-light hover:bg-primary/20 dark:hover:bg-primary/30 cursor-pointer transition-colors">
+              <button key={tag} onClick={() => handleSearch(tag)} className="text-xs px-3 py-1 rounded-full glass-subtle text-primary dark:text-primary-light hover:bg-white/50 dark:hover:bg-white/10 cursor-pointer transition-all">
                 {tag}
               </button>
             ))}
@@ -89,7 +89,7 @@ export default function MarketPage() {
 
         <div className="flex flex-wrap gap-2 mb-6">
           {['all', ...CATEGORIES].map((cat) => (
-            <button key={cat} onClick={() => handleCategoryChange(cat)} className={`px-4 py-2 rounded-xl text-sm font-medium cursor-pointer transition-all duration-200 ${selectedCategory === cat ? 'bg-primary text-white shadow-md shadow-primary/25' : 'bg-white dark:bg-white/5 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/10 border border-gray-200 dark:border-white/10'}`}>
+            <button key={cat} onClick={() => handleCategoryChange(cat)} className={`px-4 py-2 rounded-2xl text-sm font-medium cursor-pointer transition-all duration-300 ${selectedCategory === cat ? 'bg-primary/90 backdrop-blur-sm text-white shadow-lg shadow-primary/20 border border-transparent' : 'glass-subtle text-gray-600 dark:text-gray-400 hover:bg-white/50 dark:hover:bg-white/10'}`}>
               {cat === 'all' ? '全部' : cat}
             </button>
           ))}
@@ -99,7 +99,7 @@ export default function MarketPage() {
           <p className="text-sm text-gray-500 dark:text-gray-400">
             找到 <span className="font-bold text-primary dark:text-primary-light">{filteredSkills.length}</span> 个技能
           </p>
-          <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="text-sm px-3 py-1.5 rounded-lg border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/40">
+          <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="text-sm px-3 py-1.5 rounded-xl glass-subtle cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/30">
             <option value="popular">按热度</option>
             <option value="newest">按最新</option>
             <option value="name">按名称</option>
@@ -116,7 +116,7 @@ export default function MarketPage() {
           <div className="text-center py-20">
             <SearchX className="w-16 h-16 mx-auto text-gray-300 dark:text-gray-600 mb-4" />
             <p className="text-gray-500 dark:text-gray-400 text-lg">没有找到匹配的技能</p>
-            <button onClick={() => { setSearchQuery(''); setSelectedCategory('all') }} className="mt-4 px-6 py-2 rounded-xl bg-primary text-white cursor-pointer hover:bg-primary-dark transition-colors">
+            <button onClick={() => { setSearchQuery(''); setSelectedCategory('all') }} className="mt-4 px-6 py-2.5 rounded-2xl bg-primary/90 backdrop-blur-sm text-white cursor-pointer hover:bg-primary transition-all shadow-lg shadow-primary/20">
               清除搜索
             </button>
           </div>
@@ -124,15 +124,15 @@ export default function MarketPage() {
 
         {totalPages > 1 && (
           <div className="flex items-center justify-center gap-2 mt-8">
-            <button onClick={() => setCurrentPage(Math.max(1, currentPage - 1))} disabled={currentPage === 1} className="px-3 py-2 rounded-lg border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5 disabled:opacity-30 cursor-pointer transition-colors">
+            <button onClick={() => setCurrentPage(Math.max(1, currentPage - 1))} disabled={currentPage === 1} className="px-3 py-2 rounded-xl glass-subtle hover:bg-white/50 dark:hover:bg-white/10 disabled:opacity-30 cursor-pointer transition-all">
               <ChevronLeft className="w-4 h-4" />
             </button>
             {visiblePages.map((p, i) => (
-              <button key={i} onClick={() => typeof p === 'number' && setCurrentPage(p)} disabled={p === '...'} className={`w-10 h-10 rounded-lg text-sm font-medium cursor-pointer transition-all ${p === currentPage ? 'bg-primary text-white shadow-md shadow-primary/25' : 'border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5'}`}>
+              <button key={i} onClick={() => typeof p === 'number' && setCurrentPage(p)} disabled={p === '...'} className={`w-10 h-10 rounded-xl text-sm font-medium cursor-pointer transition-all duration-300 ${p === currentPage ? 'bg-primary/90 backdrop-blur-sm text-white shadow-lg shadow-primary/20 border border-transparent' : 'glass-subtle hover:bg-white/50 dark:hover:bg-white/10'}`}>
                 {p}
               </button>
             ))}
-            <button onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))} disabled={currentPage === totalPages} className="px-3 py-2 rounded-lg border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5 disabled:opacity-30 cursor-pointer transition-colors">
+            <button onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))} disabled={currentPage === totalPages} className="px-3 py-2 rounded-xl glass-subtle hover:bg-white/50 dark:hover:bg-white/10 disabled:opacity-30 cursor-pointer transition-all">
               <ChevronRight className="w-4 h-4" />
             </button>
           </div>

@@ -66,6 +66,8 @@ export interface TeamSkill extends Skill {
 export const CATEGORIES = [
   'AI & ML', 'Web Dev', 'DevOps', 'Database', 'Mobile',
   'Security', 'Testing', 'UI/UX', 'Backend', 'Frontend',
+  'Data Science', 'Blockchain', 'Game Dev', 'CLI Tools',
+  'Documentation', 'Monitoring', 'API', 'Cloud', 'IoT', 'Automation',
 ]
 
 export const CAT_COLORS: Record<string, string> = {
@@ -79,6 +81,16 @@ export const CAT_COLORS: Record<string, string> = {
   'UI/UX': 'bg-fuchsia-100 dark:bg-fuchsia-500/20 text-fuchsia-700 dark:text-fuchsia-300',
   'Backend': 'bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-300',
   'Frontend': 'bg-teal-100 dark:bg-teal-500/20 text-teal-700 dark:text-teal-300',
+  'Data Science': 'bg-indigo-100 dark:bg-indigo-500/20 text-indigo-700 dark:text-indigo-300',
+  'Blockchain': 'bg-yellow-100 dark:bg-yellow-500/20 text-yellow-700 dark:text-yellow-300',
+  'Game Dev': 'bg-purple-100 dark:bg-purple-500/20 text-purple-700 dark:text-purple-300',
+  'CLI Tools': 'bg-slate-100 dark:bg-slate-500/20 text-slate-700 dark:text-slate-300',
+  'Documentation': 'bg-sky-100 dark:bg-sky-500/20 text-sky-700 dark:text-sky-300',
+  'Monitoring': 'bg-lime-100 dark:bg-lime-500/20 text-lime-700 dark:text-lime-300',
+  'API': 'bg-rose-100 dark:bg-rose-500/20 text-rose-700 dark:text-rose-300',
+  'Cloud': 'bg-cyan-100 dark:bg-cyan-500/20 text-cyan-700 dark:text-cyan-300',
+  'IoT': 'bg-green-100 dark:bg-green-500/20 text-green-700 dark:text-green-300',
+  'Automation': 'bg-stone-100 dark:bg-stone-500/20 text-stone-700 dark:text-stone-300',
 }
 
 const SKILL_COLORS = [

@@ -14,13 +14,13 @@ export default function SkillCard({ skill }: Props) {
   return (
     <div
       onClick={() => openDetail(skill)}
-      className="group relative bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl p-5 cursor-pointer hover:shadow-xl hover:shadow-primary/10 hover:border-primary/30 dark:hover:border-primary/30 transition-all duration-300"
+      className="group relative glass-elevated glass-hover rounded-2xl p-5 cursor-pointer"
     >
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center gap-3 min-w-0">
           <div
-            className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 text-white text-sm font-bold"
-            style={{ background: skill.color || '#7C3AED' }}
+            className="w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 text-white text-sm font-bold shadow-lg"
+            style={{ background: `linear-gradient(135deg, ${skill.color || '#6366F1'}, ${skill.color || '#6366F1'}CC)` }}
           >
             {skill.name.charAt(0).toUpperCase()}
           </div>

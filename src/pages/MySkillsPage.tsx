@@ -130,28 +130,28 @@ export default function MySkillsPage() {
             </p>
           </div>
           <div className="flex gap-2">
-            <button onClick={() => setShowClonePanel(!showClonePanel)} className={`flex items-center gap-2 px-4 py-2 rounded-xl border text-sm cursor-pointer transition-colors ${showClonePanel ? 'border-primary/30 bg-primary/5 text-primary' : 'border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5'}`}>
+            <button onClick={() => setShowClonePanel(!showClonePanel)} className={`flex items-center gap-2 px-4 py-2 rounded-2xl text-sm cursor-pointer transition-all duration-300 ${showClonePanel ? 'glass-subtle !border-primary/30 text-primary' : 'glass-subtle hover:bg-white/40 dark:hover:bg-white/10'}`}>
               <GitBranch className="w-4 h-4" />
               <span className="hidden sm:inline">安装到本地</span>
             </button>
-            <button onClick={handleSync} disabled={state.syncStatus === 'syncing'} className="flex items-center gap-2 px-4 py-2 rounded-xl border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5 text-sm cursor-pointer transition-colors disabled:opacity-50">
+            <button onClick={handleSync} disabled={state.syncStatus === 'syncing'} className="flex items-center gap-2 px-4 py-2 rounded-2xl glass-subtle hover:bg-white/40 dark:hover:bg-white/10 text-sm cursor-pointer transition-all disabled:opacity-50">
               <RefreshCw className={`w-4 h-4 ${state.syncStatus === 'syncing' ? 'animate-spin' : ''}`} />
               {state.syncStatus === 'syncing' ? '同步中...' : '同步'}
             </button>
-            <button onClick={handleNew} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-primary text-white text-sm cursor-pointer hover:bg-primary-dark transition-colors">
+            <button onClick={handleNew} className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-primary/90 backdrop-blur-sm text-white text-sm cursor-pointer hover:bg-primary transition-all shadow-lg shadow-primary/20">
               <Plus className="w-4 h-4" />新建技能
             </button>
           </div>
         </div>
 
         {state.syncStatus === 'error' && (
-          <div className="mb-6 p-4 rounded-xl bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/30 text-red-600 dark:text-red-400 text-sm">
+          <div className="mb-6 p-4 rounded-2xl glass-subtle !bg-red-50/60 dark:!bg-red-500/10 !border-red-200/60 dark:!border-red-500/20 text-red-600 dark:text-red-400 text-sm">
             {state.syncMessage}
           </div>
         )}
 
         {showClonePanel && (
-          <div className="mb-6 bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl p-5 space-y-4">
+          <div className="mb-6 glass-elevated rounded-2xl p-5 space-y-4">
             <div>
               <h3 className="font-semibold text-sm mb-1 flex items-center gap-2">
                 <GitBranch className="w-4 h-4 text-primary" />
@@ -164,12 +164,12 @@ export default function MySkillsPage() {
 
             {state.githubUser && getCloneAllCommand() ? (
               <div className="relative group/code">
-                <pre className="bg-gray-900 dark:bg-black/40 text-green-400 rounded-xl p-4 pr-12 text-sm font-mono overflow-x-auto">
+                <pre className="bg-gray-900/90 dark:bg-black/60 backdrop-blur-sm text-green-400 rounded-2xl p-4 pr-12 text-sm font-mono overflow-x-auto border border-white/5">
                   <code>{getCloneAllCommand()}</code>
                 </pre>
                 <button
                   onClick={() => handleCopyCommand(getCloneAllCommand()!, 'my-repo')}
-                  className="absolute top-3 right-3 p-2 rounded-lg bg-white/10 hover:bg-white/20 text-gray-400 hover:text-white cursor-pointer transition-all opacity-0 group-hover/code:opacity-100"
+                  className="absolute top-3 right-3 p-2 rounded-xl bg-white/10 hover:bg-white/20 text-gray-400 hover:text-white cursor-pointer transition-all opacity-0 group-hover/code:opacity-100"
                 >
                   {copiedId === 'my-repo' ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
                 </button>
@@ -187,12 +187,12 @@ export default function MySkillsPage() {
             {state.mySkills.map((skill) => (
               <div
                 key={skill.id}
-                className="group bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl p-5 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 hover:border-primary/30 dark:hover:border-primary/30 cursor-pointer"
+                className="group glass-elevated glass-hover rounded-2xl p-5 cursor-pointer"
                 onClick={() => openDetail({ ...skill, installCommand: skill.installCommand || generateInstallCommand(skill) })}
               >
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center gap-3 min-w-0">
-                    <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 text-white text-sm font-bold" style={{ background: skill.color }}>
+                    <div className="w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 text-white text-sm font-bold shadow-lg" style={{ background: `linear-gradient(135deg, ${skill.color}, ${skill.color}CC)` }}>
                       {(skill.name || '?').charAt(0).toUpperCase()}
                     </div>
                     <div className="min-w-0">
@@ -217,28 +217,28 @@ export default function MySkillsPage() {
                   <div className="flex items-center gap-1">
                     <button
                       onClick={(e) => { e.stopPropagation(); handleCopyInstall(skill) }}
-                      className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/10 cursor-pointer transition-colors text-gray-400 hover:text-green-500"
+                      className="p-1.5 rounded-xl hover:bg-white/40 dark:hover:bg-white/10 cursor-pointer transition-all text-gray-400 hover:text-green-500"
                       title="复制安装命令"
                     >
                       {copiedId === skill.id ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
                     </button>
                     <button
                       onClick={(e) => { e.stopPropagation(); openDetail({ ...skill, installCommand: skill.installCommand || generateInstallCommand(skill) }) }}
-                      className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/10 cursor-pointer transition-colors text-gray-400 hover:text-primary"
+                      className="p-1.5 rounded-xl hover:bg-white/40 dark:hover:bg-white/10 cursor-pointer transition-all text-gray-400 hover:text-primary"
                       title="查看详情"
                     >
                       <Eye className="w-4 h-4" />
                     </button>
                     <button
                       onClick={(e) => { e.stopPropagation(); handleEdit(skill) }}
-                      className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/10 cursor-pointer transition-colors text-gray-400 hover:text-primary"
+                      className="p-1.5 rounded-xl hover:bg-white/40 dark:hover:bg-white/10 cursor-pointer transition-all text-gray-400 hover:text-primary"
                       title="编辑"
                     >
                       <Edit className="w-4 h-4" />
                     </button>
                     <button
                       onClick={(e) => { e.stopPropagation(); handleDelete(skill) }}
-                      className="p-1.5 rounded-lg hover:bg-red-50 dark:hover:bg-red-500/10 cursor-pointer transition-colors text-gray-400 hover:text-red-500"
+                      className="p-1.5 rounded-xl hover:bg-red-50/60 dark:hover:bg-red-500/10 cursor-pointer transition-all text-gray-400 hover:text-red-500"
                       title="删除"
                     >
                       <Trash2 className="w-4 h-4" />
@@ -250,12 +250,12 @@ export default function MySkillsPage() {
           </div>
         ) : (
           <div className="text-center py-20">
-            <div className="w-24 h-24 mx-auto mb-6 rounded-3xl bg-gray-100 dark:bg-white/5 flex items-center justify-center">
+            <div className="w-24 h-24 mx-auto mb-6 rounded-3xl glass-elevated flex items-center justify-center">
               <Cloud className="w-10 h-10 text-gray-300 dark:text-gray-600" />
             </div>
             <p className="text-gray-500 dark:text-gray-400 text-lg mb-2">还没有创建任何技能</p>
             <p className="text-gray-400 dark:text-gray-500 text-sm mb-6">创建你自己的 Cursor 技能，并通过 GitHub 同步到所有设备</p>
-            <button onClick={handleNew} className="px-6 py-3 rounded-xl bg-primary text-white cursor-pointer hover:bg-primary-dark transition-colors">
+            <button onClick={handleNew} className="px-6 py-3 rounded-2xl bg-primary/90 backdrop-blur-sm text-white cursor-pointer hover:bg-primary transition-all shadow-lg shadow-primary/20">
               创建第一个技能
             </button>
           </div>

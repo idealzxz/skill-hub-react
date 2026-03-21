@@ -149,7 +149,7 @@ export default function SettingsPage() {
         <div className="space-y-6">
 
           {/* Git Provider Binding */}
-          <div className="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl p-6">
+          <div className="glass-elevated rounded-2xl p-6">
             <div className="flex items-center gap-2 mb-1">
               <Github className="w-5 h-5" />
               <h3 className="font-semibold">Git 平台绑定</h3>
@@ -160,7 +160,7 @@ export default function SettingsPage() {
 
             {state.githubUser ? (
               <div className="space-y-4">
-                <div className="flex items-center gap-4 p-4 rounded-xl bg-gray-50 dark:bg-white/5">
+                <div className="flex items-center gap-4 p-4 rounded-2xl glass-subtle">
                   <img src={state.githubUser.avatar_url} alt="" className="w-12 h-12 rounded-full" />
                   <div className="flex-1 min-w-0">
                     <p className="font-semibold">{state.githubUser.name || state.githubUser.login}</p>
@@ -171,7 +171,7 @@ export default function SettingsPage() {
                     <span>{PROVIDER_LABELS[state.gitProviderType]}</span>
                   </div>
                 </div>
-                <button onClick={disconnectProvider} className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-red-200 dark:border-red-500/30 text-red-500 text-sm cursor-pointer hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors">
+                <button onClick={disconnectProvider} className="flex items-center gap-2 px-4 py-2.5 rounded-2xl glass-subtle !border-red-200/60 dark:!border-red-500/20 text-red-500 text-sm cursor-pointer hover:bg-red-50/60 dark:hover:bg-red-500/10 transition-all">
                   <LogOut className="w-4 h-4" />断开连接
                 </button>
               </div>
@@ -184,8 +184,8 @@ export default function SettingsPage() {
                       onClick={() => setSelectedPlatform(p.id)}
                       className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-medium cursor-pointer transition-all ${
                         selectedPlatform === p.id
-                          ? 'bg-primary text-white ring-2 ring-primary/30'
-                          : 'bg-gray-100 dark:bg-white/10 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/15'
+                          ? 'bg-primary/90 backdrop-blur-sm text-white shadow-lg shadow-primary/20 border border-transparent'
+                          : 'glass-subtle !border-transparent text-gray-600 dark:text-gray-400 hover:bg-white/50 dark:hover:bg-white/10'
                       }`}
                     >
                       <span>{p.icon}</span>
@@ -200,14 +200,14 @@ export default function SettingsPage() {
                     value={tokenInput}
                     onChange={(e) => setTokenInput(e.target.value)}
                     placeholder={PROVIDER_TOKEN_HINTS[selectedPlatform].placeholder}
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all"
+                    className="w-full px-4 py-2.5 rounded-2xl glass-subtle text-sm font-mono focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
                     onKeyDown={(e) => e.key === 'Enter' && connectProvider()}
                   />
                   <p className="text-xs text-gray-400 mt-1.5">
                     在 <a href={PROVIDER_TOKEN_HINTS[selectedPlatform].helpUrl} target="_blank" rel="noopener" className="text-primary hover:underline">{PROVIDER_TOKEN_HINTS[selectedPlatform].helpText}</a> 创建，勾选 <code className="text-xs bg-gray-100 dark:bg-white/10 px-1 py-0.5 rounded">{PROVIDER_TOKEN_HINTS[selectedPlatform].scope}</code> 权限
                   </p>
                 </div>
-                <button onClick={connectProvider} disabled={connecting} className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-sm font-medium cursor-pointer hover:opacity-90 transition-colors disabled:opacity-50">
+                <button onClick={connectProvider} disabled={connecting} className="flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-primary/90 backdrop-blur-sm text-white text-sm font-medium cursor-pointer hover:bg-primary transition-all shadow-lg shadow-primary/20 disabled:opacity-50">
                   {connecting ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Github className="w-4 h-4" />}
                   {connecting ? '连接中...' : `连接 ${PROVIDER_LABELS[selectedPlatform]}`}
                 </button>
@@ -216,7 +216,7 @@ export default function SettingsPage() {
           </div>
 
           {/* Team Repos */}
-          <div className="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl p-6">
+          <div className="glass-elevated rounded-2xl p-6">
             <div className="flex items-center gap-2 mb-1">
               <Users className="w-5 h-5" />
               <h3 className="font-semibold">团队仓库管理</h3>
@@ -235,8 +235,8 @@ export default function SettingsPage() {
             {state.teamRepos.length > 0 && (
               <div className="space-y-2 mb-4">
                 {state.teamRepos.map((r) => (
-                  <div key={r.id} className="flex items-center gap-3 p-3 rounded-xl bg-gray-50 dark:bg-white/5">
-                    <div className="w-8 h-8 rounded-lg bg-primary/10 dark:bg-primary/20 flex items-center justify-center shrink-0 text-sm">
+                  <div key={r.id} className="flex items-center gap-3 p-3 rounded-2xl glass-subtle">
+                    <div className="w-8 h-8 rounded-xl glass-icon flex items-center justify-center shrink-0 text-sm">
                       {r.platform === 'gitlab' ? '🦊' : r.platform === 'gitee' ? '🟥' : '🐙'}
                     </div>
                     <div className="flex-1 min-w-0">
@@ -252,13 +252,13 @@ export default function SettingsPage() {
                       href={`${DEFAULT_WEB_URLS[r.platform]}/${r.owner}/${r.repo}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-1.5 rounded-lg hover:bg-gray-200 dark:hover:bg-white/10 cursor-pointer transition-colors shrink-0"
+                      className="p-1.5 rounded-xl hover:bg-white/40 dark:hover:bg-white/10 cursor-pointer transition-all shrink-0"
                     >
                       <ExternalLink className="w-3.5 h-3.5 text-gray-400" />
                     </a>
                     <button
                       onClick={() => removeTeamRepo(r.id, r.label)}
-                      className="p-1.5 rounded-lg hover:bg-red-50 dark:hover:bg-red-500/10 cursor-pointer transition-colors shrink-0"
+                      className="p-1.5 rounded-xl hover:bg-red-50/60 dark:hover:bg-red-500/10 cursor-pointer transition-all shrink-0"
                     >
                       <Trash2 className="w-3.5 h-3.5 text-red-400" />
                     </button>
@@ -273,13 +273,13 @@ export default function SettingsPage() {
                 value={repoInput}
                 onChange={(e) => setRepoInput(e.target.value)}
                 placeholder="org/repo 或 https://github.com|gitlab.com|gitee.com/org/repo"
-                className="flex-1 px-4 py-2.5 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all"
+                className="flex-1 px-4 py-2.5 rounded-2xl glass-subtle text-sm font-mono focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
                 onKeyDown={(e) => e.key === 'Enter' && addTeamRepo()}
               />
               <button
                 onClick={addTeamRepo}
                 disabled={addingRepo}
-                className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-sm font-medium cursor-pointer hover:opacity-90 transition-colors disabled:opacity-50 shrink-0"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-primary/90 backdrop-blur-sm text-white text-sm font-medium cursor-pointer hover:bg-primary transition-all shadow-lg shadow-primary/20 disabled:opacity-50 shrink-0"
               >
                 {addingRepo ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
                 {addingRepo ? '验证中...' : '添加'}
@@ -288,12 +288,12 @@ export default function SettingsPage() {
           </div>
 
           {/* Theme */}
-          <div className="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl p-6">
+          <div className="glass-elevated rounded-2xl p-6">
             <h3 className="font-semibold mb-1">主题</h3>
             <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">选择你喜欢的界面主题</p>
             <div className="flex gap-3">
               {([['light', '浅色'], ['dark', '深色'], ['system', '跟随系统']] as const).map(([opt, label]) => (
-                <button key={opt} onClick={() => dispatch({ type: 'SET_THEME', theme: opt })} className={`flex-1 py-3 rounded-xl text-sm font-medium cursor-pointer transition-all ${state.theme === opt ? 'bg-primary text-white ring-2 ring-primary/30' : 'bg-gray-100 dark:bg-white/10 text-gray-600 dark:text-gray-400'}`}>
+                <button key={opt} onClick={() => dispatch({ type: 'SET_THEME', theme: opt })} className={`flex-1 py-3 rounded-xl text-sm font-medium cursor-pointer transition-all ${state.theme === opt ? 'bg-primary/90 backdrop-blur-sm text-white shadow-lg shadow-primary/20 border border-transparent' : 'glass-subtle text-gray-600 dark:text-gray-400 hover:bg-white/50 dark:hover:bg-white/10'}`}>
                   {label}
                 </button>
               ))}
@@ -301,7 +301,7 @@ export default function SettingsPage() {
           </div>
 
           {/* Keyboard Shortcuts */}
-          <div className="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl p-6">
+          <div className="glass-elevated rounded-2xl p-6">
             <h3 className="font-semibold mb-4">键盘快捷键</h3>
             <div className="space-y-3">
               {[
@@ -311,23 +311,23 @@ export default function SettingsPage() {
               ].map((s) => (
                 <div key={s.keys} className="flex items-center justify-between">
                   <span className="text-sm text-gray-600 dark:text-gray-400">{s.action}</span>
-                  <kbd className="px-2.5 py-1 rounded-lg bg-gray-100 dark:bg-white/10 text-xs font-mono font-semibold text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-white/10">{s.keys}</kbd>
+                  <kbd className="px-2.5 py-1 rounded-xl glass-subtle text-xs font-mono font-semibold text-gray-600 dark:text-gray-300">{s.keys}</kbd>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Data */}
-          <div className="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl p-6">
+          <div className="glass-elevated rounded-2xl p-6">
             <h3 className="font-semibold mb-1">数据管理</h3>
             <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">管理本地缓存和数据</p>
-            <button onClick={clearAll} className="px-5 py-2.5 rounded-xl border border-red-200 dark:border-red-500/30 text-red-500 text-sm font-medium cursor-pointer hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors">
+            <button onClick={clearAll} className="px-5 py-2.5 rounded-2xl glass-subtle !border-red-200/60 dark:!border-red-500/20 text-red-500 text-sm font-medium cursor-pointer hover:bg-red-50/60 dark:hover:bg-red-500/10 transition-all">
               清除所有数据
             </button>
           </div>
 
           {/* About */}
-          <div className="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl p-6">
+          <div className="glass-elevated rounded-2xl p-6">
             <h3 className="font-semibold mb-3">关于</h3>
             <div className="space-y-2 text-sm text-gray-500 dark:text-gray-400">
               <p>Skill Hub v2.0.0 — React Edition</p>

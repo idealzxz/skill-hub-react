@@ -35,11 +35,11 @@ export default function Sidebar() {
   }
 
   return (
-    <aside className="hidden md:flex flex-col w-64 lg:w-72 border-r border-gray-200 dark:border-white/10 bg-white/60 dark:bg-surface-dark/60 backdrop-blur-xl shrink-0">
-      <div className="p-6 border-b border-gray-200 dark:border-white/10">
+    <aside className="hidden md:flex flex-col w-64 lg:w-72 shrink-0 rounded-2xl glass-elevated">
+      <div className="p-6 border-b border-white/20 dark:border-white/8">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
-            <Zap className="w-5 h-5 text-white" />
+          <div className="w-10 h-10 rounded-2xl glass-icon flex items-center justify-center">
+            <Zap className="w-5 h-5 text-primary dark:text-primary-light" />
           </div>
           <div>
             <h1 className="text-lg font-bold text-primary dark:text-primary-light font-mono">
@@ -58,10 +58,10 @@ export default function Sidebar() {
             <button
               key={tab.id}
               onClick={() => dispatch({ type: 'SET_TAB', tab: tab.id })}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl border transition-all duration-200 cursor-pointer text-left ${
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl border cursor-pointer text-left transition-colors duration-200 ${
                 active
-                  ? 'bg-primary/10 dark:bg-primary/20 text-primary dark:text-primary-light border-primary/30'
-                  : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 border-transparent'
+                  ? 'bg-white/30 dark:bg-white/[0.06] border-white/35 dark:border-white/[0.08] text-primary dark:text-primary-light shadow-sm backdrop-blur-sm'
+                  : 'border-transparent text-gray-600 dark:text-gray-400 hover:bg-white/20 dark:hover:bg-white/5'
               }`}
             >
               {Icon && <Icon className="w-5 h-5 shrink-0" />}
@@ -87,7 +87,7 @@ export default function Sidebar() {
       </nav>
 
       {/* Sync & Auth Footer */}
-      <div className="p-4 border-t border-gray-200 dark:border-white/10 space-y-3">
+      <div className="p-4 border-t border-white/20 dark:border-white/8 space-y-3">
         {state.githubUser && (
           <div className="flex items-center gap-2 px-2">
             <img
@@ -106,7 +106,7 @@ export default function Sidebar() {
         <div className="flex items-center gap-2">
           <button
             onClick={toggleTheme}
-            className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-white/10 cursor-pointer transition-colors"
+            className="p-2 rounded-xl hover:bg-white/30 dark:hover:bg-white/10 cursor-pointer transition-all duration-200"
             title="切换主题"
           >
             {state.theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
