@@ -103,7 +103,7 @@ export class GitHubService implements GitProvider {
         body: JSON.stringify({
           name: REPO_NAME,
           description: 'Cursor Skills 管理仓库 - 由 Skill Hub 自动创建',
-          private: false,
+          private: true,
           auto_init: true,
         }),
       })

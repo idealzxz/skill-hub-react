@@ -14,7 +14,7 @@ export default function Toast() {
             initial={{ opacity: 0, y: 16, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.95 }}
-            className="px-5 py-3 rounded-2xl glass-elevated !bg-white/80 dark:!bg-white/10 text-gray-800 dark:text-gray-100 text-sm font-medium shadow-2xl flex items-center gap-2 pointer-events-auto"
+            className="px-5 py-3 rounded-2xl border border-white/40 dark:border-white/15 bg-white/85 dark:bg-[#1e1e32]/95 backdrop-blur-xl text-[#332B25] dark:!text-white text-sm font-medium shadow-2xl dark:shadow-black/40 flex items-center gap-2 pointer-events-auto"
           >
             <CheckCircle className="w-4 h-4 text-accent" />
             {t.msg}

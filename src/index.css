@@ -242,8 +242,8 @@ select.glass option {
 .dark .text-gray-400 { color: rgb(156 163 175); }
 .dark .text-gray-500 { color: rgb(107 114 128); }
 .dark .text-gray-600 { color: rgb(156 163 175); }
-.dark .text-gray-800 { color: rgb(31 41 55); }
-.dark .text-gray-900 { color: rgb(17 24 39); }
+.dark .text-gray-800 { color: rgb(229 231 235); }
+.dark .text-gray-900 { color: rgb(243 244 246); }
 
 /* Selection style */
 ::selection {

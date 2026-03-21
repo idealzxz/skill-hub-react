@@ -1,8 +1,9 @@
-import { createContext, useContext, useReducer, useCallback, useEffect, type ReactNode } from 'react'
+import { createContext, useContext, useReducer, useCallback, useEffect, useRef, type ReactNode } from 'react'
 import { generateDemoSkills, type Skill, type UserSkill, type SkillMeta, type TeamRepo, type TeamSkill, type SkillBundle } from '../data/skills'
 import { GitHubService, type GitHubUser } from '../services/github'
 import { GitLabService } from '../services/gitlab'
 import { GiteeService } from '../services/gitee'
+import { pushFavoritesToProvider, pushSettingsToProvider, type SyncedSettings } from '../services/sync'
 import type { GitProvider, GitProviderType } from '../services/git-provider'
 
 export type TabId = 'market' | 'favorites' | 'install' | 'settings' | 'dashboard' | 'recent' | 'myskills' | 'editor' | 'team'
@@ -30,6 +31,11 @@ export interface AppState {
   syncMessage: string
   indexSha?: string
   favSha?: string
+  settingsSha?: string
+  favSyncStatus: 'idle' | 'syncing' | 'error'
+  favSyncMessage: string
+  settingsSyncStatus: 'idle' | 'syncing' | 'error'
+  settingsSyncMessage: string
   teamRepos: TeamRepo[]
   teamSkills: TeamSkill[]
   teamBundles: SkillBundle[]
@@ -64,6 +70,9 @@ export type Action =
   | { type: 'SET_TEAM_SKILLS'; skills: TeamSkill[] }
   | { type: 'SET_TEAM_BUNDLES'; bundles: SkillBundle[] }
   | { type: 'SET_TEAM_SYNC_STATUS'; status: 'idle' | 'syncing' | 'error'; message?: string }
+  | { type: 'SET_FAV_SYNC_STATUS'; status: 'idle' | 'syncing' | 'error'; message?: string }
+  | { type: 'SET_SETTINGS_SHA'; sha: string }
+  | { type: 'SET_SETTINGS_SYNC_STATUS'; status: 'idle' | 'syncing' | 'error'; message?: string }
   | { type: 'CLEAR_ALL' }
 
 function reducer(state: AppState, action: Action): AppState {
@@ -142,18 +151,25 @@ function reducer(state: AppState, action: Action): AppState {
       return { ...state, teamBundles: action.bundles }
     case 'SET_TEAM_SYNC_STATUS':
       return { ...state, teamSyncStatus: action.status, teamSyncMessage: action.message || '' }
+    case 'SET_FAV_SYNC_STATUS':
+      return { ...state, favSyncStatus: action.status, favSyncMessage: action.message || '' }
+    case 'SET_SETTINGS_SHA':
+      return { ...state, settingsSha: action.sha }
+    case 'SET_SETTINGS_SYNC_STATUS':
+      return { ...state, settingsSyncStatus: action.status, settingsSyncMessage: action.message || '' }
     case 'CLEAR_ALL':
       return {
         ...state,
         favorites: [],
         recentViews: [],
         mySkills: [],
-        theme: 'light',
+        theme: 'system',
         githubToken: null,
         githubUser: null,
         gitProviderType: 'github',
         indexSha: undefined,
         favSha: undefined,
+        settingsSha: undefined,
         teamRepos: [],
         teamSkills: [],
         teamBundles: [],
@@ -174,6 +190,7 @@ interface AppContextValue {
   getGitHub: () => GitHubService | null
   getProvider: () => GitProvider | null
   getMetas: () => SkillMeta[]
+  syncFavorites: () => Promise<void>
 }
 
 const AppContext = createContext<AppContextValue | null>(null)
@@ -187,7 +204,7 @@ export function useApp() {
 function loadInitialState(): AppState {
   return {
     currentTab: 'market',
-    theme: (localStorage.getItem('sh_theme') as Theme) || 'light',
+    theme: (localStorage.getItem('sh_theme') as Theme) || 'system',
     skills: generateDemoSkills(),
     favorites: JSON.parse(localStorage.getItem('sh_favorites') || '[]'),
     recentViews: JSON.parse(localStorage.getItem('sh_recent') || '[]'),
@@ -202,6 +219,11 @@ function loadInitialState(): AppState {
     syncMessage: '',
     indexSha: undefined,
     favSha: undefined,
+    settingsSha: undefined,
+    favSyncStatus: 'idle',
+    favSyncMessage: '',
+    settingsSyncStatus: 'idle',
+    settingsSyncMessage: '',
     teamRepos: JSON.parse(localStorage.getItem('sh_team_repos') || '[]'),
     teamSkills: [],
     teamBundles: [],
@@ -251,6 +273,24 @@ export function AppProvider({ children }: { children: ReactNode }) {
     }
   }, [state.githubToken, state.gitProviderType])
 
+  const syncFavorites = useCallback(async () => {
+    if (!state.githubToken || !state.githubUser) return
+    let provider: GitProvider
+    switch (state.gitProviderType) {
+      case 'gitlab': provider = new GitLabService(state.githubToken); break
+      case 'gitee': provider = new GiteeService(state.githubToken); break
+      default: provider = new GitHubService(state.githubToken); break
+    }
+    dispatch({ type: 'SET_FAV_SYNC_STATUS', status: 'syncing', message: '正在同步收藏...' })
+    try {
+      const newSha = await pushFavoritesToProvider(provider, state.githubUser, state.favorites, state.favSha)
+      dispatch({ type: 'SET_FAV_SHA', sha: newSha })
+      dispatch({ type: 'SET_FAV_SYNC_STATUS', status: 'idle' })
+    } catch {
+      dispatch({ type: 'SET_FAV_SYNC_STATUS', status: 'error', message: '收藏同步失败' })
+    }
+  }, [state.githubToken, state.githubUser, state.gitProviderType, state.favorites, state.favSha])
+
   const getMetas = useCallback((): SkillMeta[] => {
     return state.mySkills.map((s) => ({
       id: s.id,
@@ -266,8 +306,41 @@ export function AppProvider({ children }: { children: ReactNode }) {
     }))
   }, [state.mySkills])
 
+  const favSyncTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const isFirstFavLoad = useRef(true)
+
   useEffect(() => {
     localStorage.setItem('sh_favorites', JSON.stringify(state.favorites))
+
+    if (isFirstFavLoad.current) {
+      isFirstFavLoad.current = false
+      return
+    }
+
+    if (!state.githubToken || !state.githubUser) return
+
+    if (favSyncTimer.current) clearTimeout(favSyncTimer.current)
+    favSyncTimer.current = setTimeout(async () => {
+      let provider: GitProvider
+      switch (state.gitProviderType) {
+        case 'gitlab': provider = new GitLabService(state.githubToken!); break
+        case 'gitee': provider = new GiteeService(state.githubToken!); break
+        default: provider = new GitHubService(state.githubToken!); break
+      }
+      dispatch({ type: 'SET_FAV_SYNC_STATUS', status: 'syncing', message: '正在同步收藏...' })
+      try {
+        const newSha = await pushFavoritesToProvider(provider, state.githubUser!, state.favorites, state.favSha)
+        dispatch({ type: 'SET_FAV_SHA', sha: newSha })
+        dispatch({ type: 'SET_FAV_SYNC_STATUS', status: 'idle' })
+      } catch {
+        dispatch({ type: 'SET_FAV_SYNC_STATUS', status: 'error', message: '收藏同步失败' })
+      }
+    }, 3000)
+
+    return () => {
+      if (favSyncTimer.current) clearTimeout(favSyncTimer.current)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.favorites])
 
   useEffect(() => {
@@ -276,10 +349,18 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     localStorage.setItem('sh_theme', state.theme)
-    const isDark =
-      state.theme === 'dark' ||
-      (state.theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)
-    document.documentElement.classList.toggle('dark', isDark)
+    const applyTheme = () => {
+      const isDark =
+        state.theme === 'dark' ||
+        (state.theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)
+      document.documentElement.classList.toggle('dark', isDark)
+    }
+    applyTheme()
+    if (state.theme === 'system') {
+      const mql = window.matchMedia('(prefers-color-scheme: dark)')
+      mql.addEventListener('change', applyTheme)
+      return () => mql.removeEventListener('change', applyTheme)
+    }
   }, [state.theme])
 
   useEffect(() => {
@@ -304,6 +385,45 @@ export function AppProvider({ children }: { children: ReactNode }) {
     localStorage.setItem('sh_team_repos', JSON.stringify(state.teamRepos))
   }, [state.teamRepos])
 
+  const settingsSyncTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const isFirstSettingsLoad = useRef(true)
+  const settingsKey = JSON.stringify({ theme: state.theme, teamRepos: state.teamRepos })
+
+  useEffect(() => {
+    if (isFirstSettingsLoad.current) {
+      isFirstSettingsLoad.current = false
+      return
+    }
+    if (!state.githubToken || !state.githubUser) return
+
+    if (settingsSyncTimer.current) clearTimeout(settingsSyncTimer.current)
+    settingsSyncTimer.current = setTimeout(async () => {
+      let provider: GitProvider
+      switch (state.gitProviderType) {
+        case 'gitlab': provider = new GitLabService(state.githubToken!); break
+        case 'gitee': provider = new GiteeService(state.githubToken!); break
+        default: provider = new GitHubService(state.githubToken!); break
+      }
+      const settings: SyncedSettings = {
+        theme: state.theme,
+        teamRepos: state.teamRepos,
+      }
+      dispatch({ type: 'SET_SETTINGS_SYNC_STATUS', status: 'syncing', message: '正在同步设置...' })
+      try {
+        const newSha = await pushSettingsToProvider(provider, state.githubUser!, settings, state.settingsSha)
+        dispatch({ type: 'SET_SETTINGS_SHA', sha: newSha })
+        dispatch({ type: 'SET_SETTINGS_SYNC_STATUS', status: 'idle' })
+      } catch {
+        dispatch({ type: 'SET_SETTINGS_SYNC_STATUS', status: 'error', message: '设置同步失败' })
+      }
+    }, 3000)
+
+    return () => {
+      if (settingsSyncTimer.current) clearTimeout(settingsSyncTimer.current)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [settingsKey])
+
   useEffect(() => {
     fetch(`${import.meta.env.BASE_URL}clawhub-skills.json`)
       .then((res) => {
@@ -320,7 +440,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   return (
     <AppContext.Provider
-      value={{ state, dispatch, toast, toggleFavorite, isFavorite, openDetail, closeDetail, getGitHub, getProvider, getMetas }}
+      value={{ state, dispatch, toast, toggleFavorite, isFavorite, openDetail, closeDetail, getGitHub, getProvider, getMetas, syncFavorites }}
     >
       {children}
     </AppContext.Provider>

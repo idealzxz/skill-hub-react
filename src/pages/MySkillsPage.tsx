@@ -1,7 +1,7 @@
-import { useState } from 'react'
-import { Plus, RefreshCw, Cloud, CloudOff, Edit, Trash2, CheckCircle, AlertCircle, GitBranch, Copy, Check, Eye } from 'lucide-react'
+import { useState, useRef } from 'react'
+import { Plus, RefreshCw, Cloud, CloudOff, Edit, Trash2, CheckCircle, AlertCircle, GitBranch, Copy, Check, Eye, Upload } from 'lucide-react'
 import { useApp } from '../store/AppContext'
-import { CAT_COLORS, type UserSkill } from '../data/skills'
+import { CATEGORIES, CAT_COLORS, type UserSkill, pickColor } from '../data/skills'
 import { createNewSkill } from '../services/sync'
 import { pullFromGitHub, deleteSkillRemote } from '../services/sync'
 import { copyToClipboard } from '../utils'
@@ -11,6 +11,7 @@ export default function MySkillsPage() {
   const { state, dispatch, toast, getGitHub, openDetail } = useApp()
   const [showClonePanel, setShowClonePanel] = useState(false)
   const [copiedId, setCopiedId] = useState<string | null>(null)
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   const handleNew = () => {
     const author = state.githubUser?.login || 'me'
@@ -61,6 +62,11 @@ export default function MySkillsPage() {
       if (result.favorites.length > 0) dispatch({ type: 'SET_FAVORITES', favorites: result.favorites })
       if (result.indexSha) dispatch({ type: 'SET_INDEX_SHA', sha: result.indexSha })
       if (result.favSha) dispatch({ type: 'SET_FAV_SHA', sha: result.favSha })
+      if (result.settingsSha) dispatch({ type: 'SET_SETTINGS_SHA', sha: result.settingsSha })
+      if (result.settings) {
+        if (result.settings.theme) dispatch({ type: 'SET_THEME', theme: result.settings.theme })
+        if (result.settings.teamRepos?.length) dispatch({ type: 'SET_TEAM_REPOS', repos: result.settings.teamRepos })
+      }
       dispatch({ type: 'SET_SYNC_STATUS', status: 'idle' })
       toast('同步完成')
     } catch (err) {
@@ -102,6 +108,70 @@ export default function MySkillsPage() {
     return `# 请先绑定 Git 平台后再获取安装命令`
   }
 
+  const buildSkillFromRaw = (raw: Record<string, unknown>, index: number): UserSkill => {
+    const now = new Date().toISOString()
+    const id = `user-${Date.now()}-${Math.random().toString(36).slice(2, 8)}-${index}`
+    const name = String(raw.name || raw.title || '').replace(/[^a-zA-Z0-9_-]/g, '') || `imported-skill-${index}`
+    const category = CATEGORIES.includes(String(raw.category)) ? String(raw.category) : 'AI & ML'
+    return {
+      id,
+      name,
+      author: String(raw.author || state.githubUser?.login || 'me'),
+      description: String(raw.description || raw.desc || ''),
+      category,
+      tags: Array.isArray(raw.tags) ? raw.tags.map(String) : [],
+      stars: 0,
+      downloads: 0,
+      version: String(raw.version || '1.0.0'),
+      color: pickColor(state.mySkills.length + index),
+      installCommand: '',
+      updatedAt: now,
+      isOwned: true,
+      skillMdContent: String(raw.skillMdContent || raw.content || ''),
+      repoPath: `skills/${name}/SKILL.md`,
+      syncStatus: 'local',
+    }
+  }
+
+  const handleImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files
+    if (!files?.length) return
+
+    let imported = 0
+    for (const file of Array.from(files)) {
+      try {
+        const text = await file.text()
+
+        if (file.name.endsWith('.md')) {
+          const titleMatch = text.match(/^#\s+(.+)/m)
+          const skill = buildSkillFromRaw({
+            name: (titleMatch?.[1] || file.name.replace(/\.md$/, '')).replace(/[^a-zA-Z0-9_-]/g, '-'),
+            description: text.slice(0, 120).replace(/^#.*\n+/, '').trim(),
+            skillMdContent: text,
+          }, imported)
+          dispatch({ type: 'ADD_MY_SKILL', skill })
+          imported++
+          continue
+        }
+
+        const parsed = JSON.parse(text)
+        const items: Record<string, unknown>[] = Array.isArray(parsed) ? parsed : [parsed]
+        for (const raw of items) {
+          const skill = buildSkillFromRaw(raw, imported)
+          const exists = state.mySkills.some((s) => s.name === skill.name)
+          if (exists) continue
+          dispatch({ type: 'ADD_MY_SKILL', skill })
+          imported++
+        }
+      } catch {
+        toast(`导入文件 ${file.name} 失败，请检查格式`)
+      }
+    }
+
+    if (imported > 0) toast(`成功导入 ${imported} 个技能`)
+    if (fileInputRef.current) fileInputRef.current.value = ''
+  }
+
   const syncIcon = (s: UserSkill['syncStatus']) => {
     if (s === 'synced') return <CheckCircle className="w-3.5 h-3.5 text-accent" />
     if (s === 'local') return <CloudOff className="w-3.5 h-3.5 text-amber-500" />
@@ -138,6 +208,11 @@ export default function MySkillsPage() {
               <RefreshCw className={`w-4 h-4 ${state.syncStatus === 'syncing' ? 'animate-spin' : ''}`} />
               {state.syncStatus === 'syncing' ? '同步中...' : '同步'}
             </button>
+            <button onClick={() => fileInputRef.current?.click()} className="flex items-center gap-2 px-4 py-2 rounded-2xl glass-subtle hover:bg-white/40 dark:hover:bg-white/10 text-sm cursor-pointer transition-all">
+              <Upload className="w-4 h-4" />
+              <span className="hidden sm:inline">导入</span>
+            </button>
+            <input ref={fileInputRef} type="file" accept=".json,.md" multiple className="hidden" onChange={handleImport} />
             <button onClick={handleNew} className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-primary/90 backdrop-blur-sm text-white text-sm cursor-pointer hover:bg-primary transition-all shadow-lg shadow-primary/20">
               <Plus className="w-4 h-4" />新建技能
             </button>

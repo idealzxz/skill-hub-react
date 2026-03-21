@@ -1,12 +1,18 @@
 import { GitHubService, type GitHubUser } from './github'
 import type { GitProvider } from './git-provider'
 import type { GitUser } from './git-provider'
-import type { UserSkill, SkillMeta } from '../data/skills'
+import type { UserSkill, SkillMeta, TeamRepo } from '../data/skills'
 import { pickColor } from '../data/skills'
+
+export interface SyncedSettings {
+  theme: 'light' | 'dark' | 'system'
+  teamRepos: TeamRepo[]
+}
 
 export interface SyncResult {
   mySkills: UserSkill[]
   favorites: string[]
+  settings?: SyncedSettings
   indexSha?: string
   favSha?: string
   settingsSha?: string
@@ -18,13 +24,15 @@ export async function pullFromGitHub(
 ): Promise<SyncResult> {
   await gh.ensureRepo(user.login)
 
-  const [indexRes, favRes] = await Promise.all([
+  const [indexRes, favRes, settingsRes] = await Promise.all([
     gh.readIndex(user.login),
     gh.readFavorites(user.login),
+    gh.readSettings(user.login),
   ])
 
   const metas: SkillMeta[] = indexRes?.data || []
   const favorites: string[] = favRes?.data || []
+  const settings = settingsRes?.data as SyncedSettings | undefined
 
   const skills: UserSkill[] = []
   for (const meta of metas) {
@@ -55,8 +63,10 @@ export async function pullFromGitHub(
   return {
     mySkills: skills,
     favorites,
+    settings,
     indexSha: indexRes?.sha,
     favSha: favRes?.sha,
+    settingsSha: settingsRes?.sha,
   }
 }
 
@@ -66,13 +76,15 @@ export async function pullFromProvider(
 ): Promise<SyncResult> {
   await provider.ensureRepo(user.login)
 
-  const [indexRes, favRes] = await Promise.all([
+  const [indexRes, favRes, settingsRes] = await Promise.all([
     provider.readIndex(user.login),
     provider.readFavorites(user.login),
+    provider.readSettings(user.login),
   ])
 
   const metas: SkillMeta[] = indexRes?.data || []
   const favorites: string[] = favRes?.data || []
+  const settings = settingsRes?.data as SyncedSettings | undefined
 
   const skills: UserSkill[] = []
   for (const meta of metas) {
@@ -103,8 +115,10 @@ export async function pullFromProvider(
   return {
     mySkills: skills,
     favorites,
+    settings,
     indexSha: indexRes?.sha,
     favSha: favRes?.sha,
+    settingsSha: settingsRes?.sha,
   }
 }
 
@@ -166,6 +180,26 @@ export async function pushFavorites(
   sha?: string,
 ): Promise<string> {
   return gh.writeFavorites(user.login, favorites, sha)
+}
+
+export async function pushFavoritesToProvider(
+  provider: GitProvider,
+  user: GitUser,
+  favorites: string[],
+  sha?: string,
+): Promise<string> {
+  await provider.ensureRepo(user.login)
+  return provider.writeFavorites(user.login, favorites, sha)
+}
+
+export async function pushSettingsToProvider(
+  provider: GitProvider,
+  user: GitUser,
+  settings: SyncedSettings,
+  sha?: string,
+): Promise<string> {
+  await provider.ensureRepo(user.login)
+  return provider.writeSettings(user.login, settings as unknown as Record<string, unknown>, sha)
 }
 
 export function createNewSkill(author: string, index: number): UserSkill {

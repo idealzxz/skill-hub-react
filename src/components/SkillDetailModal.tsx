@@ -1,4 +1,4 @@
-import { X, Copy, Check, ChevronDown, ExternalLink } from 'lucide-react'
+import { X, Copy, Check, ChevronDown, ExternalLink, Terminal, GitBranch } from 'lucide-react'
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { CAT_COLORS } from '../data/skills'
@@ -7,31 +7,27 @@ import { formatNum, copyToClipboard } from '../utils'
 
 const SKILLHUB_CLI_CMD = 'curl -fsSL https://skillhub-1388575217.cos.ap-guangzhou.myqcloud.com/install/install.sh | bash'
 
+type InstallFormat = 'skillhub' | 'git'
+
 export default function SkillDetailModal() {
   const { state, toast, toggleFavorite, isFavorite, closeDetail } = useApp()
   const skill = state.detailSkill
-  const [copied, setCopied] = useState(false)
-  const [copiedCli, setCopiedCli] = useState(false)
+  const [copiedKey, setCopiedKey] = useState('')
   const [showPrereq, setShowPrereq] = useState(false)
+  const [installFormat, setInstallFormat] = useState<InstallFormat>('skillhub')
 
   const fav = skill ? isFavorite(skill.id) : false
 
-  const handleCopy = async () => {
-    if (!skill) return
-    const ok = await copyToClipboard(skill.installCommand)
-    if (ok) {
-      setCopied(true)
-      toast('已复制到剪贴板')
-      setTimeout(() => setCopied(false), 2000)
-    }
-  }
+  const skillhubCmd = skill ? `skillhub install ${skill.name}` : ''
+  const gitCmd = skill ? `git clone https://github.com/${skill.author}/${skill.name}.git ~/.cursor/skills/${skill.name}` : ''
+  const activeCmd = installFormat === 'skillhub' ? skillhubCmd : gitCmd
 
-  const handleCopyCli = async () => {
-    const ok = await copyToClipboard(SKILLHUB_CLI_CMD)
+  const handleCopy = async (text: string, key: string) => {
+    const ok = await copyToClipboard(text)
     if (ok) {
-      setCopiedCli(true)
-      toast('CLI 安装命令已复制')
-      setTimeout(() => setCopiedCli(false), 2000)
+      setCopiedKey(key)
+      toast('已复制到剪贴板')
+      setTimeout(() => setCopiedKey(''), 2000)
     }
   }
 
@@ -113,48 +109,76 @@ export default function SkillDetailModal() {
               </div>
 
               <div className="mb-4">
-                <h4 className="text-sm font-semibold mb-2">安装命令</h4>
+                <div className="flex items-center justify-between mb-2">
+                  <h4 className="text-sm font-semibold">安装命令</h4>
+                  <div className="flex items-center gap-1">
+                    <button
+                      onClick={() => setInstallFormat('skillhub')}
+                      className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-medium cursor-pointer transition-all ${
+                        installFormat === 'skillhub'
+                          ? 'bg-primary/15 dark:bg-primary/25 text-primary dark:text-primary-light border border-primary/30'
+                          : 'hover:bg-gray-100 dark:hover:bg-white/10 text-gray-400'
+                      }`}
+                    >
+                      <Terminal className="w-3 h-3" />CLI
+                    </button>
+                    <button
+                      onClick={() => setInstallFormat('git')}
+                      className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-medium cursor-pointer transition-all ${
+                        installFormat === 'git'
+                          ? 'bg-primary/15 dark:bg-primary/25 text-primary dark:text-primary-light border border-primary/30'
+                          : 'hover:bg-gray-100 dark:hover:bg-white/10 text-gray-400'
+                      }`}
+                    >
+                      <GitBranch className="w-3 h-3" />Git
+                    </button>
+                  </div>
+                </div>
                 <div className="relative group/code">
                   <pre className="bg-gray-900/90 dark:bg-black/60 backdrop-blur-sm text-green-400 rounded-2xl p-4 text-sm font-mono overflow-x-auto border border-white/5">
-                    <code>{skill.installCommand}</code>
+                    <code>{activeCmd}</code>
                   </pre>
-                  <button onClick={handleCopy} className="absolute top-3 right-3 p-2 rounded-xl bg-white/10 hover:bg-white/20 text-gray-400 hover:text-white cursor-pointer transition-all opacity-0 group-hover/code:opacity-100">
-                    {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                  <button onClick={() => handleCopy(activeCmd, 'install')} className="absolute top-3 right-3 p-2 rounded-xl bg-white/10 hover:bg-white/20 text-gray-400 hover:text-white cursor-pointer transition-all opacity-0 group-hover/code:opacity-100">
+                    {copiedKey === 'install' ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
                   </button>
                 </div>
               </div>
 
-              <div className="mb-6">
-                <button
-                  onClick={() => setShowPrereq(!showPrereq)}
-                  className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 cursor-pointer transition-colors"
-                >
-                  <ChevronDown className={`w-3.5 h-3.5 transition-transform ${showPrereq ? 'rotate-180' : ''}`} />
-                  首次使用？需先安装 SkillHub CLI
-                </button>
-                {showPrereq && (
-                  <div className="mt-2 p-4 rounded-2xl glass-subtle border border-amber-200/30 dark:border-amber-500/10">
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">
-                      运行以下命令安装 SkillHub CLI（国内加速，仅需一次）：
-                    </p>
-                    <div className="relative group/cli">
-                      <pre className="bg-gray-900/90 dark:bg-black/60 backdrop-blur-sm text-amber-400 rounded-xl p-3 text-xs font-mono overflow-x-auto border border-white/5">
-                        <code>{SKILLHUB_CLI_CMD}</code>
-                      </pre>
-                      <button onClick={handleCopyCli} className="absolute top-2 right-2 p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-gray-400 hover:text-white cursor-pointer transition-all opacity-0 group-hover/cli:opacity-100">
-                        {copiedCli ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
-                      </button>
+              {installFormat === 'skillhub' && (
+                <div className="mb-6">
+                  <button
+                    onClick={() => setShowPrereq(!showPrereq)}
+                    className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 cursor-pointer transition-colors"
+                  >
+                    <ChevronDown className={`w-3.5 h-3.5 transition-transform ${showPrereq ? 'rotate-180' : ''}`} />
+                    首次使用？需先安装 SkillHub CLI
+                  </button>
+                  {showPrereq && (
+                    <div className="mt-2 p-4 rounded-2xl glass-subtle border border-amber-200/30 dark:border-amber-500/10">
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">
+                        运行以下命令安装 SkillHub CLI（国内加速，仅需一次）：
+                      </p>
+                      <div className="relative group/cli">
+                        <pre className="bg-gray-900/90 dark:bg-black/60 backdrop-blur-sm text-amber-400 rounded-xl p-3 text-xs font-mono overflow-x-auto border border-white/5">
+                          <code>{SKILLHUB_CLI_CMD}</code>
+                        </pre>
+                        <button onClick={() => handleCopy(SKILLHUB_CLI_CMD, 'cli')} className="absolute top-2 right-2 p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-gray-400 hover:text-white cursor-pointer transition-all opacity-0 group-hover/cli:opacity-100">
+                          {copiedKey === 'cli' ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                        </button>
+                      </div>
+                      <p className="text-xs text-gray-400 mt-2">
+                        安装完成后即可使用 <code className="px-1.5 py-0.5 rounded bg-gray-100 dark:bg-white/10 text-gray-600 dark:text-gray-300 font-mono text-[11px]">skillhub install</code> 命令。
+                        详见{' '}
+                        <a href="https://skillhub.tencent.com" target="_blank" rel="noopener noreferrer" className="text-primary dark:text-primary-light hover:underline">
+                          SkillHub 官网
+                        </a>
+                      </p>
                     </div>
-                    <p className="text-xs text-gray-400 mt-2">
-                      安装完成后即可使用 <code className="px-1.5 py-0.5 rounded bg-gray-100 dark:bg-white/10 text-gray-600 dark:text-gray-300 font-mono text-[11px]">skillhub install</code> 命令。
-                      详见{' '}
-                      <a href="https://skillhub.tencent.com" target="_blank" rel="noopener noreferrer" className="text-primary dark:text-primary-light hover:underline">
-                        SkillHub 官网
-                      </a>
-                    </p>
-                  </div>
-                )}
-              </div>
+                  )}
+                </div>
+              )}
+
+              {installFormat === 'git' && <div className="mb-6" />}
 
               {skill.homepage && (
                 <a
@@ -182,9 +206,9 @@ export default function SkillDetailModal() {
                   </svg>
                   {fav ? '取消收藏' : '收藏'}
                 </button>
-                <button onClick={handleCopy} className="flex-1 flex items-center justify-center gap-2 py-3 rounded-2xl bg-primary/90 backdrop-blur-sm text-white cursor-pointer hover:bg-primary transition-all duration-300 text-sm font-medium shadow-lg shadow-primary/20">
-                  <Copy className="w-4 h-4" />
-                  复制命令
+                <button onClick={() => handleCopy(activeCmd, 'bottom')} className="flex-1 flex items-center justify-center gap-2 py-3 rounded-2xl bg-primary/90 backdrop-blur-sm text-white cursor-pointer hover:bg-primary transition-all duration-300 text-sm font-medium shadow-lg shadow-primary/20">
+                  {copiedKey === 'bottom' ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                  {copiedKey === 'bottom' ? '已复制' : '复制命令'}
                 </button>
               </div>
             </div>

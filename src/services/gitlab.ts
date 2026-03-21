@@ -49,7 +49,7 @@ export class GitLabService implements GitProvider {
         body: JSON.stringify({
           name: REPO_NAME,
           description: 'Cursor Skills 管理仓库 - 由 Skill Hub 自动创建',
-          visibility: 'public',
+          visibility: 'private',
           initialize_with_readme: true,
         }),
       })
@@ -198,6 +198,16 @@ export class GitLabService implements GitProvider {
     }
     const data = await res.json()
     return data.web_url
+  }
+
+  async readSettings(owner: string): Promise<{ data: Record<string, unknown>; sha: string } | null> {
+    const result = await this.readFile(owner, '.skill-hub/settings.json')
+    if (!result) return null
+    return { data: JSON.parse(result.content), sha: result.sha }
+  }
+
+  async writeSettings(owner: string, data: Record<string, unknown>, sha?: string): Promise<string> {
+    return this.writeFile(owner, '.skill-hub/settings.json', JSON.stringify(data, null, 2), sha, '更新设置')
   }
 
   static async readPublicRepoFile(apiUrl: string, owner: string, repo: string, path: string): Promise<FileResult | null> {

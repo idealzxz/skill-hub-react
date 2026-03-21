@@ -33,6 +33,8 @@ export interface GitProvider {
   writeRepoFile(owner: string, repo: string, path: string, content: string, sha?: string, message?: string): Promise<string>
   forkRepo(owner: string, repo: string): Promise<string>
   createMergeRequest(owner: string, repo: string, title: string, body: string, head: string, base?: string): Promise<string>
+  readSettings(owner: string): Promise<{ data: Record<string, unknown>; sha: string } | null>
+  writeSettings(owner: string, data: Record<string, unknown>, sha?: string): Promise<string>
 }
 
 export interface GitProviderConfig {

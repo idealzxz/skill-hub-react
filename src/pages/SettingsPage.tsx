@@ -42,6 +42,11 @@ export default function SettingsPage() {
       if (result.favorites.length > 0) dispatch({ type: 'SET_FAVORITES', favorites: result.favorites })
       if (result.indexSha) dispatch({ type: 'SET_INDEX_SHA', sha: result.indexSha })
       if (result.favSha) dispatch({ type: 'SET_FAV_SHA', sha: result.favSha })
+      if (result.settingsSha) dispatch({ type: 'SET_SETTINGS_SHA', sha: result.settingsSha })
+      if (result.settings) {
+        if (result.settings.theme) dispatch({ type: 'SET_THEME', theme: result.settings.theme })
+        if (result.settings.teamRepos?.length) dispatch({ type: 'SET_TEAM_REPOS', repos: result.settings.teamRepos })
+      }
       dispatch({ type: 'SET_SYNC_STATUS', status: 'idle' })
       toast('同步完成')
     } catch (err) {
@@ -155,7 +160,7 @@ export default function SettingsPage() {
               <h3 className="font-semibold">Git 平台绑定</h3>
             </div>
             <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-              绑定 Git 平台后，你的技能、收藏和设置会自动同步到 <code className="text-xs bg-gray-100 dark:bg-white/10 px-1.5 py-0.5 rounded">cursor-skills</code> 仓库
+              绑定 Git 平台后，你的技能、收藏、主题和团队仓库等设置会自动同步到<strong>私有</strong>仓库 <code className="text-xs bg-gray-100 dark:bg-white/10 px-1.5 py-0.5 rounded">cursor-skills</code>，换设备登录即可恢复
             </p>
 
             {state.githubUser ? (
@@ -170,6 +175,14 @@ export default function SettingsPage() {
                     <CheckCircle className="w-4 h-4" />
                     <span>{PROVIDER_LABELS[state.gitProviderType]}</span>
                   </div>
+                </div>
+                <div className="text-xs rounded-xl p-3 bg-green-50 dark:bg-green-500/10 text-green-700 dark:text-green-300 space-y-1">
+                  <p className="font-medium">以下数据已自动同步到私有仓库：</p>
+                  <ul className="list-disc list-inside text-green-600 dark:text-green-400 space-y-0.5 ml-1">
+                    <li>我的技能（SKILL.md 文件）</li>
+                    <li>收藏列表（favorites.json）</li>
+                    <li>主题和团队仓库（settings.json）</li>
+                  </ul>
                 </div>
                 <button onClick={disconnectProvider} className="flex items-center gap-2 px-4 py-2.5 rounded-2xl glass-subtle !border-red-200/60 dark:!border-red-500/20 text-red-500 text-sm cursor-pointer hover:bg-red-50/60 dark:hover:bg-red-500/10 transition-all">
                   <LogOut className="w-4 h-4" />断开连接
