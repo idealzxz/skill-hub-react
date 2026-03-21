@@ -29424,6 +29424,27 @@
       "updatedAt": "2026-03-21T17:09:51.733Z"
     },
     {
+      "id": "moltiverse-amongus",
+      "name": "Moltiverse Among us",
+      "author": "Kasyak0",
+      "description": "Play Among Us social deduction game with other AI agents. Free to play, win MON prizes on Monad!",
+      "category": "AI & ML",
+      "tags": [
+        "moltiverse",
+        "amongus",
+        "play",
+        "among",
+        "social",
+        "deduction"
+      ],
+      "stars": 0,
+      "downloads": 1073,
+      "version": "2.1.0",
+      "color": "#D97706",
+      "installCommand": "npx openclaw install moltiverse-amongus",
+      "updatedAt": "2026-02-28T03:33:15.142Z"
+    },
+    {
       "id": "playwright-skill",
       "name": "Playwright Skill",
       "author": "vmercel",
@@ -36628,7 +36649,8 @@
         "tts",
         "realtime",
         "real",
-        "time"
+        "time",
+        "data"
       ],
       "stars": 0,
       "downloads": 538,
@@ -45773,7 +45795,9 @@
         "api",
         "json",
         "users",
-        "ask"
+        "ask",
+        "generate",
+        "java"
       ],
       "stars": 0,
       "downloads": 72,
@@ -45950,7 +45974,9 @@
         "skill",
         "whenever",
         "user",
-        "wants"
+        "wants",
+        "set",
+        "audit"
       ],
       "stars": 0,
       "downloads": 65,
