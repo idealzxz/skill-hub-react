@@ -236,10 +236,14 @@ select.glass option {
 .text-gray-400 { color: var(--color-text-muted); }
 .text-gray-500 { color: var(--color-text-secondary); }
 .text-gray-600 { color: var(--color-text-secondary); }
+.text-gray-800 { color: #332B25; }
+.text-gray-900 { color: #2A231E; }
 
 .dark .text-gray-400 { color: rgb(156 163 175); }
 .dark .text-gray-500 { color: rgb(107 114 128); }
 .dark .text-gray-600 { color: rgb(156 163 175); }
+.dark .text-gray-800 { color: rgb(31 41 55); }
+.dark .text-gray-900 { color: rgb(17 24 39); }
 
 /* Selection style */
 ::selection {

@@ -74,7 +74,7 @@ export default function MarketPage() {
               value={searchQuery}
               onChange={(e) => handleSearch(e.target.value)}
               placeholder="搜索技能名称、作者、标签..."
-              className="w-full pl-12 pr-4 py-4 rounded-2xl glass-elevated text-gray-800 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
+              className="w-full pl-12 pr-4 py-4 rounded-2xl glass-elevated text-heading placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
             />
           </div>
           <div className="mt-4 flex flex-wrap justify-center gap-2">
