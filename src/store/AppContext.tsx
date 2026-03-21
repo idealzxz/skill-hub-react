@@ -217,9 +217,9 @@ function loadInitialState(): AppState {
     editingSkill: null,
     syncStatus: 'idle',
     syncMessage: '',
-    indexSha: undefined,
-    favSha: undefined,
-    settingsSha: undefined,
+    indexSha: localStorage.getItem('sh_index_sha') || undefined,
+    favSha: localStorage.getItem('sh_fav_sha') || undefined,
+    settingsSha: localStorage.getItem('sh_settings_sha') || undefined,
     favSyncStatus: 'idle',
     favSyncMessage: '',
     settingsSyncStatus: 'idle',
@@ -384,6 +384,18 @@ export function AppProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     localStorage.setItem('sh_team_repos', JSON.stringify(state.teamRepos))
   }, [state.teamRepos])
+
+  useEffect(() => {
+    if (state.indexSha) localStorage.setItem('sh_index_sha', state.indexSha)
+  }, [state.indexSha])
+
+  useEffect(() => {
+    if (state.favSha) localStorage.setItem('sh_fav_sha', state.favSha)
+  }, [state.favSha])
+
+  useEffect(() => {
+    if (state.settingsSha) localStorage.setItem('sh_settings_sha', state.settingsSha)
+  }, [state.settingsSha])
 
   const settingsSyncTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const isFirstSettingsLoad = useRef(true)

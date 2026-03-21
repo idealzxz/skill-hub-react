@@ -20,6 +20,8 @@ export default function FavoritesPage() {
     [state.skills, state.favorites],
   )
 
+  const orphanCount = state.favorites.length - favoriteSkills.length
+
   const isWin = platform === 'Windows'
 
   const batchCommand = useMemo(() => {
@@ -88,7 +90,23 @@ export default function FavoritesPage() {
           <div>
             <h2 className="text-2xl font-bold">我的收藏</h2>
             <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-              {state.favorites.length} 个技能已收藏
+              {favoriteSkills.length} 个技能已收藏
+              {orphanCount > 0 && (
+                <span className="ml-1.5 text-amber-500">
+                  （{orphanCount} 个已失效
+                  <button
+                    onClick={() => {
+                      const validIds = favoriteSkills.map((s) => s.id)
+                      dispatch({ type: 'SET_FAVORITES', favorites: validIds })
+                      toast(`已清理 ${orphanCount} 个失效收藏`)
+                    }}
+                    className="ml-1 underline cursor-pointer hover:text-amber-600 transition-colors"
+                  >
+                    清理
+                  </button>
+                  ）
+                </span>
+              )}
               {state.githubUser && (
                 <span className="ml-2 inline-flex items-center gap-1">
                   ·
@@ -109,7 +127,7 @@ export default function FavoritesPage() {
               )}
             </p>
           </div>
-          {state.favorites.length > 0 && (
+          {favoriteSkills.length > 0 && (
             <div className="flex gap-2">
               <button
                 onClick={() => setShowBatchPanel(!showBatchPanel)}

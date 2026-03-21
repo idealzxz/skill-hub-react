@@ -143,6 +143,9 @@ export default function SettingsPage() {
     localStorage.removeItem('sh_github_user')
     localStorage.removeItem('sh_git_provider')
     localStorage.removeItem('sh_team_repos')
+    localStorage.removeItem('sh_index_sha')
+    localStorage.removeItem('sh_fav_sha')
+    localStorage.removeItem('sh_settings_sha')
     dispatch({ type: 'CLEAR_ALL' })
     toast('所有数据已清除')
   }

@@ -167,15 +167,23 @@ export class GiteeService implements GitProvider {
     content: string, sha?: string, message?: string,
   ): Promise<string> {
     const url = `${this.apiUrl}/repos/${owner}/${repo}/contents/${path}`
+    let fileSha = sha
+    let method = sha ? 'PUT' : 'POST'
+
+    if (!fileSha) {
+      const existing = await this._readFile(owner, repo, path)
+      if (existing) {
+        fileSha = existing.sha
+        method = 'PUT'
+      }
+    }
+
     const body: Record<string, string> = {
       access_token: this.token,
       message: message || `更新 ${path}`,
       content: btoa(unescape(encodeURIComponent(content))),
     }
-    if (sha) body.sha = sha
-
-    const existing = sha ? true : !!(await this._readFile(owner, repo, path))
-    const method = existing ? 'PUT' : 'POST'
+    if (fileSha) body.sha = fileSha
 
     const res = await fetch(url, {
       method,
@@ -187,7 +195,7 @@ export class GiteeService implements GitProvider {
       throw new Error(`写入文件失败: ${path} - ${err.message || res.status}`)
     }
     const data = await res.json()
-    return data.content?.sha || sha || ''
+    return data.content?.sha || fileSha || ''
   }
 
   async readSettings(owner: string): Promise<{ data: Record<string, unknown>; sha: string } | null> {

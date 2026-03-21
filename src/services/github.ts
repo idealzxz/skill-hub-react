@@ -128,22 +128,32 @@ export class GitHubService implements GitProvider {
   }
 
   async writeFile(owner: string, path: string, content: string, sha?: string, message?: string): Promise<string> {
-    const body: Record<string, string> = {
-      message: message || `更新 ${path}`,
-      content: btoa(unescape(encodeURIComponent(content))),
+    const encoded = btoa(unescape(encodeURIComponent(content)))
+    const url = `${this.apiUrl}/repos/${owner}/${REPO_NAME}/contents/${path}`
+    const headers = { ...this.headers(), 'Content-Type': 'application/json' }
+
+    const attempt = async (fileSha?: string) => {
+      const body: Record<string, string> = { message: message || `更新 ${path}`, content: encoded }
+      if (fileSha) body.sha = fileSha
+      const res = await fetch(url, { method: 'PUT', headers, body: JSON.stringify(body) })
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}))
+        throw { status: res.status, message: err.message || String(res.status) }
+      }
+      const data = await res.json()
+      return data.content.sha as string
     }
-    if (sha) body.sha = sha
-    const res = await fetch(`${this.apiUrl}/repos/${owner}/${REPO_NAME}/contents/${path}`, {
-      method: 'PUT',
-      headers: { ...this.headers(), 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-    })
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}))
-      throw new Error(`写入文件失败: ${path} - ${err.message || res.status}`)
+
+    try {
+      return await attempt(sha)
+    } catch (e: unknown) {
+      const err = e as { status?: number; message?: string }
+      if ((err.status === 409 || err.status === 422) && !sha) {
+        const existing = await this.readFile(owner, path)
+        if (existing) return attempt(existing.sha)
+      }
+      throw new Error(`写入文件失败: ${path} - ${err.message || 'unknown'}`)
     }
-    const data = await res.json()
-    return data.content.sha
   }
 
   async deleteFile(owner: string, path: string, sha: string): Promise<void> {

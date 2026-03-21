@@ -29,6 +29,8 @@ const TABS: { id: TabId; icon: string; label: string }[] = [
 export default function Sidebar() {
   const { state, dispatch } = useApp()
 
+  const favCount = state.skills.filter((s) => state.favorites.includes(s.id)).length
+
   const toggleTheme = () => {
     const isDark = document.documentElement.classList.contains('dark')
     dispatch({ type: 'SET_THEME', theme: isDark ? 'light' : 'dark' })
@@ -66,9 +68,9 @@ export default function Sidebar() {
             >
               {Icon && <Icon className="w-5 h-5 shrink-0" />}
               <span className="font-medium text-sm">{tab.label}</span>
-              {tab.id === 'favorites' && state.favorites.length > 0 && (
+              {tab.id === 'favorites' && favCount > 0 && (
                 <span className="ml-auto bg-primary/20 text-primary dark:text-primary-light text-xs font-bold px-2 py-0.5 rounded-full">
-                  {state.favorites.length}
+                  {favCount}
                 </span>
               )}
               {tab.id === 'myskills' && state.mySkills.length > 0 && (
