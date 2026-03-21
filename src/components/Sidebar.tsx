@@ -1,6 +1,6 @@
 import {
   Zap, Store, Heart, DownloadCloud, Settings,
-  BarChart3, Clock, Sun, Moon, FolderEdit, RefreshCw,
+  BarChart3, Clock, Sun, Moon, FolderEdit, RefreshCw, Users,
 } from 'lucide-react'
 import { useApp, type TabId } from '../store/AppContext'
 
@@ -12,11 +12,13 @@ const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
   'bar-chart-3': BarChart3,
   clock: Clock,
   'folder-edit': FolderEdit,
+  users: Users,
 }
 
 const TABS: { id: TabId; icon: string; label: string }[] = [
   { id: 'market', icon: 'store', label: '技能市场' },
   { id: 'myskills', icon: 'folder-edit', label: '我的技能' },
+  { id: 'team', icon: 'users', label: '团队技能' },
   { id: 'favorites', icon: 'heart', label: '我的收藏' },
   { id: 'install', icon: 'download-cloud', label: '安装指南' },
   { id: 'dashboard', icon: 'bar-chart-3', label: '数据看板' },
@@ -72,6 +74,11 @@ export default function Sidebar() {
               {tab.id === 'myskills' && state.mySkills.length > 0 && (
                 <span className="ml-auto bg-primary/20 text-primary dark:text-primary-light text-xs font-bold px-2 py-0.5 rounded-full">
                   {state.mySkills.length}
+                </span>
+              )}
+              {tab.id === 'team' && state.teamSkills.length > 0 && (
+                <span className="ml-auto bg-primary/20 text-primary dark:text-primary-light text-xs font-bold px-2 py-0.5 rounded-full">
+                  {state.teamSkills.length}
                 </span>
               )}
             </button>

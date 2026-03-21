@@ -36,6 +36,32 @@ export interface SkillMeta {
   updatedAt: string
 }
 
+export interface TeamRepo {
+  id: string
+  owner: string
+  repo: string
+  label: string
+  lastSynced?: string
+}
+
+export interface SkillBundle {
+  id: string
+  name: string
+  description: string
+  skillNames: string[]
+  author: string
+  createdAt: string
+  updatedAt: string
+}
+
+export interface TeamSkill extends Skill {
+  repoId: string
+  repoLabel: string
+  repoOwner: string
+  repoName: string
+  skillMdContent?: string
+}
+
 export const CATEGORIES = [
   'AI & ML', 'Web Dev', 'DevOps', 'Database', 'Mobile',
   'Security', 'Testing', 'UI/UX', 'Backend', 'Frontend',

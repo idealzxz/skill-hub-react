@@ -1,8 +1,8 @@
 import { createContext, useContext, useReducer, useCallback, useEffect, type ReactNode } from 'react'
-import { generateDemoSkills, type Skill, type UserSkill, type SkillMeta } from '../data/skills'
+import { generateDemoSkills, type Skill, type UserSkill, type SkillMeta, type TeamRepo, type TeamSkill, type SkillBundle } from '../data/skills'
 import { GitHubService, type GitHubUser } from '../services/github'
 
-export type TabId = 'market' | 'favorites' | 'install' | 'settings' | 'dashboard' | 'recent' | 'myskills' | 'editor'
+export type TabId = 'market' | 'favorites' | 'install' | 'settings' | 'dashboard' | 'recent' | 'myskills' | 'editor' | 'team'
 type Theme = 'light' | 'dark' | 'system'
 
 interface RecentView {
@@ -26,6 +26,11 @@ export interface AppState {
   syncMessage: string
   indexSha?: string
   favSha?: string
+  teamRepos: TeamRepo[]
+  teamSkills: TeamSkill[]
+  teamBundles: SkillBundle[]
+  teamSyncStatus: 'idle' | 'syncing' | 'error'
+  teamSyncMessage: string
 }
 
 export type Action =
@@ -48,6 +53,13 @@ export type Action =
   | { type: 'SET_SYNC_STATUS'; status: 'idle' | 'syncing' | 'error'; message?: string }
   | { type: 'SET_INDEX_SHA'; sha: string }
   | { type: 'SET_FAV_SHA'; sha: string }
+  | { type: 'SET_TEAM_REPOS'; repos: TeamRepo[] }
+  | { type: 'ADD_TEAM_REPO'; repo: TeamRepo }
+  | { type: 'REMOVE_TEAM_REPO'; repoId: string }
+  | { type: 'UPDATE_TEAM_REPO'; repo: TeamRepo }
+  | { type: 'SET_TEAM_SKILLS'; skills: TeamSkill[] }
+  | { type: 'SET_TEAM_BUNDLES'; bundles: SkillBundle[] }
+  | { type: 'SET_TEAM_SYNC_STATUS'; status: 'idle' | 'syncing' | 'error'; message?: string }
   | { type: 'CLEAR_ALL' }
 
 function reducer(state: AppState, action: Action): AppState {
@@ -109,6 +121,23 @@ function reducer(state: AppState, action: Action): AppState {
       return { ...state, indexSha: action.sha }
     case 'SET_FAV_SHA':
       return { ...state, favSha: action.sha }
+    case 'SET_TEAM_REPOS':
+      return { ...state, teamRepos: action.repos }
+    case 'ADD_TEAM_REPO':
+      return { ...state, teamRepos: [...state.teamRepos, action.repo] }
+    case 'REMOVE_TEAM_REPO':
+      return { ...state, teamRepos: state.teamRepos.filter((r) => r.id !== action.repoId) }
+    case 'UPDATE_TEAM_REPO':
+      return {
+        ...state,
+        teamRepos: state.teamRepos.map((r) => (r.id === action.repo.id ? action.repo : r)),
+      }
+    case 'SET_TEAM_SKILLS':
+      return { ...state, teamSkills: action.skills }
+    case 'SET_TEAM_BUNDLES':
+      return { ...state, teamBundles: action.bundles }
+    case 'SET_TEAM_SYNC_STATUS':
+      return { ...state, teamSyncStatus: action.status, teamSyncMessage: action.message || '' }
     case 'CLEAR_ALL':
       return {
         ...state,
@@ -120,6 +149,9 @@ function reducer(state: AppState, action: Action): AppState {
         githubUser: null,
         indexSha: undefined,
         favSha: undefined,
+        teamRepos: [],
+        teamSkills: [],
+        teamBundles: [],
       }
     default:
       return state
@@ -163,6 +195,11 @@ function loadInitialState(): AppState {
     syncMessage: '',
     indexSha: undefined,
     favSha: undefined,
+    teamRepos: JSON.parse(localStorage.getItem('sh_team_repos') || '[]'),
+    teamSkills: [],
+    teamBundles: [],
+    teamSyncStatus: 'idle',
+    teamSyncMessage: '',
   }
 }
 
@@ -242,6 +279,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     localStorage.setItem('sh_my_skills', JSON.stringify(state.mySkills))
   }, [state.mySkills])
+
+  useEffect(() => {
+    localStorage.setItem('sh_team_repos', JSON.stringify(state.teamRepos))
+  }, [state.teamRepos])
 
   return (
     <AppContext.Provider

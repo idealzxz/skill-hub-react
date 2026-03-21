@@ -24,9 +24,9 @@ export function useKeyboardShortcuts() {
         return
       }
 
-      if (e.altKey && e.key >= '1' && e.key <= '7') {
+      if (e.altKey && e.key >= '1' && e.key <= '8') {
         e.preventDefault()
-        const tabs: TabId[] = ['market', 'myskills', 'favorites', 'install', 'dashboard', 'recent', 'settings']
+        const tabs: TabId[] = ['market', 'myskills', 'team', 'favorites', 'install', 'dashboard', 'recent', 'settings']
         const idx = parseInt(e.key) - 1
         if (tabs[idx]) dispatch({ type: 'SET_TAB', tab: tabs[idx] })
       }

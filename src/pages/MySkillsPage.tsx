@@ -1,11 +1,15 @@
-import { Plus, RefreshCw, Cloud, CloudOff, Edit, Trash2, CheckCircle, AlertCircle } from 'lucide-react'
+import { useState } from 'react'
+import { Plus, RefreshCw, Cloud, CloudOff, Edit, Trash2, CheckCircle, AlertCircle, GitBranch, Copy, Check, Eye } from 'lucide-react'
 import { useApp } from '../store/AppContext'
 import { CAT_COLORS, type UserSkill } from '../data/skills'
 import { createNewSkill } from '../services/sync'
 import { pullFromGitHub, deleteSkillRemote } from '../services/sync'
+import { copyToClipboard } from '../utils'
 
 export default function MySkillsPage() {
-  const { state, dispatch, toast, getGitHub } = useApp()
+  const { state, dispatch, toast, getGitHub, openDetail } = useApp()
+  const [showClonePanel, setShowClonePanel] = useState(false)
+  const [copiedId, setCopiedId] = useState<string | null>(null)
 
   const handleNew = () => {
     const author = state.githubUser?.login || 'me'
@@ -64,6 +68,37 @@ export default function MySkillsPage() {
     }
   }
 
+  const getCloneAllCommand = (): string | null => {
+    if (!state.githubUser) return null
+    return `git clone https://github.com/${state.githubUser.login}/cursor-skills.git ~/.cursor/skills/${state.githubUser.login}-cursor-skills`
+  }
+
+  const handleCopyCommand = async (cmd: string, id: string) => {
+    const ok = await copyToClipboard(cmd)
+    if (ok) {
+      setCopiedId(id)
+      toast('已复制安装命令')
+      setTimeout(() => setCopiedId(null), 2000)
+    }
+  }
+
+  const handleCopyInstall = async (skill: UserSkill) => {
+    const cmd = skill.installCommand || generateInstallCommand(skill)
+    const ok = await copyToClipboard(cmd)
+    if (ok) {
+      setCopiedId(skill.id)
+      toast('已复制安装命令')
+      setTimeout(() => setCopiedId(null), 2000)
+    }
+  }
+
+  const generateInstallCommand = (skill: UserSkill): string => {
+    if (state.githubUser) {
+      return `git clone https://github.com/${state.githubUser.login}/cursor-skills.git ~/.cursor/skills-sync && cp -r ~/.cursor/skills-sync/skills/${skill.name} ~/.cursor/skills/${skill.name}`
+    }
+    return `# 请先同步到 GitHub 后再获取安装命令`
+  }
+
   const syncIcon = (s: UserSkill['syncStatus']) => {
     if (s === 'synced') return <CheckCircle className="w-3.5 h-3.5 text-accent" />
     if (s === 'local') return <CloudOff className="w-3.5 h-3.5 text-amber-500" />
@@ -92,6 +127,10 @@ export default function MySkillsPage() {
             </p>
           </div>
           <div className="flex gap-2">
+            <button onClick={() => setShowClonePanel(!showClonePanel)} className={`flex items-center gap-2 px-4 py-2 rounded-xl border text-sm cursor-pointer transition-colors ${showClonePanel ? 'border-primary/30 bg-primary/5 text-primary' : 'border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5'}`}>
+              <GitBranch className="w-4 h-4" />
+              <span className="hidden sm:inline">安装到本地</span>
+            </button>
             <button onClick={handleSync} disabled={state.syncStatus === 'syncing'} className="flex items-center gap-2 px-4 py-2 rounded-xl border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5 text-sm cursor-pointer transition-colors disabled:opacity-50">
               <RefreshCw className={`w-4 h-4 ${state.syncStatus === 'syncing' ? 'animate-spin' : ''}`} />
               {state.syncStatus === 'syncing' ? '同步中...' : '同步'}
@@ -108,17 +147,53 @@ export default function MySkillsPage() {
           </div>
         )}
 
+        {showClonePanel && (
+          <div className="mb-6 bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl p-5 space-y-4">
+            <div>
+              <h3 className="font-semibold text-sm mb-1 flex items-center gap-2">
+                <GitBranch className="w-4 h-4 text-primary" />
+                安装全部技能到本地
+              </h3>
+              <p className="text-xs text-gray-500 dark:text-gray-400 mb-3">
+                复制下方命令在终端执行，即可将仓库中的所有技能 clone 到本地 Cursor skills 目录
+              </p>
+            </div>
+
+            {state.githubUser && getCloneAllCommand() ? (
+              <div className="relative group/code">
+                <pre className="bg-gray-900 dark:bg-black/40 text-green-400 rounded-xl p-4 pr-12 text-sm font-mono overflow-x-auto">
+                  <code>{getCloneAllCommand()}</code>
+                </pre>
+                <button
+                  onClick={() => handleCopyCommand(getCloneAllCommand()!, 'my-repo')}
+                  className="absolute top-3 right-3 p-2 rounded-lg bg-white/10 hover:bg-white/20 text-gray-400 hover:text-white cursor-pointer transition-all opacity-0 group-hover/code:opacity-100"
+                >
+                  {copiedId === 'my-repo' ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                </button>
+              </div>
+            ) : (
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                请先在<button onClick={() => dispatch({ type: 'SET_TAB', tab: 'settings' })} className="text-primary hover:underline cursor-pointer mx-1">设置</button>中绑定 GitHub 账号后获取安装命令
+              </p>
+            )}
+          </div>
+        )}
+
         {state.mySkills.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {state.mySkills.map((skill) => (
-              <div key={skill.id} className="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl p-5 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10">
+              <div
+                key={skill.id}
+                className="group bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl p-5 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 hover:border-primary/30 dark:hover:border-primary/30 cursor-pointer"
+                onClick={() => openDetail({ ...skill, installCommand: skill.installCommand || generateInstallCommand(skill) })}
+              >
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center gap-3 min-w-0">
                     <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 text-white text-sm font-bold" style={{ background: skill.color }}>
                       {(skill.name || '?').charAt(0).toUpperCase()}
                     </div>
                     <div className="min-w-0">
-                      <h3 className="font-semibold text-sm truncate">{skill.name || '(未命名)'}</h3>
+                      <h3 className="font-semibold text-sm truncate group-hover:text-primary dark:group-hover:text-primary-light transition-colors">{skill.name || '(未命名)'}</h3>
                       <p className="text-xs text-gray-400 truncate">@{skill.author}</p>
                     </div>
                   </div>
@@ -137,10 +212,32 @@ export default function MySkillsPage() {
                     {skill.category}
                   </span>
                   <div className="flex items-center gap-1">
-                    <button onClick={() => handleEdit(skill)} className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/10 cursor-pointer transition-colors text-gray-400 hover:text-primary">
+                    <button
+                      onClick={(e) => { e.stopPropagation(); handleCopyInstall(skill) }}
+                      className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/10 cursor-pointer transition-colors text-gray-400 hover:text-green-500"
+                      title="复制安装命令"
+                    >
+                      {copiedId === skill.id ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
+                    </button>
+                    <button
+                      onClick={(e) => { e.stopPropagation(); openDetail({ ...skill, installCommand: skill.installCommand || generateInstallCommand(skill) }) }}
+                      className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/10 cursor-pointer transition-colors text-gray-400 hover:text-primary"
+                      title="查看详情"
+                    >
+                      <Eye className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={(e) => { e.stopPropagation(); handleEdit(skill) }}
+                      className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/10 cursor-pointer transition-colors text-gray-400 hover:text-primary"
+                      title="编辑"
+                    >
                       <Edit className="w-4 h-4" />
                     </button>
-                    <button onClick={() => handleDelete(skill)} className="p-1.5 rounded-lg hover:bg-red-50 dark:hover:bg-red-500/10 cursor-pointer transition-colors text-gray-400 hover:text-red-500">
+                    <button
+                      onClick={(e) => { e.stopPropagation(); handleDelete(skill) }}
+                      className="p-1.5 rounded-lg hover:bg-red-50 dark:hover:bg-red-500/10 cursor-pointer transition-colors text-gray-400 hover:text-red-500"
+                      title="删除"
+                    >
                       <Trash2 className="w-4 h-4" />
                     </button>
                   </div>

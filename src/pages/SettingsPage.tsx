@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Github, LogOut, CheckCircle, RefreshCw } from 'lucide-react'
+import { Github, LogOut, CheckCircle, RefreshCw, Users, Plus, Trash2, ExternalLink } from 'lucide-react'
 import { useApp } from '../store/AppContext'
 import { GitHubService } from '../services/github'
 import { pullFromGitHub } from '../services/sync'
@@ -8,6 +8,10 @@ export default function SettingsPage() {
   const { state, dispatch, toast } = useApp()
   const [tokenInput, setTokenInput] = useState('')
   const [connecting, setConnecting] = useState(false)
+  const [repoOwner, setRepoOwner] = useState('')
+  const [repoName, setRepoName] = useState('')
+  const [repoLabel, setRepoLabel] = useState('')
+  const [addingRepo, setAddingRepo] = useState(false)
 
   const connectGitHub = async () => {
     if (!tokenInput.trim()) { toast('请输入 GitHub Token'); return }
@@ -41,6 +45,46 @@ export default function SettingsPage() {
     toast('已断开 GitHub 连接')
   }
 
+  const addTeamRepo = async () => {
+    const owner = repoOwner.trim()
+    const repo = repoName.trim()
+    const label = repoLabel.trim() || `${owner}/${repo}`
+    if (!owner || !repo) { toast('请填写仓库拥有者和名称'); return }
+    if (state.teamRepos.some((r) => r.owner === owner && r.repo === repo)) {
+      toast('该仓库已添加')
+      return
+    }
+    setAddingRepo(true)
+    try {
+      const headers: Record<string, string> = {
+        Accept: 'application/vnd.github+json',
+        'X-GitHub-Api-Version': '2022-11-28',
+      }
+      if (state.githubToken) headers.Authorization = `Bearer ${state.githubToken}`
+      const res = await fetch(`https://api.github.com/repos/${owner}/${repo}`, { headers })
+      if (!res.ok) throw new Error(res.status === 404 ? '仓库不存在或无权访问' : '检查仓库失败')
+      dispatch({
+        type: 'ADD_TEAM_REPO',
+        repo: { id: `tr-${Date.now()}`, owner, repo, label },
+      })
+      setRepoOwner('')
+      setRepoName('')
+      setRepoLabel('')
+      toast(`已添加团队仓库: ${label}`)
+    } catch (err) {
+      toast('添加失败: ' + String(err))
+    }
+    setAddingRepo(false)
+  }
+
+  const removeTeamRepo = (id: string, label: string) => {
+    if (!confirm(`确定要移除团队仓库「${label}」吗？`)) return
+    dispatch({ type: 'REMOVE_TEAM_REPO', repoId: id })
+    const remaining = state.teamSkills.filter((s) => s.repoId !== id)
+    dispatch({ type: 'SET_TEAM_SKILLS', skills: remaining })
+    toast(`已移除: ${label}`)
+  }
+
   const clearAll = () => {
     if (!confirm('确定要清除所有数据吗？此操作不可撤销。')) return
     localStorage.removeItem('sh_favorites')
@@ -49,6 +93,7 @@ export default function SettingsPage() {
     localStorage.removeItem('sh_my_skills')
     localStorage.removeItem('sh_github_token')
     localStorage.removeItem('sh_github_user')
+    localStorage.removeItem('sh_team_repos')
     dispatch({ type: 'CLEAR_ALL' })
     toast('所有数据已清除')
   }
@@ -109,6 +154,86 @@ export default function SettingsPage() {
             )}
           </div>
 
+          {/* Team Repos */}
+          <div className="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl p-6">
+            <div className="flex items-center gap-2 mb-1">
+              <Users className="w-5 h-5" />
+              <h3 className="font-semibold">团队仓库管理</h3>
+            </div>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+              订阅 GitHub 仓库作为团队技能源。支持公开仓库（无需 Token）和私有仓库（需绑定 Token）。
+            </p>
+
+            {state.teamRepos.length > 0 && (
+              <div className="space-y-2 mb-4">
+                {state.teamRepos.map((r) => (
+                  <div key={r.id} className="flex items-center gap-3 p-3 rounded-xl bg-gray-50 dark:bg-white/5">
+                    <div className="w-8 h-8 rounded-lg bg-primary/10 dark:bg-primary/20 flex items-center justify-center shrink-0">
+                      <Github className="w-4 h-4 text-primary dark:text-primary-light" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium truncate">{r.label}</p>
+                      <p className="text-xs text-gray-400 font-mono truncate">{r.owner}/{r.repo}</p>
+                    </div>
+                    {r.lastSynced && (
+                      <span className="text-[10px] text-gray-400 shrink-0 hidden sm:block">
+                        {new Date(r.lastSynced).toLocaleDateString()}
+                      </span>
+                    )}
+                    <a
+                      href={`https://github.com/${r.owner}/${r.repo}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-1.5 rounded-lg hover:bg-gray-200 dark:hover:bg-white/10 cursor-pointer transition-colors shrink-0"
+                    >
+                      <ExternalLink className="w-3.5 h-3.5 text-gray-400" />
+                    </a>
+                    <button
+                      onClick={() => removeTeamRepo(r.id, r.label)}
+                      className="p-1.5 rounded-lg hover:bg-red-50 dark:hover:bg-red-500/10 cursor-pointer transition-colors shrink-0"
+                    >
+                      <Trash2 className="w-3.5 h-3.5 text-red-400" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <div className="space-y-3">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <input
+                  type="text"
+                  value={repoOwner}
+                  onChange={(e) => setRepoOwner(e.target.value)}
+                  placeholder="拥有者 (如 my-org)"
+                  className="px-4 py-2.5 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all"
+                />
+                <input
+                  type="text"
+                  value={repoName}
+                  onChange={(e) => setRepoName(e.target.value)}
+                  placeholder="仓库名 (如 team-skills)"
+                  className="px-4 py-2.5 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all"
+                />
+                <input
+                  type="text"
+                  value={repoLabel}
+                  onChange={(e) => setRepoLabel(e.target.value)}
+                  placeholder="显示名称 (可选)"
+                  className="px-4 py-2.5 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all"
+                />
+              </div>
+              <button
+                onClick={addTeamRepo}
+                disabled={addingRepo}
+                className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-sm font-medium cursor-pointer hover:opacity-90 transition-colors disabled:opacity-50"
+              >
+                {addingRepo ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
+                {addingRepo ? '验证中...' : '添加仓库'}
+              </button>
+            </div>
+          </div>
+
           {/* Theme */}
           <div className="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl p-6">
             <h3 className="font-semibold mb-1">主题</h3>
@@ -129,7 +254,7 @@ export default function SettingsPage() {
               {[
                 { keys: 'Ctrl + K', action: '搜索' },
                 { keys: 'Ctrl + J', action: '切换主题' },
-                { keys: 'Alt + 1~7', action: '技能市场 / 我的技能 / ...' },
+                { keys: 'Alt + 1~8', action: '技能市场 / 我的技能 / 团队技能 / ...' },
               ].map((s) => (
                 <div key={s.keys} className="flex items-center justify-between">
                   <span className="text-sm text-gray-600 dark:text-gray-400">{s.action}</span>

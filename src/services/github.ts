@@ -1,4 +1,4 @@
-import type { SkillMeta } from '../data/skills'
+import type { SkillMeta, SkillBundle } from '../data/skills'
 
 const API = 'https://api.github.com'
 const REPO_NAME = 'cursor-skills'
@@ -12,6 +12,67 @@ export interface GitHubUser {
 interface FileResult {
   content: string
   sha: string
+}
+
+function publicHeaders(): Record<string, string> {
+  return {
+    Accept: 'application/vnd.github+json',
+    'X-GitHub-Api-Version': '2022-11-28',
+  }
+}
+
+export async function readPublicFile(owner: string, repo: string, path: string): Promise<FileResult | null> {
+  const res = await fetch(`${API}/repos/${owner}/${repo}/contents/${path}`, {
+    headers: publicHeaders(),
+  })
+  if (res.status === 404) return null
+  if (!res.ok) throw new Error(`读取文件失败: ${path}`)
+  const data = await res.json()
+  return {
+    content: decodeURIComponent(escape(atob(data.content.replace(/\n/g, '')))),
+    sha: data.sha,
+  }
+}
+
+export async function fetchTeamIndex(owner: string, repo: string, token?: string | null): Promise<SkillMeta[]> {
+  const headers: Record<string, string> = {
+    Accept: 'application/vnd.github+json',
+    'X-GitHub-Api-Version': '2022-11-28',
+  }
+  if (token) headers.Authorization = `Bearer ${token}`
+  const res = await fetch(`${API}/repos/${owner}/${repo}/contents/.skill-hub/index.json`, { headers })
+  if (res.status === 404) return []
+  if (!res.ok) throw new Error(`读取团队索引失败: ${owner}/${repo}`)
+  const data = await res.json()
+  const content = decodeURIComponent(escape(atob(data.content.replace(/\n/g, ''))))
+  return JSON.parse(content) as SkillMeta[]
+}
+
+export async function fetchTeamBundles(owner: string, repo: string, token?: string | null): Promise<SkillBundle[]> {
+  const headers: Record<string, string> = {
+    Accept: 'application/vnd.github+json',
+    'X-GitHub-Api-Version': '2022-11-28',
+  }
+  if (token) headers.Authorization = `Bearer ${token}`
+  const res = await fetch(`${API}/repos/${owner}/${repo}/contents/.skill-hub/bundles.json`, { headers })
+  if (res.status === 404) return []
+  if (!res.ok) throw new Error(`读取技能集合失败: ${owner}/${repo}`)
+  const data = await res.json()
+  const content = decodeURIComponent(escape(atob(data.content.replace(/\n/g, ''))))
+  return JSON.parse(content) as SkillBundle[]
+}
+
+export async function fetchTeamSkillMd(owner: string, repo: string, skillName: string, token?: string | null): Promise<string> {
+  const headers: Record<string, string> = {
+    Accept: 'application/vnd.github+json',
+    'X-GitHub-Api-Version': '2022-11-28',
+  }
+  if (token) headers.Authorization = `Bearer ${token}`
+  const res = await fetch(`${API}/repos/${owner}/${repo}/contents/skills/${skillName}/SKILL.md`, { headers })
+  if (res.status === 404) return ''
+  if (!res.ok) throw new Error(`读取技能文件失败: ${skillName}`)
+  const data = await res.json()
+  return decodeURIComponent(escape(atob(data.content.replace(/\n/g, ''))))
 }
 
 export class GitHubService {

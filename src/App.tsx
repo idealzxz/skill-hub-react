@@ -11,6 +11,7 @@ import SettingsPage from './pages/SettingsPage'
 import DashboardPage from './pages/DashboardPage'
 import RecentPage from './pages/RecentPage'
 import MySkillsPage from './pages/MySkillsPage'
+import TeamPage from './pages/TeamPage'
 import SkillEditorPage from './pages/SkillEditorPage'
 
 function AppContent() {
@@ -26,6 +27,7 @@ function AppContent() {
       case 'dashboard': return <DashboardPage />
       case 'recent': return <RecentPage />
       case 'myskills': return <MySkillsPage />
+      case 'team': return <TeamPage />
       case 'editor': return <SkillEditorPage />
       default: return <MarketPage />
     }
