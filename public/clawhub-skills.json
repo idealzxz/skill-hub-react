@@ -1,6 +1,6 @@
 {
-  "fetchedAt": "2026-03-21T17:56:54.189Z",
-  "count": 591,
+  "fetchedAt": "2026-03-21T18:07:57.104Z",
+  "count": 589,
   "skills": [
     {
       "id": "gog",
@@ -13,13 +13,13 @@
         "google",
         "workspace",
         "cli",
-        "for",
-        "gmail"
+        "gmail",
+        "calendar"
       ],
       "stars": 768,
       "downloads": 126087,
       "version": "1.0.0",
-      "color": "#2563EB",
+      "color": "#7C3AED",
       "installCommand": "npx openclaw install gog",
       "updatedAt": "2026-03-14T05:02:36.555Z"
     },
@@ -32,15 +32,15 @@
       "tags": [
         "automation",
         "workflows",
-        "design",
-        "and",
-        "implement",
-        "save"
+        "time",
+        "scale",
+        "operations",
+        "solopreneur"
       ],
       "stars": 198,
       "downloads": 47348,
       "version": "0.1.0",
-      "color": "#0891B2",
+      "color": "#DC2626",
       "installCommand": "npx openclaw install automation-workflows",
       "updatedAt": "2026-02-26T00:30:40.450Z"
     },
@@ -55,8 +55,8 @@
         "essentials",
         "essential",
         "commands",
-        "and",
-        "workflows"
+        "workflows",
+        "container"
       ],
       "stars": 22,
       "downloads": 21230,
@@ -76,13 +76,13 @@
         "workflow",
         "automation",
         "designs",
-        "and",
-        "outputs"
+        "outputs",
+        "json"
       ],
       "stars": 97,
       "downloads": 19653,
       "version": "1.0.0",
-      "color": "#DC2626",
+      "color": "#D97706",
       "installCommand": "npx openclaw install n8n-workflow-automation",
       "updatedAt": "2026-02-26T00:20:40.363Z"
     },
@@ -97,13 +97,13 @@
         "essentials",
         "essential",
         "commands",
-        "and",
-        "workflows"
+        "workflows",
+        "version"
       ],
       "stars": 26,
       "downloads": 18823,
       "version": "1.0.0",
-      "color": "#0D9488",
+      "color": "#EA580C",
       "installCommand": "npx openclaw install git-essentials",
       "updatedAt": "2026-02-26T03:13:23.999Z"
     },
@@ -117,14 +117,14 @@
         "playwright",
         "scraper",
         "skill",
-        "based",
         "web",
-        "scraping"
+        "scraping",
+        "openclaw"
       ],
       "stars": 43,
       "downloads": 18712,
       "version": "1.2.0",
-      "color": "#D97706",
+      "color": "#059669",
       "installCommand": "npx openclaw install playwright-scraper-skill",
       "updatedAt": "2026-03-21T03:31:31.282Z"
     },
@@ -145,7 +145,7 @@
       "stars": 43,
       "downloads": 15366,
       "version": "1.0.3",
-      "color": "#DC2626",
+      "color": "#D97706",
       "installCommand": "npx openclaw install playwright",
       "updatedAt": "2026-03-11T18:01:53.156Z"
     },
@@ -166,7 +166,7 @@
       "stars": 26,
       "downloads": 15363,
       "version": "1.0.0",
-      "color": "#059669",
+      "color": "#2563EB",
       "installCommand": "npx openclaw install goplaces",
       "updatedAt": "2026-02-26T00:25:39.606Z"
     },
@@ -179,10 +179,10 @@
       "tags": [
         "security",
         "auditor",
-        "use",
-        "when",
         "reviewing",
-        "code"
+        "code",
+        "vulnerabilities",
+        "implementing"
       ],
       "stars": 20,
       "downloads": 14364,
@@ -202,8 +202,8 @@
         "video",
         "toolkit",
         "complete",
-        "for",
-        "programmatic"
+        "programmatic",
+        "creation"
       ],
       "stars": 60,
       "downloads": 14004,
@@ -229,7 +229,7 @@
       "stars": 41,
       "downloads": 12011,
       "version": "1.0.0",
-      "color": "#059669",
+      "color": "#2563EB",
       "installCommand": "npx openclaw install agent-team-orchestration",
       "updatedAt": "2026-02-26T00:30:40.450Z"
     },
@@ -243,9 +243,9 @@
         "sql",
         "toolkit",
         "query",
-        "design",
         "migrate",
-        "and"
+        "optimize",
+        "databases"
       ],
       "stars": 32,
       "downloads": 10736,
@@ -265,13 +265,13 @@
         "agent",
         "comprehensive",
         "skill",
-        "for",
-        "using"
+        "cli",
+        "various"
       ],
       "stars": 17,
       "downloads": 9510,
       "version": "2.1.0",
-      "color": "#D97706",
+      "color": "#059669",
       "installCommand": "npx openclaw install cursor-agent",
       "updatedAt": "2026-03-21T03:01:39.265Z"
     },
@@ -286,13 +286,13 @@
         "automation",
         "automate",
         "tasks",
-        "like",
-        "form"
+        "form",
+        "filling"
       ],
       "stars": 6,
       "downloads": 9465,
       "version": "1.0.0",
-      "color": "#DB2777",
+      "color": "#0891B2",
       "installCommand": "npx openclaw install ai-web-automation",
       "updatedAt": "2026-03-21T04:16:43.708Z"
     },
@@ -304,16 +304,16 @@
       "category": "Frontend",
       "tags": [
         "frontend",
-        "design",
-        "create",
         "distinctive",
         "production",
-        "grade"
+        "grade",
+        "interfaces",
+        "high"
       ],
       "stars": 17,
       "downloads": 9272,
       "version": "0.1.0",
-      "color": "#DC2626",
+      "color": "#D97706",
       "installCommand": "npx openclaw install frontend-design-3",
       "updatedAt": "2026-02-26T00:30:40.450Z"
     },
@@ -328,13 +328,13 @@
         "github",
         "assistant",
         "query",
-        "and",
-        "manage"
+        "manage",
+        "repositories"
       ],
       "stars": 4,
       "downloads": 9270,
       "version": "2.0.1",
-      "color": "#0D9488",
+      "color": "#EA580C",
       "installCommand": "npx openclaw install openclaw-github-assistant",
       "updatedAt": "2026-03-21T03:48:44.291Z"
     },
@@ -348,14 +348,14 @@
         "coding",
         "style",
         "memory",
-        "that",
         "adapts",
-        "your"
+        "preferences",
+        "conventions"
       ],
       "stars": 13,
       "downloads": 9244,
       "version": "1.0.3",
-      "color": "#059669",
+      "color": "#2563EB",
       "installCommand": "npx openclaw install coding",
       "updatedAt": "2026-02-26T00:30:40.450Z"
     },
@@ -370,13 +370,13 @@
         "runner",
         "write",
         "run",
-        "and",
-        "manage"
+        "manage",
+        "unit"
       ],
       "stars": 10,
       "downloads": 9218,
       "version": "1.0.0",
-      "color": "#DC2626",
+      "color": "#D97706",
       "installCommand": "npx openclaw install test-runner",
       "updatedAt": "2026-02-26T00:25:39.606Z"
     },
@@ -397,7 +397,7 @@
       "stars": 4,
       "downloads": 8259,
       "version": "1.0.0",
-      "color": "#7C3AED",
+      "color": "#0D9488",
       "installCommand": "npx openclaw install git-workflows",
       "updatedAt": "2026-02-26T03:32:14.986Z"
     },
@@ -418,7 +418,7 @@
       "stars": 15,
       "downloads": 8195,
       "version": "1.0.8",
-      "color": "#2563EB",
+      "color": "#7C3AED",
       "installCommand": "npx openclaw install git",
       "updatedAt": "2026-03-11T20:31:52.251Z"
     },
@@ -433,8 +433,8 @@
         "audit",
         "toolkit",
         "codebases",
-        "and",
-        "infrastructure"
+        "infrastructure",
+        "issues"
       ],
       "stars": 13,
       "downloads": 8025,
@@ -454,13 +454,13 @@
         "monitor",
         "topics",
         "interest",
-        "and",
-        "proactively"
+        "proactively",
+        "alert"
       ],
       "stars": 24,
       "downloads": 7170,
       "version": "1.3.5",
-      "color": "#DB2777",
+      "color": "#0891B2",
       "installCommand": "npx openclaw install topic-monitor",
       "updatedAt": "2026-03-03T13:43:25.702Z"
     },
@@ -473,10 +473,10 @@
       "tags": [
         "frontend",
         "development",
-        "with",
         "react",
         "next.js",
-        "tailwind"
+        "tailwind",
+        "css"
       ],
       "stars": 11,
       "downloads": 6141,
@@ -494,15 +494,15 @@
       "tags": [
         "agent",
         "directory",
-        "the",
-        "for",
         "services",
-        "discover"
+        "discover",
+        "tools",
+        "platforms"
       ],
       "stars": 15,
       "downloads": 5884,
       "version": "1.2.0",
-      "color": "#D97706",
+      "color": "#059669",
       "installCommand": "npx openclaw install agent-directory",
       "updatedAt": "2026-02-25T23:00:40.045Z"
     },
@@ -514,11 +514,11 @@
       "category": "UI/UX",
       "tags": [
         "shadcn",
-        "use",
-        "when",
         "building",
-        "with",
-        "components"
+        "components",
+        "tailwind",
+        "css",
+        "layouts"
       ],
       "stars": 7,
       "downloads": 5843,
@@ -537,9 +537,9 @@
         "remotion",
         "best",
         "practices",
-        "for",
         "video",
-        "creation"
+        "creation",
+        "react"
       ],
       "stars": 8,
       "downloads": 5743,
@@ -558,14 +558,14 @@
         "openclaw",
         "mcp",
         "plugin",
-        "use",
         "model",
-        "context"
+        "context",
+        "protocol"
       ],
       "stars": 12,
       "downloads": 5662,
       "version": "0.1.1",
-      "color": "#D97706",
+      "color": "#059669",
       "installCommand": "npx openclaw install openclaw-mcp-plugin",
       "updatedAt": "2026-03-11T09:23:59.390Z"
     },
@@ -623,12 +623,12 @@
         "real",
         "time",
         "monitoring",
-        "for"
+        "clawdbot"
       ],
       "stars": 4,
       "downloads": 5606,
       "version": "1.0.0",
-      "color": "#0891B2",
+      "color": "#DC2626",
       "installCommand": "npx openclaw install security-monitor",
       "updatedAt": "2026-03-21T03:06:05.777Z"
     },
@@ -642,9 +642,9 @@
         "web",
         "pilot",
         "search",
-        "the",
-        "and",
-        "read"
+        "read",
+        "page",
+        "contents"
       ],
       "stars": 1,
       "downloads": 5531,
@@ -663,14 +663,14 @@
         "markdown",
         "formatter",
         "format",
-        "and",
         "beautify",
-        "documents"
+        "documents",
+        "configurable"
       ],
       "stars": 3,
       "downloads": 5409,
       "version": "1.0.0",
-      "color": "#D97706",
+      "color": "#059669",
       "installCommand": "npx openclaw install markdown-formatter",
       "updatedAt": "2026-02-26T03:35:09.898Z"
     },
@@ -686,12 +686,12 @@
         "provides",
         "access",
         "tools",
-        "for"
+        "web"
       ],
       "stars": 4,
       "downloads": 5379,
       "version": "1.0.0",
-      "color": "#2563EB",
+      "color": "#7C3AED",
       "installCommand": "npx openclaw install mcp-skill",
       "updatedAt": "2026-02-27T03:08:08.048Z"
     },
@@ -707,7 +707,7 @@
         "control",
         "devices",
         "via",
-        "with"
+        "support"
       ],
       "stars": 12,
       "downloads": 5321,
@@ -730,7 +730,7 @@
       "stars": 22,
       "downloads": 5195,
       "version": "1.0.13",
-      "color": "#2563EB",
+      "color": "#7C3AED",
       "installCommand": "npx openclaw install tushare-data",
       "updatedAt": "2026-03-21T15:16:49.403Z"
     },
@@ -743,10 +743,10 @@
       "tags": [
         "react",
         "expert",
-        "use",
-        "when",
         "building",
-        "applications"
+        "applications",
+        "requiring",
+        "component"
       ],
       "stars": 4,
       "downloads": 5173,
@@ -764,15 +764,15 @@
       "tags": [
         "test",
         "master",
-        "use",
-        "when",
         "writing",
-        "tests"
+        "tests",
+        "creating",
+        "strategies"
       ],
       "stars": 6,
       "downloads": 5039,
       "version": "0.1.0",
-      "color": "#0D9488",
+      "color": "#EA580C",
       "installCommand": "npx openclaw install test-master",
       "updatedAt": "2026-02-25T23:05:35.879Z"
     },
@@ -787,8 +787,8 @@
         "scanner",
         "automated",
         "scanning",
-        "and",
-        "vulnerability"
+        "vulnerability",
+        "detection"
       ],
       "stars": 1,
       "downloads": 4808,
@@ -809,7 +809,7 @@
         "multi",
         "step",
         "deployment",
-        "for"
+        "full"
       ],
       "stars": 2,
       "downloads": 4661,
@@ -827,15 +827,15 @@
       "tags": [
         "automation",
         "workflows",
-        "design",
-        "and",
-        "implement",
-        "save"
+        "time",
+        "scale",
+        "operations",
+        "solopreneur"
       ],
       "stars": 10,
       "downloads": 4491,
       "version": "1.0.0",
-      "color": "#4F46E5",
+      "color": "#DB2777",
       "installCommand": "npx openclaw install automation-workflows-0-1-0",
       "updatedAt": "2026-02-25T23:10:36.142Z"
     },
@@ -851,12 +851,12 @@
         "professional",
         "data",
         "visualization",
-        "using"
+        "matplotlib"
       ],
       "stars": 3,
       "downloads": 4308,
       "version": "1.0.0",
-      "color": "#0891B2",
+      "color": "#DC2626",
       "installCommand": "npx openclaw install python-dataviz",
       "updatedAt": "2026-02-26T00:20:35.893Z"
     },
@@ -870,37 +870,16 @@
         "aws",
         "infra",
         "chat",
-        "based",
         "infrastructure",
-        "assistance"
+        "assistance",
+        "cli"
       ],
       "stars": 3,
       "downloads": 4232,
       "version": "1.0.0",
-      "color": "#0D9488",
+      "color": "#EA580C",
       "installCommand": "npx openclaw install aws-infra",
       "updatedAt": "2026-02-27T03:10:16.979Z"
-    },
-    {
-      "id": "gcloud",
-      "name": "Google Cloud Platform",
-      "author": "jortega0033",
-      "description": "Manage Google Cloud Platform resources via gcloud CLI. Use for Compute Engine VMs, Cloud Run services, Firebase Hosting, Cloud Storage, and project management. Covers deployment, monitoring, logs, and SSH access.",
-      "category": "AI & ML",
-      "tags": [
-        "gcloud",
-        "manage",
-        "google",
-        "cloud",
-        "platform",
-        "resources"
-      ],
-      "stars": 2,
-      "downloads": 4165,
-      "version": "1.0.1",
-      "color": "#EA580C",
-      "installCommand": "npx openclaw install gcloud",
-      "updatedAt": "2026-02-25T22:40:39.958Z"
     },
     {
       "id": "agentic-coding",
@@ -914,12 +893,12 @@
         "ship",
         "production",
         "code",
-        "with"
+        "agents"
       ],
       "stars": 5,
       "downloads": 4124,
       "version": "1.0.0",
-      "color": "#D97706",
+      "color": "#059669",
       "installCommand": "npx openclaw install agentic-coding",
       "updatedAt": "2026-02-27T22:01:55.302Z"
     },
@@ -961,7 +940,7 @@
       "stars": 3,
       "downloads": 3989,
       "version": "1.0.0",
-      "color": "#7C3AED",
+      "color": "#0D9488",
       "installCommand": "npx openclaw install github-cli",
       "updatedAt": "2026-03-21T04:01:41.563Z"
     },
@@ -982,7 +961,7 @@
       "stars": 1,
       "downloads": 3839,
       "version": "1.0.0",
-      "color": "#059669",
+      "color": "#2563EB",
       "installCommand": "npx openclaw install git-helper",
       "updatedAt": "2026-02-26T03:31:06.379Z"
     },
@@ -995,10 +974,10 @@
       "tags": [
         "docker",
         "sandbox",
-        "create",
-        "and",
         "manage",
-        "sandboxed"
+        "sandboxed",
+        "environments",
+        "safe"
       ],
       "stars": 5,
       "downloads": 3739,
@@ -1017,14 +996,14 @@
         "e2e",
         "testing",
         "patterns",
-        "build",
         "reliable",
-        "fast"
+        "fast",
+        "test"
       ],
       "stars": 3,
       "downloads": 3659,
       "version": "1.0.0",
-      "color": "#DC2626",
+      "color": "#D97706",
       "installCommand": "npx openclaw install e2e-testing-patterns",
       "updatedAt": "2026-02-26T00:30:40.450Z"
     },
@@ -1036,16 +1015,16 @@
       "category": "UI/UX",
       "tags": [
         "graphic",
-        "design",
         "support",
         "understanding",
-        "from",
-        "basic"
+        "basic",
+        "visuals",
+        "professional"
       ],
       "stars": 13,
       "downloads": 3626,
       "version": "1.0.0",
-      "color": "#0891B2",
+      "color": "#DC2626",
       "installCommand": "npx openclaw install graphic-design",
       "updatedAt": "2026-02-26T00:00:35.886Z"
     },
@@ -1061,7 +1040,7 @@
         "deployments",
         "manage",
         "infrastructure",
-        "and"
+        "reliable"
       ],
       "stars": 3,
       "downloads": 3609,
@@ -1087,7 +1066,7 @@
       "stars": 3,
       "downloads": 3521,
       "version": "1.0.4",
-      "color": "#EA580C",
+      "color": "#4F46E5",
       "installCommand": "npx openclaw install gitflow",
       "updatedAt": "2026-02-28T03:20:44.111Z"
     },
@@ -1108,7 +1087,7 @@
       "stars": 5,
       "downloads": 3473,
       "version": "1.11.0",
-      "color": "#7C3AED",
+      "color": "#0D9488",
       "installCommand": "npx openclaw install gitlab-cli-skills",
       "updatedAt": "2026-03-11T10:21:58.641Z"
     },
@@ -1142,10 +1121,10 @@
       "tags": [
         "vercel",
         "deploy",
-        "and",
         "manage",
         "projects",
-        "use"
+        "deploying",
+        "applications"
       ],
       "stars": 1,
       "downloads": 3321,
@@ -1164,9 +1143,9 @@
         "data",
         "model",
         "designer",
-        "design",
         "models",
-        "for"
+        "construction",
+        "projects"
       ],
       "stars": 0,
       "downloads": 3284,
@@ -1185,14 +1164,14 @@
         "atlassian",
         "mcp",
         "run",
-        "the",
         "model",
-        "context"
+        "context",
+        "protocol"
       ],
       "stars": 7,
       "downloads": 3241,
       "version": "1.0.0",
-      "color": "#DC2626",
+      "color": "#D97706",
       "installCommand": "npx openclaw install atlassian-mcp",
       "updatedAt": "2026-02-27T03:06:59.561Z"
     },
@@ -1229,7 +1208,7 @@
         "suite",
         "advanced",
         "validation",
-        "for"
+        "pattern"
       ],
       "stars": 10,
       "downloads": 3190,
@@ -1246,16 +1225,16 @@
       "category": "UI/UX",
       "tags": [
         "tailwind",
-        "design",
         "system",
-        "build",
         "scalable",
-        "themable"
+        "themable",
+        "css",
+        "component"
       ],
       "stars": 5,
       "downloads": 3143,
       "version": "1.0.0",
-      "color": "#D97706",
+      "color": "#059669",
       "installCommand": "npx openclaw install tailwind-design-system",
       "updatedAt": "2026-02-26T00:00:35.886Z"
     },
@@ -1276,7 +1255,7 @@
       "stars": 4,
       "downloads": 3106,
       "version": "1.0.0",
-      "color": "#0891B2",
+      "color": "#DC2626",
       "installCommand": "npx openclaw install clickup-mcp",
       "updatedAt": "2026-02-27T03:01:07.994Z"
     },
@@ -1292,7 +1271,7 @@
         "production",
         "ready",
         "scripts",
-        "for"
+        "app"
       ],
       "stars": 1,
       "downloads": 3099,
@@ -1311,14 +1290,14 @@
         "hetzner",
         "cloud",
         "cli",
-        "for",
         "managing",
-        "servers"
+        "servers",
+        "volumes"
       ],
       "stars": 4,
       "downloads": 3024,
       "version": "1.0.0",
-      "color": "#0D9488",
+      "color": "#EA580C",
       "installCommand": "npx openclaw install hetzner-cloud",
       "updatedAt": "2026-02-25T23:40:35.980Z"
     },
@@ -1332,14 +1311,14 @@
         "monitoring",
         "set",
         "observability",
-        "for",
         "applications",
-        "and"
+        "infrastructure",
+        "metrics"
       ],
       "stars": 4,
       "downloads": 2990,
       "version": "1.0.0",
-      "color": "#D97706",
+      "color": "#059669",
       "installCommand": "npx openclaw install monitoring",
       "updatedAt": "2026-03-01T03:57:40.816Z"
     },
@@ -1355,7 +1334,7 @@
         "memory",
         "habit",
         "formation",
-        "and"
+        "procedural"
       ],
       "stars": 11,
       "downloads": 2938,
@@ -1374,14 +1353,14 @@
         "agent",
         "evaluation",
         "testing",
-        "and",
         "benchmarking",
-        "llm"
+        "llm",
+        "agents"
       ],
       "stars": 6,
       "downloads": 2917,
       "version": "1.0.0",
-      "color": "#7C3AED",
+      "color": "#0D9488",
       "installCommand": "npx openclaw install agent-evaluation",
       "updatedAt": "2026-02-25T23:00:35.906Z"
     },
@@ -1397,7 +1376,7 @@
         "inspect",
         "containers",
         "logs",
-        "and"
+        "images"
       ],
       "stars": 1,
       "downloads": 2910,
@@ -1423,7 +1402,7 @@
       "stars": 2,
       "downloads": 2878,
       "version": "1.0.0",
-      "color": "#2563EB",
+      "color": "#7C3AED",
       "installCommand": "npx openclaw install api-tester",
       "updatedAt": "2026-02-25T23:10:36.142Z"
     },
@@ -1437,14 +1416,14 @@
         "test",
         "patterns",
         "write",
-        "and",
         "run",
-        "tests"
+        "tests",
+        "languages"
       ],
       "stars": 1,
       "downloads": 2736,
       "version": "1.0.0",
-      "color": "#0891B2",
+      "color": "#DC2626",
       "installCommand": "npx openclaw install test-patterns",
       "updatedAt": "2026-03-21T03:20:20.469Z"
     },
@@ -1457,10 +1436,10 @@
       "tags": [
         "web",
         "deploy",
-        "build",
         "preview",
-        "and",
-        "websites"
+        "websites",
+        "apps",
+        "apis"
       ],
       "stars": 1,
       "downloads": 2720,
@@ -1479,9 +1458,9 @@
         "llmwhisperer",
         "extract",
         "text",
-        "and",
         "layout",
-        "from"
+        "images",
+        "pdfs"
       ],
       "stars": 1,
       "downloads": 2713,
@@ -1500,9 +1479,9 @@
         "react",
         "best",
         "practices",
-        "and",
         "next.js",
-        "performance"
+        "performance",
+        "optimization"
       ],
       "stars": 3,
       "downloads": 2706,
@@ -1523,7 +1502,7 @@
         "advanced",
         "log",
         "analysis",
-        "for"
+        "containers"
       ],
       "stars": 0,
       "downloads": 2695,
@@ -1549,7 +1528,7 @@
       "stars": 4,
       "downloads": 2609,
       "version": "1.0.0",
-      "color": "#0D9488",
+      "color": "#EA580C",
       "installCommand": "npx openclaw install gitlab-manager",
       "updatedAt": "2026-02-28T03:17:33.576Z"
     },
@@ -1564,13 +1543,13 @@
         "patterns",
         "unit",
         "integration",
-        "and",
-        "e2e"
+        "e2e",
+        "framework"
       ],
       "stars": 2,
       "downloads": 2606,
       "version": "0.1.0",
-      "color": "#0891B2",
+      "color": "#DC2626",
       "installCommand": "npx openclaw install testing-patterns",
       "updatedAt": "2026-02-26T00:05:36.021Z"
     },
@@ -1585,8 +1564,8 @@
         "write",
         "type",
         "safe",
-        "with",
-        "proper"
+        "proper",
+        "narrowing"
       ],
       "stars": 6,
       "downloads": 2605,
@@ -1604,15 +1583,15 @@
       "tags": [
         "mcp",
         "hass",
-        "the",
         "skill",
-        "for",
-        "control"
+        "control",
+        "home",
+        "assistant"
       ],
       "stars": 7,
       "downloads": 2580,
       "version": "1.0.1",
-      "color": "#059669",
+      "color": "#2563EB",
       "installCommand": "npx openclaw install mcp-hass",
       "updatedAt": "2026-02-26T00:15:40.106Z"
     },
@@ -1626,14 +1605,14 @@
         "glab",
         "cli",
         "interact",
-        "with",
         "gitlab",
-        "using"
+        "claude",
+        "needs"
       ],
       "stars": 8,
       "downloads": 2565,
       "version": "1.0.0",
-      "color": "#4F46E5",
+      "color": "#DB2777",
       "installCommand": "npx openclaw install glab-cli",
       "updatedAt": "2026-03-21T03:01:47.492Z"
     },
@@ -1654,7 +1633,7 @@
       "stars": 1,
       "downloads": 2505,
       "version": "0.1.0",
-      "color": "#7C3AED",
+      "color": "#0D9488",
       "installCommand": "npx openclaw install check-analytics",
       "updatedAt": "2026-02-25T21:35:40.014Z"
     },
@@ -1675,7 +1654,7 @@
       "stars": 0,
       "downloads": 2484,
       "version": "2.1.0",
-      "color": "#DC2626",
+      "color": "#D97706",
       "installCommand": "npx openclaw install data-lineage-tracker",
       "updatedAt": "2026-03-21T03:31:50.446Z"
     },
@@ -1689,14 +1668,14 @@
         "azure",
         "infra",
         "chat",
-        "based",
         "infrastructure",
-        "assistance"
+        "assistance",
+        "cli"
       ],
       "stars": 2,
       "downloads": 2446,
       "version": "1.0.0",
-      "color": "#0D9488",
+      "color": "#EA580C",
       "installCommand": "npx openclaw install azure-infra",
       "updatedAt": "2026-02-27T03:10:22.909Z"
     },
@@ -1717,7 +1696,7 @@
       "stars": 2,
       "downloads": 2401,
       "version": "0.1.0",
-      "color": "#EA580C",
+      "color": "#4F46E5",
       "installCommand": "npx openclaw install agentic-workflow-automation",
       "updatedAt": "2026-02-26T18:27:01.444Z"
     },
@@ -1733,7 +1712,7 @@
         "automate",
         "login",
         "flows",
-        "with"
+        "user"
       ],
       "stars": 3,
       "downloads": 2377,
@@ -1759,7 +1738,7 @@
       "stars": 1,
       "downloads": 2359,
       "version": "1.0.0",
-      "color": "#2563EB",
+      "color": "#7C3AED",
       "installCommand": "npx openclaw install azure-cli",
       "updatedAt": "2026-02-27T03:05:15.923Z"
     },
@@ -1771,16 +1750,16 @@
       "category": "UI/UX",
       "tags": [
         "web",
-        "design",
         "css",
         "implementation",
         "patterns",
-        "for"
+        "layout",
+        "typography"
       ],
       "stars": 1,
       "downloads": 2351,
       "version": "1.0.0",
-      "color": "#DB2777",
+      "color": "#0891B2",
       "installCommand": "npx openclaw install web-design",
       "updatedAt": "2026-03-21T03:41:25.952Z"
     },
@@ -1795,13 +1774,13 @@
         "generate",
         "clean",
         "portable",
-        "that",
-        "renders"
+        "renders",
+        "correctly"
       ],
       "stars": 3,
       "downloads": 2244,
       "version": "1.0.1",
-      "color": "#DC2626",
+      "color": "#D97706",
       "installCommand": "npx openclaw install markdown",
       "updatedAt": "2026-02-25T23:00:35.906Z"
     },
@@ -1814,10 +1793,10 @@
       "tags": [
         "sql",
         "pro",
-        "use",
-        "when",
         "optimizing",
-        "queries"
+        "queries",
+        "designing",
+        "database"
       ],
       "stars": 3,
       "downloads": 2218,
@@ -1838,12 +1817,12 @@
         "detector",
         "detect",
         "anomalies",
-        "and"
+        "outliers"
       ],
       "stars": 1,
       "downloads": 2201,
       "version": "2.1.0",
-      "color": "#D97706",
+      "color": "#059669",
       "installCommand": "npx openclaw install data-anomaly-detector",
       "updatedAt": "2026-02-25T23:45:36.179Z"
     },
@@ -1857,9 +1836,9 @@
         "k8s",
         "browser",
         "automation",
-        "for",
         "kubernetes",
-        "dashboards"
+        "dashboards",
+        "web"
       ],
       "stars": 0,
       "downloads": 2142,
@@ -1876,11 +1855,11 @@
       "category": "Web Dev",
       "tags": [
         "nextjs",
-        "build",
         "next.js",
         "apps",
-        "with",
-        "app"
+        "app",
+        "router",
+        "server"
       ],
       "stars": 3,
       "downloads": 2111,
@@ -1903,7 +1882,7 @@
       "stars": 1,
       "downloads": 2026,
       "version": "1.0.0",
-      "color": "#2563EB",
+      "color": "#7C3AED",
       "installCommand": "npx openclaw install github-ops",
       "updatedAt": "2026-02-28T02:43:05.379Z"
     },
@@ -1915,11 +1894,11 @@
       "category": "AI & ML",
       "tags": [
         "miniapp",
-        "build",
         "telegram",
         "mini",
         "apps",
-        "without"
+        "pain",
+        "includes"
       ],
       "stars": 1,
       "downloads": 2003,
@@ -1958,15 +1937,15 @@
       "tags": [
         "test",
         "specialist",
-        "this",
         "skill",
-        "should",
-        "used"
+        "used",
+        "writing",
+        "cases"
       ],
       "stars": 3,
       "downloads": 1975,
       "version": "0.1.0",
-      "color": "#DB2777",
+      "color": "#0891B2",
       "installCommand": "npx openclaw install test-specialist",
       "updatedAt": "2026-02-26T03:16:48.482Z"
     },
@@ -1978,16 +1957,16 @@
       "category": "Security",
       "tags": [
         "backend",
-        "build",
         "reliable",
         "services",
-        "with",
-        "proper"
+        "proper",
+        "error",
+        "handling"
       ],
       "stars": 3,
       "downloads": 1943,
       "version": "1.0.0",
-      "color": "#059669",
+      "color": "#2563EB",
       "installCommand": "npx openclaw install backend",
       "updatedAt": "2026-02-25T23:05:40.305Z"
     },
@@ -2001,14 +1980,14 @@
         "secure",
         "code",
         "guardian",
-        "use",
-        "when",
-        "implementing"
+        "implementing",
+        "authentication",
+        "authorization"
       ],
       "stars": 1,
       "downloads": 1920,
       "version": "0.1.0",
-      "color": "#DB2777",
+      "color": "#0891B2",
       "installCommand": "npx openclaw install secure-code-guardian",
       "updatedAt": "2026-02-25T23:30:35.899Z"
     },
@@ -2024,12 +2003,12 @@
         "identity",
         "personality",
         "voice",
-        "and"
+        "boundaries"
       ],
       "stars": 7,
       "downloads": 1910,
       "version": "1.0.0",
-      "color": "#DC2626",
+      "color": "#D97706",
       "installCommand": "npx openclaw install agent",
       "updatedAt": "2026-02-25T23:40:35.980Z"
     },
@@ -2043,14 +2022,14 @@
         "aws",
         "architect",
         "deploy",
-        "and",
         "optimize",
-        "infrastructure"
+        "infrastructure",
+        "avoiding"
       ],
       "stars": 2,
       "downloads": 1896,
       "version": "1.0.2",
-      "color": "#7C3AED",
+      "color": "#0D9488",
       "installCommand": "npx openclaw install aws",
       "updatedAt": "2026-03-21T03:37:55.473Z"
     },
@@ -2064,9 +2043,9 @@
         "k8s",
         "backup",
         "kubernetes",
-        "and",
         "restore",
-        "with"
+        "velero",
+        "creating"
       ],
       "stars": 1,
       "downloads": 1892,
@@ -2085,9 +2064,9 @@
         "autoscaling",
         "configure",
         "kubernetes",
-        "with",
         "hpa",
-        "vpa"
+        "vpa",
+        "keda"
       ],
       "stars": 1,
       "downloads": 1889,
@@ -2108,7 +2087,7 @@
         "kubernetes",
         "certificate",
         "management",
-        "with"
+        "cert"
       ],
       "stars": 1,
       "downloads": 1865,
@@ -2134,7 +2113,7 @@
       "stars": 5,
       "downloads": 1861,
       "version": "1.0.1",
-      "color": "#EA580C",
+      "color": "#4F46E5",
       "installCommand": "npx openclaw install nodejs",
       "updatedAt": "2026-02-25T23:35:44.757Z"
     },
@@ -2147,15 +2126,15 @@
       "tags": [
         "azure",
         "voicelive",
-        "build",
         "real",
         "time",
-        "voice"
+        "voice",
+        "applications"
       ],
       "stars": 2,
       "downloads": 1858,
       "version": "0.1.0",
-      "color": "#D97706",
+      "color": "#059669",
       "installCommand": "npx openclaw install azure-ai-voicelive-py",
       "updatedAt": "2026-02-27T03:17:08.331Z"
     },
@@ -2197,7 +2176,7 @@
       "stars": 0,
       "downloads": 1808,
       "version": "0.1.0",
-      "color": "#DC2626",
+      "color": "#D97706",
       "installCommand": "npx openclaw install azd-deployment",
       "updatedAt": "2026-03-21T03:09:55.919Z"
     },
@@ -2212,13 +2191,13 @@
         "deploy",
         "privacy",
         "first",
-        "with",
-        "correct"
+        "correct",
+        "api"
       ],
       "stars": 3,
       "downloads": 1792,
       "version": "1.0.0",
-      "color": "#2563EB",
+      "color": "#7C3AED",
       "installCommand": "npx openclaw install analytics",
       "updatedAt": "2026-03-01T03:43:30.894Z"
     },
@@ -2233,8 +2212,8 @@
         "master",
         "relational",
         "databases",
-        "with",
-        "schema"
+        "schema",
+        "queries"
       ],
       "stars": 3,
       "downloads": 1780,
@@ -2260,7 +2239,7 @@
       "stars": 0,
       "downloads": 1772,
       "version": "1.0.0",
-      "color": "#DB2777",
+      "color": "#0891B2",
       "installCommand": "npx openclaw install glin-profanity-mcp",
       "updatedAt": "2026-03-21T03:13:14.577Z"
     },
@@ -2272,16 +2251,16 @@
       "category": "UI/UX",
       "tags": [
         "awwwards",
-        "design",
-        "create",
         "award",
         "winning",
-        "memorable"
+        "memorable",
+        "websites",
+        "advanced"
       ],
       "stars": 7,
       "downloads": 1764,
       "version": "1.0.0",
-      "color": "#7C3AED",
+      "color": "#0D9488",
       "installCommand": "npx openclaw install awwwards-design",
       "updatedAt": "2026-02-25T23:55:41.465Z"
     },
@@ -2296,13 +2275,13 @@
         "analyst",
         "pro",
         "complete",
-        "the",
-        "analysis"
+        "analysis",
+        "tasks"
       ],
       "stars": 0,
       "downloads": 1737,
       "version": "0.1.0",
-      "color": "#059669",
+      "color": "#2563EB",
       "installCommand": "npx openclaw install data-analyst-pro",
       "updatedAt": "2026-02-26T00:30:36.042Z"
     },
@@ -2317,8 +2296,8 @@
         "auth",
         "self",
         "hosted",
-        "for",
-        "typescript"
+        "typescript",
+        "cloudflare"
       ],
       "stars": 1,
       "downloads": 1731,
@@ -2335,9 +2314,7 @@
       "category": "DevOps",
       "tags": [
         "android",
-        "build",
         "system",
-        "and",
         "deployment",
         "patterns"
       ],
@@ -2356,11 +2333,11 @@
       "category": "Database",
       "tags": [
         "mongodb",
-        "design",
         "schemas",
         "write",
         "queries",
-        "and"
+        "configure",
+        "consistency"
       ],
       "stars": 4,
       "downloads": 1683,
@@ -2397,17 +2374,17 @@
       "description": "Complete workflow for creating distinctive design systems from scratch. Orchestrates aesthetic documentation, token architecture, components, and motion. Use when starting a new design system or refactoring an existing one. Triggers on create design system, design tokens, design system setup, visual identity, theming.",
       "category": "Frontend",
       "tags": [
-        "design",
         "system",
         "creation",
         "complete",
         "workflow",
-        "for"
+        "creating",
+        "distinctive"
       ],
       "stars": 4,
       "downloads": 1673,
       "version": "1.0.0",
-      "color": "#4F46E5",
+      "color": "#DB2777",
       "installCommand": "npx openclaw install design-system-creation",
       "updatedAt": "2026-02-25T23:40:42.724Z"
     },
@@ -2423,12 +2400,12 @@
         "patterns",
         "structure",
         "maintenance",
-        "and"
+        "avoiding"
       ],
       "stars": 3,
       "downloads": 1663,
       "version": "1.0.0",
-      "color": "#D97706",
+      "color": "#059669",
       "installCommand": "npx openclaw install documentation",
       "updatedAt": "2026-02-26T00:30:40.450Z"
     },
@@ -2444,12 +2421,12 @@
         "tailwind",
         "utility",
         "classes",
-        "with"
+        "proper"
       ],
       "stars": 4,
       "downloads": 1659,
       "version": "1.0.0",
-      "color": "#0891B2",
+      "color": "#DC2626",
       "installCommand": "npx openclaw install tailwindcss",
       "updatedAt": "2026-02-28T03:52:36.120Z"
     },
@@ -2462,10 +2439,10 @@
       "tags": [
         "vue",
         "expert",
-        "use",
-        "when",
         "building",
-        "applications"
+        "applications",
+        "javascript",
+        "only"
       ],
       "stars": 1,
       "downloads": 1652,
@@ -2491,7 +2468,7 @@
       "stars": 1,
       "downloads": 1638,
       "version": "1.0.0",
-      "color": "#4F46E5",
+      "color": "#DB2777",
       "installCommand": "npx openclaw install mrc-monitor",
       "updatedAt": "2026-02-28T03:22:56.952Z"
     },
@@ -2506,13 +2483,13 @@
         "wingman",
         "development",
         "tutor",
-        "and",
-        "builder"
+        "builder",
+        "scaffold"
       ],
       "stars": 2,
       "downloads": 1636,
       "version": "0.1.0",
-      "color": "#D97706",
+      "color": "#059669",
       "installCommand": "npx openclaw install ethereum-wingman",
       "updatedAt": "2026-02-27T03:10:55.579Z"
     },
@@ -2533,7 +2510,7 @@
       "stars": 1,
       "downloads": 1614,
       "version": "1.0.2",
-      "color": "#7C3AED",
+      "color": "#0D9488",
       "installCommand": "npx openclaw install whoop-central",
       "updatedAt": "2026-02-26T03:11:13.122Z"
     },
@@ -2575,7 +2552,7 @@
       "stars": 0,
       "downloads": 1600,
       "version": "0.1.0",
-      "color": "#DB2777",
+      "color": "#0891B2",
       "installCommand": "npx openclaw install lb-tailwindcss-skill",
       "updatedAt": "2026-03-21T03:32:01.027Z"
     },
@@ -2589,14 +2566,14 @@
         "pyzotero",
         "python",
         "scripts",
-        "for",
         "zotero",
-        "supports"
+        "supports",
+        "search"
       ],
       "stars": 3,
       "downloads": 1598,
       "version": "2.2.0",
-      "color": "#2563EB",
+      "color": "#7C3AED",
       "installCommand": "npx openclaw install pyzotero",
       "updatedAt": "2026-03-18T10:40:57.896Z"
     },
@@ -2617,7 +2594,7 @@
       "stars": 7,
       "downloads": 1589,
       "version": "1.0.1",
-      "color": "#7C3AED",
+      "color": "#0D9488",
       "installCommand": "npx openclaw install java",
       "updatedAt": "2026-02-25T23:35:36.181Z"
     },
@@ -2630,10 +2607,10 @@
       "tags": [
         "nodejs",
         "patterns",
-        "what",
         "production",
         "ready",
-        "node.js"
+        "node.js",
+        "backend"
       ],
       "stars": 2,
       "downloads": 1580,
@@ -2651,10 +2628,10 @@
       "tags": [
         "kubernetes",
         "devops",
-        "what",
         "manifest",
         "generation",
-        "deployments"
+        "deployments",
+        "statefulsets"
       ],
       "stars": 1,
       "downloads": 1574,
@@ -2671,11 +2648,11 @@
       "category": "Mobile",
       "tags": [
         "ios",
-        "build",
         "test",
-        "and",
         "ship",
-        "apps"
+        "apps",
+        "swift",
+        "xcode"
       ],
       "stars": 6,
       "downloads": 1564,
@@ -2692,11 +2669,11 @@
       "category": "Database",
       "tags": [
         "flutter",
-        "build",
         "performant",
         "cross",
         "platform",
-        "apps"
+        "apps",
+        "widgets"
       ],
       "stars": 5,
       "downloads": 1554,
@@ -2722,7 +2699,7 @@
       "stars": 0,
       "downloads": 1551,
       "version": "3.3.4",
-      "color": "#0D9488",
+      "color": "#EA580C",
       "installCommand": "npx openclaw install wordpress-mcp",
       "updatedAt": "2026-03-21T03:40:44.586Z"
     },
@@ -2736,14 +2713,14 @@
         "pdauth",
         "dynamic",
         "oauth",
-        "for",
         "agents",
-        "via"
+        "via",
+        "pipedream"
       ],
       "stars": 1,
       "downloads": 1549,
       "version": "1.0.0",
-      "color": "#2563EB",
+      "color": "#7C3AED",
       "installCommand": "npx openclaw install pdauth",
       "updatedAt": "2026-02-28T03:26:12.122Z"
     },
@@ -2755,16 +2732,16 @@
       "category": "UI/UX",
       "tags": [
         "fastapi",
-        "build",
         "fast",
         "production",
         "ready",
-        "python"
+        "python",
+        "apis"
       ],
       "stars": 4,
       "downloads": 1533,
       "version": "1.0.0",
-      "color": "#0891B2",
+      "color": "#DC2626",
       "installCommand": "npx openclaw install fastapi",
       "updatedAt": "2026-02-25T22:10:35.877Z"
     },
@@ -2777,10 +2754,10 @@
       "tags": [
         "angular",
         "architect",
-        "use",
-        "when",
         "building",
-        "applications"
+        "applications",
+        "standalone",
+        "components"
       ],
       "stars": 2,
       "downloads": 1528,
@@ -2797,16 +2774,16 @@
       "category": "UI/UX",
       "tags": [
         "frontend",
-        "design",
         "pro",
         "skill",
         "impeccable",
-        "audit"
+        "audit",
+        "polish"
       ],
       "stars": 1,
       "downloads": 1524,
       "version": "1.0.0",
-      "color": "#0D9488",
+      "color": "#EA580C",
       "installCommand": "npx openclaw install frontend-design-pro",
       "updatedAt": "2026-03-10T02:21:51.378Z"
     },
@@ -2822,12 +2799,12 @@
         "enable",
         "openai",
         "integration",
-        "with"
+        "openclaw"
       ],
       "stars": 1,
       "downloads": 1522,
       "version": "1.0.0",
-      "color": "#059669",
+      "color": "#2563EB",
       "installCommand": "npx openclaw install azure-proxy",
       "updatedAt": "2026-02-28T03:37:11.799Z"
     },
@@ -2840,10 +2817,10 @@
       "tags": [
         "react",
         "native",
-        "build",
         "performant",
         "cross",
-        "platform"
+        "platform",
+        "mobile"
       ],
       "stars": 4,
       "downloads": 1503,
@@ -2884,8 +2861,8 @@
         "ship",
         "applications",
         "reliably",
-        "with",
-        "rollback"
+        "rollback",
+        "strategies"
       ],
       "stars": 3,
       "downloads": 1493,
@@ -2911,7 +2888,7 @@
       "stars": 3,
       "downloads": 1492,
       "version": "0.1.0",
-      "color": "#2563EB",
+      "color": "#7C3AED",
       "installCommand": "npx openclaw install lb-motion-skill",
       "updatedAt": "2026-02-25T23:15:41.305Z"
     },
@@ -2924,10 +2901,10 @@
       "tags": [
         "redis",
         "store",
-        "use",
         "effectively",
-        "for",
-        "caching"
+        "caching",
+        "queues",
+        "data"
       ],
       "stars": 4,
       "downloads": 1488,
@@ -2945,15 +2922,15 @@
       "tags": [
         "cursor",
         "cli",
-        "use",
         "editor",
-        "and",
-        "agent"
+        "agent",
+        "coding",
+        "tasks"
       ],
       "stars": 0,
       "downloads": 1474,
       "version": "1.1.1",
-      "color": "#DC2626",
+      "color": "#D97706",
       "installCommand": "npx openclaw install cursor-cli",
       "updatedAt": "2026-03-20T04:06:53.295Z"
     },
@@ -2965,16 +2942,16 @@
       "category": "Frontend",
       "tags": [
         "workflow",
-        "build",
         "automated",
         "pipelines",
-        "with",
-        "reusable"
+        "reusable",
+        "components",
+        "data"
       ],
       "stars": 3,
       "downloads": 1466,
       "version": "1.0.0",
-      "color": "#0891B2",
+      "color": "#DC2626",
       "installCommand": "npx openclaw install workflow",
       "updatedAt": "2026-03-21T04:02:45.139Z"
     },
@@ -2995,7 +2972,7 @@
       "stars": 5,
       "downloads": 1457,
       "version": "1.0.0",
-      "color": "#2563EB",
+      "color": "#7C3AED",
       "installCommand": "npx openclaw install gitlab",
       "updatedAt": "2026-02-25T23:50:35.871Z"
     },
@@ -3016,7 +2993,7 @@
       "stars": 1,
       "downloads": 1452,
       "version": "1.0.0",
-      "color": "#4F46E5",
+      "color": "#DB2777",
       "installCommand": "npx openclaw install xiaohongshu-mcp-skill",
       "updatedAt": "2026-03-21T04:48:00.943Z"
     },
@@ -3029,15 +3006,15 @@
       "tags": [
         "vibe",
         "coding",
-        "build",
         "software",
-        "with",
-        "describing"
+        "describing",
+        "want",
+        "covers"
       ],
       "stars": 1,
       "downloads": 1450,
       "version": "1.0.0",
-      "color": "#DC2626",
+      "color": "#D97706",
       "installCommand": "npx openclaw install vibe-coding",
       "updatedAt": "2026-02-25T23:40:42.724Z"
     },
@@ -3069,13 +3046,13 @@
         "max",
         "plus",
         "professional",
-        "design",
-        "resource"
+        "resource",
+        "library"
       ],
       "stars": 4,
       "downloads": 1432,
       "version": "1.0.0",
-      "color": "#0891B2",
+      "color": "#DC2626",
       "installCommand": "npx openclaw install ui-ux-pro-max-plus",
       "updatedAt": "2026-02-26T00:15:35.912Z"
     },
@@ -3117,7 +3094,7 @@
       "stars": 0,
       "downloads": 1374,
       "version": "1.0.0",
-      "color": "#4F46E5",
+      "color": "#DB2777",
       "installCommand": "npx openclaw install python-script-generator",
       "updatedAt": "2026-03-21T04:55:40.518Z"
     },
@@ -3132,8 +3109,8 @@
         "essentials",
         "essential",
         "commands",
-        "and",
-        "workflows"
+        "workflows",
+        "container"
       ],
       "stars": 1,
       "downloads": 1371,
@@ -3152,14 +3129,14 @@
         "tailwind",
         "shadcn",
         "configures",
-        "with",
-        "using",
-        "mandatory"
+        "mandatory",
+        "four",
+        "step"
       ],
       "stars": 1,
       "downloads": 1367,
       "version": "1.0.0",
-      "color": "#DC2626",
+      "color": "#D97706",
       "installCommand": "npx openclaw install tailwind-v4-shadcn",
       "updatedAt": "2026-02-26T00:30:36.042Z"
     },
@@ -3180,7 +3157,7 @@
       "stars": 4,
       "downloads": 1366,
       "version": "1.0.1",
-      "color": "#4F46E5",
+      "color": "#DB2777",
       "installCommand": "npx openclaw install rust",
       "updatedAt": "2026-02-25T21:00:35.903Z"
     },
@@ -3195,13 +3172,13 @@
         "understand",
         "technology",
         "interact",
-        "with",
-        "smart"
+        "smart",
+        "contracts"
       ],
       "stars": 3,
       "downloads": 1354,
       "version": "1.0.0",
-      "color": "#7C3AED",
+      "color": "#0D9488",
       "installCommand": "npx openclaw install blockchain",
       "updatedAt": "2026-02-25T23:35:44.757Z"
     },
@@ -3217,12 +3194,12 @@
         "organize",
         "sync",
         "share",
-        "and"
+        "back"
       ],
       "stars": 2,
       "downloads": 1334,
       "version": "1.0.0",
-      "color": "#7C3AED",
+      "color": "#0D9488",
       "installCommand": "npx openclaw install cloud",
       "updatedAt": "2026-02-25T20:50:39.474Z"
     },
@@ -3238,12 +3215,12 @@
         "social",
         "deduction",
         "game",
-        "for"
+        "agents"
       ],
       "stars": 0,
       "downloads": 1326,
       "version": "1.0.5",
-      "color": "#D97706",
+      "color": "#059669",
       "installCommand": "npx openclaw install lobster-trap",
       "updatedAt": "2026-03-21T03:33:13.581Z"
     },
@@ -3285,7 +3262,7 @@
       "stars": 3,
       "downloads": 1288,
       "version": "1.0.1",
-      "color": "#2563EB",
+      "color": "#7C3AED",
       "installCommand": "npx openclaw install css",
       "updatedAt": "2026-02-25T22:40:35.883Z"
     },
@@ -3296,12 +3273,12 @@
       "description": "Design and operate databases avoiding common scaling, reliability, and data integrity traps.",
       "category": "Database",
       "tags": [
-        "design",
-        "and",
         "operate",
         "databases",
         "avoiding",
-        "common"
+        "common",
+        "scaling",
+        "reliability"
       ],
       "stars": 3,
       "downloads": 1285,
@@ -3325,7 +3302,7 @@
       "stars": 0,
       "downloads": 1284,
       "version": "1.0.0",
-      "color": "#0891B2",
+      "color": "#DC2626",
       "installCommand": "npx openclaw install multi-agent-collaboration",
       "updatedAt": "2026-03-21T04:40:09.064Z"
     },
@@ -3339,14 +3316,14 @@
         "azure",
         "deploy",
         "monitor",
-        "and",
         "manage",
-        "services"
+        "services",
+        "battle"
       ],
       "stars": 2,
       "downloads": 1277,
       "version": "1.0.0",
-      "color": "#7C3AED",
+      "color": "#0D9488",
       "installCommand": "npx openclaw install azure",
       "updatedAt": "2026-02-25T23:25:36.035Z"
     },
@@ -3362,12 +3339,12 @@
         "structured",
         "distributed",
         "tracing",
-        "and"
+        "metrics"
       ],
       "stars": 1,
       "downloads": 1276,
       "version": "0.1.0",
-      "color": "#DC2626",
+      "color": "#D97706",
       "installCommand": "npx openclaw install logging-observability",
       "updatedAt": "2026-02-25T22:20:35.873Z"
     },
@@ -3380,15 +3357,15 @@
       "tags": [
         "pls",
         "canvas",
-        "design",
         "generates",
         "original",
-        "visual"
+        "visual",
+        "art"
       ],
       "stars": 2,
       "downloads": 1259,
       "version": "1.0.0",
-      "color": "#EA580C",
+      "color": "#4F46E5",
       "installCommand": "npx openclaw install pls-canvas-design",
       "updatedAt": "2026-02-26T00:30:36.042Z"
     },
@@ -3400,11 +3377,11 @@
       "category": "Database",
       "tags": [
         "mobile",
-        "build",
         "applications",
-        "with",
         "proper",
-        "lifecycle"
+        "lifecycle",
+        "handling",
+        "offline"
       ],
       "stars": 3,
       "downloads": 1231,
@@ -3449,7 +3426,7 @@
       "stars": 3,
       "downloads": 1216,
       "version": "1.0.0",
-      "color": "#0891B2",
+      "color": "#DC2626",
       "installCommand": "npx openclaw install unity",
       "updatedAt": "2026-02-25T23:25:36.035Z"
     },
@@ -3463,14 +3440,14 @@
         "skill",
         "test",
         "skills",
-        "before",
-        "using",
-        "publishing"
+        "publishing",
+        "trial",
+        "compare"
       ],
       "stars": 2,
       "downloads": 1215,
       "version": "1.0.0",
-      "color": "#4F46E5",
+      "color": "#DB2777",
       "installCommand": "npx openclaw install skill-test",
       "updatedAt": "2026-02-25T22:35:39.848Z"
     },
@@ -3482,16 +3459,16 @@
       "category": "Database",
       "tags": [
         "graphql",
-        "design",
         "schemas",
-        "and",
         "resolvers",
-        "with"
+        "proper",
+        "performance",
+        "security"
       ],
       "stars": 2,
       "downloads": 1212,
       "version": "1.0.1",
-      "color": "#D97706",
+      "color": "#059669",
       "installCommand": "npx openclaw install graphql",
       "updatedAt": "2026-02-25T23:45:36.179Z"
     },
@@ -3526,14 +3503,14 @@
         "javascript",
         "sdk",
         "typescript",
-        "for",
         "inference.sh",
-        "run"
+        "run",
+        "apps"
       ],
       "stars": 0,
       "downloads": 1201,
       "version": "0.1.5",
-      "color": "#059669",
+      "color": "#2563EB",
       "installCommand": "npx openclaw install javascript-sdk",
       "updatedAt": "2026-03-21T03:28:36.309Z"
     },
@@ -3573,30 +3550,9 @@
       "stars": 0,
       "downloads": 1198,
       "version": "1.0.0",
-      "color": "#7C3AED",
+      "color": "#0D9488",
       "installCommand": "npx openclaw install data-automation-service",
       "updatedAt": "2026-02-25T23:20:35.938Z"
-    },
-    {
-      "id": "openclaw-skill-observability",
-      "name": "Openclaw Skill Observability",
-      "author": "erain",
-      "description": "Provides tools to monitor OpenClaw health by reporting recent errors and estimating API usage costs over the last 24 hours.",
-      "category": "Monitoring",
-      "tags": [
-        "openclaw",
-        "skill",
-        "observability",
-        "provides",
-        "tools",
-        "monitor"
-      ],
-      "stars": 0,
-      "downloads": 1196,
-      "version": "0.1.0",
-      "color": "#0891B2",
-      "installCommand": "npx openclaw install openclaw-skill-observability",
-      "updatedAt": "2026-03-21T03:34:55.314Z"
     },
     {
       "id": "animations",
@@ -3606,16 +3562,16 @@
       "category": "UI/UX",
       "tags": [
         "animations",
-        "create",
         "performant",
         "web",
-        "with",
-        "proper"
+        "proper",
+        "accessibility",
+        "timing"
       ],
       "stars": 2,
       "downloads": 1192,
       "version": "1.0.0",
-      "color": "#EA580C",
+      "color": "#4F46E5",
       "installCommand": "npx openclaw install animations",
       "updatedAt": "2026-02-25T23:40:35.980Z"
     },
@@ -3631,7 +3587,7 @@
         "list",
         "projects",
         "repositories",
-        "and"
+        "branches"
       ],
       "stars": 1,
       "downloads": 1192,
@@ -3653,7 +3609,7 @@
       "stars": 0,
       "downloads": 1191,
       "version": "1.0.0",
-      "color": "#DC2626",
+      "color": "#D97706",
       "installCommand": "npx openclaw install auto-monitor",
       "updatedAt": "2026-03-21T04:36:08.951Z"
     },
@@ -3665,16 +3621,16 @@
       "category": "AI & ML",
       "tags": [
         "describe",
-        "design",
         "research",
         "codebase",
-        "and",
-        "create"
+        "architectural",
+        "documentation",
+        "describing"
       ],
       "stars": 0,
       "downloads": 1189,
       "version": "0.1.0",
-      "color": "#4F46E5",
+      "color": "#DB2777",
       "installCommand": "npx openclaw install describe-design",
       "updatedAt": "2026-02-25T23:55:36.195Z"
     },
@@ -3689,13 +3645,13 @@
         "business",
         "automation",
         "turn",
-        "your",
-        "agent"
+        "agent",
+        "architect"
       ],
       "stars": 0,
       "downloads": 1174,
       "version": "1.0.0",
-      "color": "#0D9488",
+      "color": "#EA580C",
       "installCommand": "npx openclaw install afrexai-business-automation",
       "updatedAt": "2026-03-21T03:54:47.340Z"
     },
@@ -3711,7 +3667,7 @@
         "engineer",
         "engineering",
         "workflow",
-        "for"
+        "openclaw"
       ],
       "stars": 0,
       "downloads": 1154,
@@ -3731,13 +3687,13 @@
         "source",
         "audit",
         "comprehensive",
-        "all",
-        "construction"
+        "construction",
+        "sources"
       ],
       "stars": 0,
       "downloads": 1146,
       "version": "2.1.0",
-      "color": "#0891B2",
+      "color": "#DC2626",
       "installCommand": "npx openclaw install data-source-audit",
       "updatedAt": "2026-02-25T22:35:35.895Z"
     },
@@ -3750,10 +3706,10 @@
       "tags": [
         "expo",
         "native",
-        "build",
         "beautiful",
         "ios",
-        "android"
+        "android",
+        "apps"
       ],
       "stars": 0,
       "downloads": 1143,
@@ -3761,27 +3717,6 @@
       "color": "#DB2777",
       "installCommand": "npx openclaw install expo-native-ui",
       "updatedAt": "2026-03-21T03:41:32.423Z"
-    },
-    {
-      "id": "moltiverse-among",
-      "name": "Moltiverse Among",
-      "author": "Kasyak0",
-      "description": "Play Among Us social deduction game with other AI agents. Free to play, win MON prizes on Monad!",
-      "category": "AI & ML",
-      "tags": [
-        "moltiverse",
-        "among",
-        "play",
-        "social",
-        "deduction",
-        "game"
-      ],
-      "stars": 0,
-      "downloads": 1125,
-      "version": "2.0.2",
-      "color": "#DC2626",
-      "installCommand": "npx openclaw install moltiverse-among",
-      "updatedAt": "2026-02-28T03:33:14.652Z"
     },
     {
       "id": "aegis-security-hackathon",
@@ -3795,7 +3730,7 @@
         "hackathon",
         "blockchain",
         "scanner",
-        "for"
+        "agents"
       ],
       "stars": 0,
       "downloads": 1122,
@@ -3816,7 +3751,7 @@
         "cli",
         "generate",
         "edit",
-        "and"
+        "manage"
       ],
       "stars": 0,
       "downloads": 1121,
@@ -3839,7 +3774,7 @@
       "stars": 0,
       "downloads": 1121,
       "version": "1.0.0",
-      "color": "#059669",
+      "color": "#2563EB",
       "installCommand": "npx openclaw install github-search",
       "updatedAt": "2026-03-21T04:46:05.271Z"
     },
@@ -3855,12 +3790,12 @@
         "run",
         "node.js",
         "scripts",
-        "using"
+        "full"
       ],
       "stars": 0,
       "downloads": 1115,
       "version": "1.0.0",
-      "color": "#DB2777",
+      "color": "#0891B2",
       "installCommand": "npx openclaw install playwright-npx",
       "updatedAt": "2026-02-25T23:30:35.899Z"
     },
@@ -3881,7 +3816,7 @@
       "stars": 1,
       "downloads": 1114,
       "version": "1.0.0",
-      "color": "#0891B2",
+      "color": "#DC2626",
       "installCommand": "npx openclaw install coding-agent-backup",
       "updatedAt": "2026-03-21T04:37:22.599Z"
     },
@@ -3896,13 +3831,13 @@
         "storage",
         "manage",
         "files",
-        "across",
-        "providers"
+        "providers",
+        "authentication"
       ],
       "stars": 2,
       "downloads": 1102,
       "version": "1.0.1",
-      "color": "#2563EB",
+      "color": "#7C3AED",
       "installCommand": "npx openclaw install cloud-storage",
       "updatedAt": "2026-02-25T23:55:36.195Z"
     },
@@ -3928,6 +3863,27 @@
       "updatedAt": "2026-02-25T23:55:41.465Z"
     },
     {
+      "id": "moltiverse-amongus",
+      "name": "Moltiverse Among us",
+      "author": "Kasyak0",
+      "description": "Play Among Us social deduction game with other AI agents. Free to play, win MON prizes on Monad!",
+      "category": "AI & ML",
+      "tags": [
+        "moltiverse",
+        "amongus",
+        "play",
+        "among",
+        "social",
+        "deduction"
+      ],
+      "stars": 0,
+      "downloads": 1073,
+      "version": "2.1.0",
+      "color": "#D97706",
+      "installCommand": "npx openclaw install moltiverse-amongus",
+      "updatedAt": "2026-02-28T03:33:15.142Z"
+    },
+    {
       "id": "playwright-skill",
       "name": "Playwright Skill",
       "author": "vmercel",
@@ -3939,12 +3895,12 @@
         "complete",
         "browser",
         "automation",
-        "with"
+        "auto"
       ],
       "stars": 0,
       "downloads": 1066,
       "version": "0.1.0",
-      "color": "#4F46E5",
+      "color": "#DB2777",
       "installCommand": "npx openclaw install playwright-skill",
       "updatedAt": "2026-03-21T04:24:02.260Z"
     },
@@ -3977,16 +3933,16 @@
       "category": "UI/UX",
       "tags": [
         "responsive",
-        "design",
-        "implement",
         "layouts",
-        "using",
-        "container"
+        "container",
+        "queries",
+        "fluid",
+        "typography"
       ],
       "stars": 0,
       "downloads": 1060,
       "version": "1.0.0",
-      "color": "#0891B2",
+      "color": "#DC2626",
       "installCommand": "npx openclaw install responsive-design",
       "updatedAt": "2026-02-25T23:35:36.181Z"
     },
@@ -4001,8 +3957,8 @@
         "write",
         "efficient",
         "queries",
-        "design",
-        "schemas"
+        "schemas",
+        "avoid"
       ],
       "stars": 2,
       "downloads": 1051,
@@ -4062,10 +4018,10 @@
       "tags": [
         "react",
         "performance",
-        "and",
         "next.js",
         "optimization",
-        "patterns"
+        "patterns",
+        "writing"
       ],
       "stars": 0,
       "downloads": 990,
@@ -4087,7 +4043,7 @@
       "stars": 0,
       "downloads": 987,
       "version": "1.0.0",
-      "color": "#DB2777",
+      "color": "#0891B2",
       "installCommand": "npx openclaw install ws-agent-browser",
       "updatedAt": "2026-03-10T16:11:54.818Z"
     },
@@ -4108,7 +4064,7 @@
       "stars": 1,
       "downloads": 978,
       "version": "1.0.0",
-      "color": "#DB2777",
+      "color": "#0891B2",
       "installCommand": "npx openclaw install afrexai-qa-testing-engine",
       "updatedAt": "2026-02-26T00:30:36.042Z"
     },
@@ -4124,12 +4080,12 @@
         "orchestrator",
         "chain",
         "skills",
-        "into"
+        "automated"
       ],
       "stars": 0,
       "downloads": 970,
       "version": "1.1.0",
-      "color": "#4F46E5",
+      "color": "#DB2777",
       "installCommand": "npx openclaw install arc-workflow-orchestrator",
       "updatedAt": "2026-03-21T04:02:42.556Z"
     },
@@ -4171,7 +4127,7 @@
       "stars": 0,
       "downloads": 966,
       "version": "1.0.0",
-      "color": "#0891B2",
+      "color": "#DC2626",
       "installCommand": "npx openclaw install rust-analyzer-lsp",
       "updatedAt": "2026-02-25T23:40:35.980Z"
     },
@@ -4192,7 +4148,7 @@
       "stars": 0,
       "downloads": 965,
       "version": "1.0.3",
-      "color": "#EA580C",
+      "color": "#4F46E5",
       "installCommand": "npx openclaw install alicloud-compute-fc-serverless-devs",
       "updatedAt": "2026-03-21T03:44:58.866Z"
     },
@@ -4205,10 +4161,10 @@
       "tags": [
         "railway",
         "deploy",
-        "this",
         "skill",
-        "should",
-        "used"
+        "used",
+        "user",
+        "wants"
       ],
       "stars": 0,
       "downloads": 963,
@@ -4229,12 +4185,12 @@
         "code",
         "quality",
         "checking",
-        "and"
+        "integration"
       ],
       "stars": 0,
       "downloads": 958,
       "version": "1.1.0",
-      "color": "#DB2777",
+      "color": "#0891B2",
       "installCommand": "npx openclaw install lsp-python",
       "updatedAt": "2026-03-21T04:49:18.829Z"
     },
@@ -4246,16 +4202,16 @@
       "category": "UI/UX",
       "tags": [
         "distinctive",
-        "design",
         "systems",
         "patterns",
-        "for",
-        "creating"
+        "creating",
+        "personality",
+        "aesthetics"
       ],
       "stars": 0,
       "downloads": 948,
       "version": "1.0.0",
-      "color": "#EA580C",
+      "color": "#4F46E5",
       "installCommand": "npx openclaw install distinctive-design-systems",
       "updatedAt": "2026-02-26T00:00:35.886Z"
     },
@@ -4273,7 +4229,7 @@
       "stars": 0,
       "downloads": 948,
       "version": "1.0.0",
-      "color": "#DB2777",
+      "color": "#0891B2",
       "installCommand": "npx openclaw install coding-as-dressing",
       "updatedAt": "2026-02-25T23:25:42.242Z"
     },
@@ -4294,7 +4250,7 @@
       "stars": 0,
       "downloads": 928,
       "version": "1.0.0",
-      "color": "#0891B2",
+      "color": "#DC2626",
       "installCommand": "npx openclaw install gopls-lsp",
       "updatedAt": "2026-02-25T23:35:36.181Z"
     },
@@ -4309,13 +4265,13 @@
         "code",
         "export",
         "pen",
-        "design",
-        "react"
+        "react",
+        "tailwind"
       ],
       "stars": 0,
       "downloads": 917,
       "version": "0.1.0",
-      "color": "#4F46E5",
+      "color": "#DB2777",
       "installCommand": "npx openclaw install pencil-to-code",
       "updatedAt": "2026-02-25T23:15:35.986Z"
     },
@@ -4327,11 +4283,11 @@
       "category": "Security",
       "tags": [
         "auth",
-        "build",
         "secure",
         "authentication",
-        "with",
-        "sessions"
+        "sessions",
+        "jwt",
+        "oauth"
       ],
       "stars": 3,
       "downloads": 914,
@@ -4348,11 +4304,10 @@
       "category": "Security",
       "tags": [
         "oauth",
-        "implement",
-        "and",
         "openid",
         "connect",
-        "flows"
+        "flows",
+        "securely"
       ],
       "stars": 2,
       "downloads": 890,
@@ -4419,7 +4374,7 @@
       "stars": 2,
       "downloads": 856,
       "version": "3.0.0",
-      "color": "#EA580C",
+      "color": "#4F46E5",
       "installCommand": "npx openclaw install skill-security-reviewer",
       "updatedAt": "2026-03-21T03:45:52.256Z"
     },
@@ -4435,12 +4390,12 @@
         "builds",
         "automation",
         "workflows",
-        "from"
+        "repetitive"
       ],
       "stars": 1,
       "downloads": 849,
       "version": "1.0.0",
-      "color": "#DB2777",
+      "color": "#0891B2",
       "installCommand": "npx openclaw install auto-workflow",
       "updatedAt": "2026-03-21T04:50:20.854Z"
     },
@@ -4456,12 +4411,12 @@
         "cls",
         "log",
         "query",
-        "and"
+        "troubleshooting"
       ],
       "stars": 0,
       "downloads": 848,
       "version": "1.0.0",
-      "color": "#DB2777",
+      "color": "#DC2626",
       "installCommand": "npx openclaw install volcengine-observability-cls",
       "updatedAt": "2026-03-01T03:51:13.354Z"
     },
@@ -4482,7 +4437,7 @@
       "stars": 2,
       "downloads": 844,
       "version": "1.0.0",
-      "color": "#059669",
+      "color": "#2563EB",
       "installCommand": "npx openclaw install solidity",
       "updatedAt": "2026-02-26T00:25:35.894Z"
     },
@@ -4500,7 +4455,7 @@
       "stars": 0,
       "downloads": 833,
       "version": "1.0.0",
-      "color": "#D97706",
+      "color": "#059669",
       "installCommand": "npx openclaw install github-actions-generator",
       "updatedAt": "2026-03-02T09:30:38.407Z"
     },
@@ -4515,13 +4470,13 @@
         "workflow",
         "automation",
         "designs",
-        "and",
-        "outputs"
+        "outputs",
+        "json"
       ],
       "stars": 0,
       "downloads": 833,
       "version": "1.0.0",
-      "color": "#0D9488",
+      "color": "#EA580C",
       "installCommand": "npx openclaw install n8n-workflow-automation-1-0-0",
       "updatedAt": "2026-02-25T23:40:42.724Z"
     },
@@ -4535,9 +4490,9 @@
         "security",
         "hardener",
         "audit",
-        "and",
         "harden",
-        "openclaw"
+        "openclaw",
+        "configuration"
       ],
       "stars": 0,
       "downloads": 829,
@@ -4556,14 +4511,14 @@
         "volcengine",
         "compute",
         "function",
-        "build",
-        "and",
-        "operate"
+        "operate",
+        "workloads",
+        "users"
       ],
       "stars": 0,
       "downloads": 829,
       "version": "1.0.0",
-      "color": "#0D9488",
+      "color": "#EA580C",
       "installCommand": "npx openclaw install volcengine-compute-function",
       "updatedAt": "2026-02-28T03:57:00.254Z"
     },
@@ -4584,7 +4539,7 @@
       "stars": 0,
       "downloads": 823,
       "version": "1.0.3",
-      "color": "#EA580C",
+      "color": "#4F46E5",
       "installCommand": "npx openclaw install mcp-client",
       "updatedAt": "2026-02-26T00:15:35.912Z"
     },
@@ -4605,7 +4560,7 @@
       "stars": 2,
       "downloads": 817,
       "version": "1.0.0",
-      "color": "#0891B2",
+      "color": "#DC2626",
       "installCommand": "npx openclaw install nestjs",
       "updatedAt": "2026-02-28T03:49:47.008Z"
     },
@@ -4626,7 +4581,7 @@
       "stars": 2,
       "downloads": 805,
       "version": "1.0.0",
-      "color": "#DC2626",
+      "color": "#D97706",
       "installCommand": "npx openclaw install encryption",
       "updatedAt": "2026-03-01T04:00:35.615Z"
     },
@@ -4640,9 +4595,9 @@
         "alchemy",
         "web3",
         "interact",
-        "with",
         "apis",
-        "for"
+        "blockchain",
+        "data"
       ],
       "stars": 0,
       "downloads": 790,
@@ -4663,12 +4618,12 @@
         "structural",
         "parity",
         "skeleton",
-        "for"
+        "queue"
       ],
       "stars": 0,
       "downloads": 783,
       "version": "1.0.0",
-      "color": "#7C3AED",
+      "color": "#0D9488",
       "installCommand": "npx openclaw install workflow-engine",
       "updatedAt": "2026-03-21T04:14:44.453Z"
     },
@@ -4689,7 +4644,7 @@
       "stars": 3,
       "downloads": 779,
       "version": "1.1.2",
-      "color": "#0D9488",
+      "color": "#EA580C",
       "installCommand": "npx openclaw install vault",
       "updatedAt": "2026-02-26T00:30:40.450Z"
     },
@@ -4731,7 +4686,7 @@
       "stars": 0,
       "downloads": 775,
       "version": "1.0.0",
-      "color": "#D97706",
+      "color": "#059669",
       "installCommand": "npx openclaw install git-secrets-scanner",
       "updatedAt": "2026-03-21T04:13:20.255Z"
     },
@@ -4745,9 +4700,9 @@
         "web",
         "browsing",
         "browse",
-        "and",
         "summarize",
-        "websites"
+        "websites",
+        "extract"
       ],
       "stars": 0,
       "downloads": 764,
@@ -4767,8 +4722,8 @@
         "guardian",
         "automated",
         "auditing",
-        "for",
-        "openclaw"
+        "openclaw",
+        "projects"
       ],
       "stars": 0,
       "downloads": 760,
@@ -4785,16 +4740,16 @@
       "category": "UI/UX",
       "tags": [
         "vibe",
-        "design",
-        "create",
         "visual",
         "designs",
-        "with"
+        "tools",
+        "covers",
+        "prompting"
       ],
       "stars": 6,
       "downloads": 746,
       "version": "1.0.0",
-      "color": "#0D9488",
+      "color": "#EA580C",
       "installCommand": "npx openclaw install vibe-design",
       "updatedAt": "2026-02-25T23:30:40.103Z"
     },
@@ -4809,8 +4764,8 @@
         "coder",
         "expert",
         "engineer",
-        "with",
-        "comprehensive"
+        "comprehensive",
+        "knowledge"
       ],
       "stars": 0,
       "downloads": 742,
@@ -4831,12 +4786,12 @@
         "gen",
         "generate",
         "changelogs",
-        "from"
+        "commits"
       ],
       "stars": 0,
       "downloads": 741,
       "version": "1.0.0",
-      "color": "#0891B2",
+      "color": "#DC2626",
       "installCommand": "npx openclaw install git-changelog-gen",
       "updatedAt": "2026-02-25T22:40:39.958Z"
     },
@@ -4852,12 +4807,12 @@
         "templates",
         "production",
         "ready",
-        "for"
+        "agents"
       ],
       "stars": 0,
       "downloads": 732,
       "version": "1.0.0",
-      "color": "#2563EB",
+      "color": "#7C3AED",
       "installCommand": "npx openclaw install n8n-workflow-templates",
       "updatedAt": "2026-03-21T04:11:55.343Z"
     },
@@ -4878,7 +4833,7 @@
       "stars": 1,
       "downloads": 702,
       "version": "1.0.10",
-      "color": "#059669",
+      "color": "#2563EB",
       "installCommand": "npx openclaw install feishu-project-connector",
       "updatedAt": "2026-03-18T02:36:53.666Z"
     },
@@ -4892,9 +4847,9 @@
         "mobile",
         "app",
         "builder",
-        "build",
-        "and",
-        "maintain"
+        "maintain",
+        "applications",
+        "end"
       ],
       "stars": 1,
       "downloads": 694,
@@ -4913,9 +4868,9 @@
         "realtime",
         "react",
         "hooks",
-        "for",
         "real",
-        "time"
+        "time",
+        "data"
       ],
       "stars": 0,
       "downloads": 693,
@@ -4941,7 +4896,7 @@
       "stars": 0,
       "downloads": 683,
       "version": "1.0.1",
-      "color": "#EA580C",
+      "color": "#4F46E5",
       "installCommand": "npx openclaw install self-monitor",
       "updatedAt": "2026-02-26T00:20:35.893Z"
     },
@@ -5016,12 +4971,12 @@
         "mcp",
         "first",
         "intelligence",
-        "with"
+        "llm"
       ],
       "stars": 0,
       "downloads": 671,
       "version": "0.2.1",
-      "color": "#7C3AED",
+      "color": "#0D9488",
       "installCommand": "npx openclaw install arc-security-mcp",
       "updatedAt": "2026-02-26T00:30:40.450Z"
     },
@@ -5038,7 +4993,7 @@
       "stars": 1,
       "downloads": 669,
       "version": "1.0.23",
-      "color": "#DB2777",
+      "color": "#0891B2",
       "installCommand": "npx openclaw install data-analyst-cn",
       "updatedAt": "2026-03-17T05:58:20.043Z"
     },
@@ -5095,8 +5050,8 @@
         "react",
         "native",
         "skills",
-        "and",
-        "expo"
+        "expo",
+        "best"
       ],
       "stars": 1,
       "downloads": 665,
@@ -5143,7 +5098,7 @@
       "stars": 0,
       "downloads": 651,
       "version": "2.0.0",
-      "color": "#DC2626",
+      "color": "#D97706",
       "installCommand": "npx openclaw install api-generator",
       "updatedAt": "2026-03-17T19:27:04.945Z"
     },
@@ -5179,7 +5134,7 @@
         "audit",
         "codebases",
         "infrastructure",
-        "and"
+        "systems"
       ],
       "stars": 0,
       "downloads": 642,
@@ -5205,7 +5160,7 @@
       "stars": 0,
       "downloads": 613,
       "version": "1.1.0",
-      "color": "#DB2777",
+      "color": "#0891B2",
       "installCommand": "npx openclaw install afrexai-technical-docs",
       "updatedAt": "2026-02-26T00:30:36.042Z"
     },
@@ -5226,7 +5181,7 @@
       "stars": 0,
       "downloads": 600,
       "version": "1.0.0",
-      "color": "#D97706",
+      "color": "#059669",
       "installCommand": "npx openclaw install backup-gog-20260213-121122",
       "updatedAt": "2026-02-26T00:30:36.042Z"
     },
@@ -5261,9 +5216,9 @@
         "deploy",
         "pilot",
         "manages",
-        "the",
         "full",
-        "cycle"
+        "cycle",
+        "validation"
       ],
       "stars": 0,
       "downloads": 592,
@@ -5289,7 +5244,7 @@
       "stars": 0,
       "downloads": 591,
       "version": "2.1.1",
-      "color": "#0891B2",
+      "color": "#DC2626",
       "installCommand": "npx openclaw install playwright-pro",
       "updatedAt": "2026-03-10T04:31:52.919Z"
     },
@@ -5304,13 +5259,13 @@
         "engine",
         "comprehensive",
         "system",
-        "for",
-        "planning"
+        "planning",
+        "strategy"
       ],
       "stars": 0,
       "downloads": 590,
       "version": "1.0.0",
-      "color": "#059669",
+      "color": "#2563EB",
       "installCommand": "npx openclaw install afrexai-qa-engine",
       "updatedAt": "2026-02-25T23:25:42.242Z"
     },
@@ -5321,17 +5276,17 @@
       "description": "Implements UI from design mockups (Figma, Sketch, or image) with pixel-accurate layout, responsive behavior, and design tokens. Use when 还原设计图, implementing...",
       "category": "UI/UX",
       "tags": [
-        "design",
         "code",
         "implements",
-        "from",
         "mockups",
-        "figma"
+        "figma",
+        "sketch",
+        "image"
       ],
       "stars": 0,
       "downloads": 586,
       "version": "1.0.0",
-      "color": "#7C3AED",
+      "color": "#0D9488",
       "installCommand": "npx openclaw install design-to-code",
       "updatedAt": "2026-03-04T04:07:35.305Z"
     },
@@ -5352,7 +5307,7 @@
       "stars": 0,
       "downloads": 580,
       "version": "1.0.0",
-      "color": "#2563EB",
+      "color": "#7C3AED",
       "installCommand": "npx openclaw install ai-automation-workflow",
       "updatedAt": "2026-03-06T05:06:49.734Z"
     },
@@ -5367,8 +5322,8 @@
         "query",
         "optimizer",
         "analyze",
-        "and",
-        "optimize"
+        "optimize",
+        "queries"
       ],
       "stars": 0,
       "downloads": 579,
@@ -5387,14 +5342,14 @@
         "cursor",
         "tui",
         "spawn",
-        "and",
         "relay",
-        "agent"
+        "agent",
+        "cli"
       ],
       "stars": 1,
       "downloads": 572,
       "version": "1.0.1",
-      "color": "#0891B2",
+      "color": "#DC2626",
       "installCommand": "npx openclaw install cursor-tui",
       "updatedAt": "2026-03-02T00:41:36.289Z"
     },
@@ -5407,10 +5362,10 @@
       "tags": [
         "drf",
         "generate",
-        "and",
         "manage",
         "django",
-        "rest"
+        "rest",
+        "apis"
       ],
       "stars": 0,
       "downloads": 566,
@@ -5436,7 +5391,7 @@
       "stars": 0,
       "downloads": 565,
       "version": "0.1.0",
-      "color": "#4F46E5",
+      "color": "#DB2777",
       "installCommand": "npx openclaw install agent-arena-skill",
       "updatedAt": "2026-02-26T00:00:39.812Z"
     },
@@ -5475,7 +5430,7 @@
       "stars": 0,
       "downloads": 556,
       "version": "2.1.1",
-      "color": "#D97706",
+      "color": "#059669",
       "installCommand": "npx openclaw install observability-designer",
       "updatedAt": "2026-03-10T13:22:03.033Z"
     },
@@ -5490,13 +5445,13 @@
         "workspace",
         "byok",
         "calendar",
-        "and",
-        "gmail"
+        "gmail",
+        "integration"
       ],
       "stars": 0,
       "downloads": 552,
       "version": "1.0.0",
-      "color": "#D97706",
+      "color": "#059669",
       "installCommand": "npx openclaw install google-workspace-byok",
       "updatedAt": "2026-03-21T04:03:30.994Z"
     },
@@ -5512,7 +5467,7 @@
         "extract",
         "structured",
         "information",
-        "from"
+        "websites"
       ],
       "stars": 0,
       "downloads": 543,
@@ -5553,7 +5508,7 @@
         "production",
         "complete",
         "methodology",
-        "for"
+        "building"
       ],
       "stars": 0,
       "downloads": 537,
@@ -5572,14 +5527,14 @@
         "test",
         "sentinel",
         "writes",
-        "and",
         "runs",
-        "tests"
+        "tests",
+        "unit"
       ],
       "stars": 0,
       "downloads": 532,
       "version": "0.1.1",
-      "color": "#0D9488",
+      "color": "#EA580C",
       "installCommand": "npx openclaw install test-sentinel",
       "updatedAt": "2026-03-21T04:12:23.273Z"
     },
@@ -5595,12 +5550,12 @@
         "google",
         "workspace",
         "cli",
-        "for"
+        "gmail"
       ],
       "stars": 0,
       "downloads": 527,
       "version": "1.0.0",
-      "color": "#DC2626",
+      "color": "#D97706",
       "installCommand": "npx openclaw install gog-jasmine",
       "updatedAt": "2026-02-26T00:25:39.606Z"
     },
@@ -5614,9 +5569,9 @@
         "authy",
         "inject",
         "secrets",
-        "into",
         "subprocesses",
-        "via"
+        "via",
+        "environment"
       ],
       "stars": 2,
       "downloads": 524,
@@ -5660,7 +5615,7 @@
       "stars": 0,
       "downloads": 514,
       "version": "1.0.0",
-      "color": "#EA580C",
+      "color": "#4F46E5",
       "installCommand": "npx openclaw install git-workflow",
       "updatedAt": "2026-03-01T05:18:52.801Z"
     },
@@ -5677,7 +5632,7 @@
       "stars": 0,
       "downloads": 511,
       "version": "1.0.0",
-      "color": "#0D9488",
+      "color": "#EA580C",
       "installCommand": "npx openclaw install agent-team",
       "updatedAt": "2026-03-21T04:54:11.956Z"
     },
@@ -5693,7 +5648,7 @@
         "automator",
         "suggests",
         "reactions",
-        "for"
+        "text"
       ],
       "stars": 0,
       "downloads": 508,
@@ -5701,27 +5656,6 @@
       "color": "#4F46E5",
       "installCommand": "npx openclaw install emoji-reaction-automator",
       "updatedAt": "2026-02-26T00:15:40.106Z"
-    },
-    {
-      "id": "cloudmonkey",
-      "name": "cloudmonkey",
-      "author": "kiranchavala",
-      "description": "Manage Apache CloudStack infrastructure using the cloudmonkey (cmk) CLI — list/start/stop/destroy VMs, manage networks, volumes, snapshots, and run any Cloud...",
-      "category": "CLI Tools",
-      "tags": [
-        "cloudmonkey",
-        "manage",
-        "apache",
-        "cloudstack",
-        "infrastructure",
-        "using"
-      ],
-      "stars": 0,
-      "downloads": 506,
-      "version": "1.0.0",
-      "color": "#4F46E5",
-      "installCommand": "npx openclaw install cloudmonkey",
-      "updatedAt": "2026-02-25T20:40:35.928Z"
     },
     {
       "id": "gcp-fullstack",
@@ -5754,9 +5688,9 @@
         "secure",
         "auth",
         "patterns",
-        "implement",
         "authentication",
-        "and"
+        "authorization",
+        "jwt"
       ],
       "stars": 0,
       "downloads": 505,
@@ -5774,15 +5708,15 @@
       "tags": [
         "workflow",
         "builder",
-        "with",
-        "design",
         "automate",
-        "optimize"
+        "optimize",
+        "document",
+        "approval"
       ],
       "stars": 0,
       "downloads": 503,
       "version": "2.0.0",
-      "color": "#EA580C",
+      "color": "#4F46E5",
       "installCommand": "npx openclaw install workflow-builder",
       "updatedAt": "2026-03-17T18:56:48.342Z"
     },
@@ -5796,14 +5730,14 @@
         "mcp",
         "workflow",
         "automation",
-        "using",
         "model",
-        "context"
+        "context",
+        "protocol"
       ],
       "stars": 0,
       "downloads": 502,
       "version": "1.0.0",
-      "color": "#059669",
+      "color": "#2563EB",
       "installCommand": "npx openclaw install mcp-workflow",
       "updatedAt": "2026-03-21T04:17:00.219Z"
     },
@@ -5838,14 +5772,14 @@
         "ceo",
         "automation",
         "system",
-        "for",
         "fully",
-        "automated"
+        "automated",
+        "company"
       ],
       "stars": 0,
       "downloads": 497,
       "version": "1.0.0",
-      "color": "#D97706",
+      "color": "#059669",
       "installCommand": "npx openclaw install ai-ceo-automation",
       "updatedAt": "2026-03-21T04:44:35.017Z"
     },
@@ -5859,14 +5793,14 @@
         "playwright",
         "scraper",
         "skill",
-        "based",
         "web",
-        "scraping"
+        "scraping",
+        "openclaw"
       ],
       "stars": 0,
       "downloads": 495,
       "version": "1.0.0",
-      "color": "#0D9488",
+      "color": "#EA580C",
       "installCommand": "npx openclaw install playwright-scraper-skill-1-2-0",
       "updatedAt": "2026-03-21T04:25:07.265Z"
     },
@@ -5880,14 +5814,14 @@
         "vault",
         "memory",
         "backup",
-        "and",
         "restore",
-        "openclaw"
+        "openclaw",
+        "agent"
       ],
       "stars": 0,
       "downloads": 494,
       "version": "0.1.10",
-      "color": "#7C3AED",
+      "color": "#0D9488",
       "installCommand": "npx openclaw install x1-vault-memory",
       "updatedAt": "2026-02-26T00:15:40.106Z"
     },
@@ -5908,7 +5842,7 @@
       "stars": 0,
       "downloads": 493,
       "version": "1.1.2",
-      "color": "#059669",
+      "color": "#2563EB",
       "installCommand": "npx openclaw install openclawmp",
       "updatedAt": "2026-03-21T04:28:40.106Z"
     },
@@ -5922,14 +5856,14 @@
         "git",
         "cli",
         "helper",
-        "for",
-        "using",
-        "the"
+        "inspect",
+        "stage",
+        "commit"
       ],
       "stars": 1,
       "downloads": 490,
       "version": "1.0.1",
-      "color": "#DC2626",
+      "color": "#D97706",
       "installCommand": "npx openclaw install git-cli",
       "updatedAt": "2026-03-16T03:01:49.448Z"
     },
@@ -5948,7 +5882,7 @@
       "stars": 0,
       "downloads": 488,
       "version": "1.0.3",
-      "color": "#EA580C",
+      "color": "#4F46E5",
       "installCommand": "npx openclaw install python-code-test",
       "updatedAt": "2026-03-21T05:38:49.253Z"
     },
@@ -5969,7 +5903,7 @@
       "stars": 1,
       "downloads": 485,
       "version": "0.1.1",
-      "color": "#DC2626",
+      "color": "#D97706",
       "installCommand": "npx openclaw install github-workflow",
       "updatedAt": "2026-03-06T08:42:37.836Z"
     },
@@ -5986,7 +5920,7 @@
       "stars": 1,
       "downloads": 483,
       "version": "1.0.3",
-      "color": "#EA580C",
+      "color": "#4F46E5",
       "installCommand": "npx openclaw install agent-group",
       "updatedAt": "2026-02-26T03:12:03.810Z"
     },
@@ -6000,9 +5934,9 @@
         "docker",
         "skill",
         "installs",
-        "and",
         "uses",
-        "reliably"
+        "reliably",
+        "official"
       ],
       "stars": 0,
       "downloads": 482,
@@ -6024,7 +5958,7 @@
       "stars": 0,
       "downloads": 481,
       "version": "1.0.0",
-      "color": "#059669",
+      "color": "#2563EB",
       "installCommand": "npx openclaw install automation-tool",
       "updatedAt": "2026-03-21T05:27:57.305Z"
     },
@@ -6036,11 +5970,11 @@
       "category": "Security",
       "tags": [
         "authorization",
-        "build",
         "secure",
         "access",
         "control",
-        "with"
+        "rbac",
+        "abac"
       ],
       "stars": 2,
       "downloads": 475,
@@ -6065,7 +5999,7 @@
       "stars": 2,
       "downloads": 471,
       "version": "1.0.0",
-      "color": "#EA580C",
+      "color": "#4F46E5",
       "installCommand": "npx openclaw install playwright-cli-openclaw",
       "updatedAt": "2026-03-12T04:56:53.484Z"
     },
@@ -6080,8 +6014,8 @@
         "transform",
         "android",
         "phone",
-        "with",
-        "webcam"
+        "webcam",
+        "intelligent"
       ],
       "stars": 2,
       "downloads": 469,
@@ -6107,7 +6041,7 @@
       "stars": 0,
       "downloads": 465,
       "version": "1.0.0",
-      "color": "#2563EB",
+      "color": "#7C3AED",
       "installCommand": "npx openclaw install sovereign-aws-cost-optimizer",
       "updatedAt": "2026-02-26T00:30:40.450Z"
     },
@@ -6128,30 +6062,9 @@
       "stars": 0,
       "downloads": 465,
       "version": "1.1.0",
-      "color": "#0D9488",
+      "color": "#EA580C",
       "installCommand": "npx openclaw install infra-watchdog",
       "updatedAt": "2026-03-21T04:30:55.160Z"
-    },
-    {
-      "id": "8004-skill",
-      "name": "8004 Skill",
-      "author": "SpyderJR",
-      "description": "ERC-8004 Trustless Agents - Register and manage AI agent identities on TRON and BSC blockchains with on-chain reputation tracking",
-      "category": "AI & ML",
-      "tags": [
-        "8004",
-        "skill",
-        "erc",
-        "trustless",
-        "agents",
-        "register"
-      ],
-      "stars": 0,
-      "downloads": 462,
-      "version": "1.0.1",
-      "color": "#0D9488",
-      "installCommand": "npx openclaw install 8004-skill",
-      "updatedAt": "2026-02-25T22:30:35.891Z"
     },
     {
       "id": "safe-encryption-skill",
@@ -6165,12 +6078,12 @@
         "skill",
         "encrypt",
         "decrypt",
-        "and"
+        "manage"
       ],
       "stars": 0,
       "downloads": 454,
       "version": "0.1.0",
-      "color": "#0891B2",
+      "color": "#DC2626",
       "installCommand": "npx openclaw install safe-encryption-skill",
       "updatedAt": "2026-03-19T04:24:44.007Z"
     },
@@ -6186,7 +6099,7 @@
         "pack",
         "provides",
         "templates",
-        "and"
+        "scripts"
       ],
       "stars": 0,
       "downloads": 453,
@@ -6212,7 +6125,7 @@
       "stars": 1,
       "downloads": 452,
       "version": "2.1.0",
-      "color": "#0D9488",
+      "color": "#EA580C",
       "installCommand": "npx openclaw install file-converter",
       "updatedAt": "2026-03-19T00:36:58.110Z"
     },
@@ -6224,11 +6137,11 @@
       "category": "Database",
       "tags": [
         "database",
-        "design",
         "designer",
-        "with",
         "normalization",
-        "indexing"
+        "indexing",
+        "migration",
+        "seeding"
       ],
       "stars": 0,
       "downloads": 445,
@@ -6246,15 +6159,15 @@
       "tags": [
         "crypto",
         "encryption",
-        "and",
         "decryption",
         "toolkit",
-        "for"
+        "string",
+        "byte"
       ],
       "stars": 0,
       "downloads": 443,
       "version": "0.1.0",
-      "color": "#4F46E5",
+      "color": "#DB2777",
       "installCommand": "npx openclaw install crypto-2",
       "updatedAt": "2026-02-25T23:35:36.181Z"
     },
@@ -6273,7 +6186,7 @@
       "stars": 0,
       "downloads": 443,
       "version": "1.0.0",
-      "color": "#EA580C",
+      "color": "#4F46E5",
       "installCommand": "npx openclaw install ios-view-generator",
       "updatedAt": "2026-02-26T00:00:35.886Z"
     },
@@ -6289,7 +6202,7 @@
         "deploy",
         "install",
         "harden",
-        "and"
+        "run"
       ],
       "stars": 0,
       "downloads": 442,
@@ -6310,7 +6223,7 @@
         "practices",
         "review",
         "code",
-        "with"
+        "secure"
       ],
       "stars": 0,
       "downloads": 440,
@@ -6330,8 +6243,8 @@
         "llm",
         "send",
         "requests",
-        "the",
-        "dr.eamer.dev"
+        "dr.eamer.dev",
+        "api"
       ],
       "stars": 0,
       "downloads": 438,
@@ -6373,12 +6286,12 @@
         "auto",
         "deploy",
         "websites",
-        "with"
+        "custom"
       ],
       "stars": 0,
       "downloads": 433,
       "version": "1.0.0",
-      "color": "#DB2777",
+      "color": "#0891B2",
       "installCommand": "npx openclaw install github-pages-auto-deploy",
       "updatedAt": "2026-03-21T04:44:36.526Z"
     },
@@ -6394,7 +6307,7 @@
         "devtools",
         "inspector",
         "inspect",
-        "and"
+        "analyze"
       ],
       "stars": 1,
       "downloads": 431,
@@ -6411,16 +6324,16 @@
       "category": "Automation",
       "tags": [
         "python3",
-        "use",
         "python",
-        "for",
         "practical",
-        "project"
+        "project",
+        "setup",
+        "dependency"
       ],
       "stars": 0,
       "downloads": 424,
       "version": "1.0.0",
-      "color": "#0D9488",
+      "color": "#EA580C",
       "installCommand": "npx openclaw install python3",
       "updatedAt": "2026-03-14T14:56:47.161Z"
     },
@@ -6441,7 +6354,7 @@
       "stars": 0,
       "downloads": 415,
       "version": "2.0.1",
-      "color": "#EA580C",
+      "color": "#4F46E5",
       "installCommand": "npx openclaw install test-generator",
       "updatedAt": "2026-03-18T11:26:55.504Z"
     },
@@ -6457,12 +6370,12 @@
         "tester",
         "test",
         "endpoints",
-        "and"
+        "document"
       ],
       "stars": 0,
       "downloads": 410,
       "version": "1.0.0",
-      "color": "#EA580C",
+      "color": "#4F46E5",
       "installCommand": "npx openclaw install openclaw-api-tester",
       "updatedAt": "2026-03-11T07:05:09.300Z"
     },
@@ -6475,10 +6388,10 @@
       "tags": [
         "mobilerun",
         "load",
-        "this",
         "skill",
         "whenever",
-        "the"
+        "user",
+        "wants"
       ],
       "stars": 2,
       "downloads": 409,
@@ -6498,13 +6411,13 @@
         "write",
         "reliable",
         "e2e",
-        "and",
-        "component"
+        "component",
+        "tests"
       ],
       "stars": 0,
       "downloads": 409,
       "version": "1.0.0",
-      "color": "#D97706",
+      "color": "#059669",
       "installCommand": "npx openclaw install cypress",
       "updatedAt": "2026-02-25T21:00:35.903Z"
     },
@@ -6560,7 +6473,7 @@
       "stars": 5,
       "downloads": 402,
       "version": "1.0.4",
-      "color": "#DB2777",
+      "color": "#0891B2",
       "installCommand": "npx openclaw install express",
       "updatedAt": "2026-03-17T04:16:54.262Z"
     },
@@ -6576,12 +6489,12 @@
         "issus",
         "local",
         "operations",
-        "for"
+        "project"
       ],
       "stars": 0,
       "downloads": 402,
       "version": "1.0.0",
-      "color": "#DB2777",
+      "color": "#0891B2",
       "installCommand": "npx openclaw install git-hub-issus",
       "updatedAt": "2026-03-10T15:46:55.503Z"
     },
@@ -6597,12 +6510,12 @@
         "google",
         "workspace",
         "cli",
-        "for"
+        "gmail"
       ],
       "stars": 0,
       "downloads": 389,
       "version": "1.0.1",
-      "color": "#DB2777",
+      "color": "#0891B2",
       "installCommand": "npx openclaw install jx76-gog",
       "updatedAt": "2026-03-17T19:12:07.090Z"
     },
@@ -6638,8 +6551,8 @@
         "helper",
         "dockerfile",
         "compose",
-        "use",
-        "when"
+        "need",
+        "capabilities"
       ],
       "stars": 0,
       "downloads": 388,
@@ -6657,10 +6570,10 @@
       "tags": [
         "flexible",
         "database",
-        "design",
         "guide",
         "agents",
-        "and"
+        "users",
+        "sqlite"
       ],
       "stars": 0,
       "downloads": 383,
@@ -6701,7 +6614,7 @@
       "stars": 0,
       "downloads": 377,
       "version": "1.1.0",
-      "color": "#4F46E5",
+      "color": "#DB2777",
       "installCommand": "npx openclaw install git-workflow-cn",
       "updatedAt": "2026-03-16T07:01:58.484Z"
     },
@@ -6713,16 +6626,16 @@
       "category": "Automation",
       "tags": [
         "cursor",
-        "use",
         "safely",
-        "across",
         "editor",
-        "cli"
+        "cli",
+        "rules",
+        "background"
       ],
       "stars": 1,
       "downloads": 374,
       "version": "1.0.0",
-      "color": "#DB2777",
+      "color": "#0891B2",
       "installCommand": "npx openclaw install cursor",
       "updatedAt": "2026-03-12T19:26:52.574Z"
     },
@@ -6737,13 +6650,13 @@
         "markdown",
         "convert",
         "files",
-        "with",
-        "table"
+        "table",
+        "recognition"
       ],
       "stars": 0,
       "downloads": 371,
       "version": "3.0.1",
-      "color": "#DB2777",
+      "color": "#0891B2",
       "installCommand": "npx openclaw install pdf-to-markdown",
       "updatedAt": "2026-03-21T05:58:38.068Z"
     },
@@ -6756,15 +6669,15 @@
       "tags": [
         "analytics",
         "tracking",
-        "when",
-        "the",
         "user",
-        "wants"
+        "wants",
+        "set",
+        "improve"
       ],
       "stars": 0,
       "downloads": 362,
       "version": "0.1.0",
-      "color": "#059669",
+      "color": "#2563EB",
       "installCommand": "npx openclaw install analytics-tracking-2",
       "updatedAt": "2026-03-05T05:09:27.486Z"
     },
@@ -6778,9 +6691,9 @@
         "agent",
         "security",
         "hardening",
-        "for",
         "agents",
-        "audit"
+        "audit",
+        "workspace"
       ],
       "stars": 0,
       "downloads": 359,
@@ -6805,7 +6718,7 @@
       "stars": 0,
       "downloads": 359,
       "version": "1.2.0",
-      "color": "#7C3AED",
+      "color": "#0D9488",
       "installCommand": "npx openclaw install miliger-playwright-scraper",
       "updatedAt": "2026-03-15T01:46:59.386Z"
     },
@@ -6824,7 +6737,7 @@
       "stars": 0,
       "downloads": 358,
       "version": "1.2.0",
-      "color": "#059669",
+      "color": "#2563EB",
       "installCommand": "npx openclaw install gitlab-code-review",
       "updatedAt": "2026-03-06T02:19:54.221Z"
     },
@@ -6840,7 +6753,7 @@
         "analytics",
         "track",
         "metrics",
-        "with"
+        "firebase"
       ],
       "stars": 0,
       "downloads": 352,
@@ -6882,12 +6795,12 @@
         "generator",
         "analyzes",
         "codebases",
-        "and"
+        "generates"
       ],
       "stars": 0,
       "downloads": 347,
       "version": "1.0.0",
-      "color": "#7C3AED",
+      "color": "#0D9488",
       "installCommand": "npx openclaw install sovereign-test-generator",
       "updatedAt": "2026-02-26T00:10:40.938Z"
     },
@@ -6901,9 +6814,9 @@
         "dashscope",
         "web",
         "search",
-        "the",
-        "for",
-        "real"
+        "real",
+        "time",
+        "information"
       ],
       "stars": 0,
       "downloads": 343,
@@ -6924,12 +6837,12 @@
         "automation",
         "automate",
         "provisioning",
-        "and"
+        "management"
       ],
       "stars": 0,
       "downloads": 341,
       "version": "1.0.0",
-      "color": "#D97706",
+      "color": "#059669",
       "installCommand": "npx openclaw install cloud-infra-automation",
       "updatedAt": "2026-03-04T19:20:33.521Z"
     },
@@ -6950,7 +6863,7 @@
       "stars": 1,
       "downloads": 338,
       "version": "2.0.0",
-      "color": "#DB2777",
+      "color": "#0891B2",
       "installCommand": "npx openclaw install ui-component",
       "updatedAt": "2026-03-17T20:27:03.686Z"
     },
@@ -6971,7 +6884,7 @@
       "stars": 1,
       "downloads": 335,
       "version": "1.0.2",
-      "color": "#D97706",
+      "color": "#059669",
       "installCommand": "npx openclaw install javascript-skills",
       "updatedAt": "2026-03-18T22:31:46.658Z"
     },
@@ -6992,7 +6905,7 @@
       "stars": 0,
       "downloads": 335,
       "version": "0.1.0",
-      "color": "#DC2626",
+      "color": "#D97706",
       "installCommand": "npx openclaw install code-runner",
       "updatedAt": "2026-03-21T06:27:55.028Z"
     },
@@ -7055,7 +6968,7 @@
       "stars": 0,
       "downloads": 328,
       "version": "1.0.0",
-      "color": "#4F46E5",
+      "color": "#0891B2",
       "installCommand": "npx openclaw install afrexai-observability-engine",
       "updatedAt": "2026-02-26T00:15:35.912Z"
     },
@@ -7068,10 +6981,10 @@
       "tags": [
         "sql",
         "generator",
-        "from",
         "natural",
         "language",
-        "explainer"
+        "explainer",
+        "optimizer"
       ],
       "stars": 0,
       "downloads": 325,
@@ -7113,12 +7026,12 @@
         "html",
         "converts",
         "styled",
-        "with"
+        "wechat"
       ],
       "stars": 0,
       "downloads": 324,
       "version": "1.74.0",
-      "color": "#0891B2",
+      "color": "#DC2626",
       "installCommand": "npx openclaw install baoyu-markdown-to-html",
       "updatedAt": "2026-03-21T04:26:50.746Z"
     },
@@ -7151,11 +7064,11 @@
       "category": "AI & ML",
       "tags": [
         "keras",
-        "build",
         "train",
-        "and",
         "debug",
-        "deep"
+        "deep",
+        "learning",
+        "models"
       ],
       "stars": 2,
       "downloads": 312,
@@ -7181,7 +7094,7 @@
       "stars": 1,
       "downloads": 312,
       "version": "1.69.1",
-      "color": "#7C3AED",
+      "color": "#0D9488",
       "installCommand": "npx openclaw install baoyu-post-to-weibo",
       "updatedAt": "2026-03-21T05:37:34.734Z"
     },
@@ -7222,7 +7135,7 @@
       "stars": 0,
       "downloads": 311,
       "version": "1.0.0",
-      "color": "#0D9488",
+      "color": "#EA580C",
       "installCommand": "npx openclaw install dioxus-framework",
       "updatedAt": "2026-02-25T23:40:42.724Z"
     },
@@ -7233,17 +7146,17 @@
       "description": "Generate practical UI design systems and starter pages using local style/color/typography datasets. Use for landing page or dashboard UI planning and impleme...",
       "category": "UI/UX",
       "tags": [
-        "design",
         "optimizer",
         "generate",
         "practical",
         "systems",
-        "and"
+        "starter",
+        "pages"
       ],
       "stars": 0,
       "downloads": 310,
       "version": "1.1.0",
-      "color": "#2563EB",
+      "color": "#7C3AED",
       "installCommand": "npx openclaw install ui-design-optimizer",
       "updatedAt": "2026-03-21T05:15:59.567Z"
     },
@@ -7257,14 +7170,14 @@
         "echo",
         "test",
         "returns",
-        "the",
         "text",
-        "you"
+        "input",
+        "along"
       ],
       "stars": 0,
       "downloads": 305,
       "version": "1.0.0",
-      "color": "#2563EB",
+      "color": "#7C3AED",
       "installCommand": "npx openclaw install echo-test",
       "updatedAt": "2026-02-25T23:40:35.980Z"
     },
@@ -7280,7 +7193,7 @@
         "new",
         "isolated",
         "openclaw",
-        "with"
+        "own"
       ],
       "stars": 0,
       "downloads": 304,
@@ -7306,7 +7219,7 @@
       "stars": 0,
       "downloads": 304,
       "version": "1.0.0",
-      "color": "#059669",
+      "color": "#2563EB",
       "installCommand": "npx openclaw install clawhub-skill-infra-watchdog",
       "updatedAt": "2026-03-21T04:32:05.756Z"
     },
@@ -7321,8 +7234,8 @@
         "complete",
         "machine",
         "learning",
-        "for",
-        "trading"
+        "trading",
+        "feature"
       ],
       "stars": 0,
       "downloads": 303,
@@ -7344,7 +7257,7 @@
       "stars": 0,
       "downloads": 302,
       "version": "1.0.0",
-      "color": "#059669",
+      "color": "#2563EB",
       "installCommand": "npx openclaw install interactive-games",
       "updatedAt": "2026-03-05T12:14:42.702Z"
     },
@@ -7357,15 +7270,15 @@
       "tags": [
         "cloud",
         "architect",
-        "use",
-        "when",
         "designing",
-        "architectures"
+        "architectures",
+        "planning",
+        "migrations"
       ],
       "stars": 1,
       "downloads": 297,
       "version": "0.1.0",
-      "color": "#059669",
+      "color": "#2563EB",
       "installCommand": "npx openclaw install cloud-architect",
       "updatedAt": "2026-03-07T14:16:45.728Z"
     },
@@ -7397,13 +7310,13 @@
         "helper",
         "flexbox",
         "grid",
-        "for",
-        "animation"
+        "animation",
+        "gradient"
       ],
       "stars": 0,
       "downloads": 296,
       "version": "2.0.1",
-      "color": "#059669",
+      "color": "#2563EB",
       "installCommand": "npx openclaw install css-helper",
       "updatedAt": "2026-03-17T20:11:57.743Z"
     },
@@ -7437,7 +7350,7 @@
         "claw",
         "integrates",
         "desk",
-        "with"
+        "openclaw"
       ],
       "stars": 0,
       "downloads": 289,
@@ -7463,7 +7376,7 @@
       "stars": 0,
       "downloads": 285,
       "version": "1.0.0",
-      "color": "#7C3AED",
+      "color": "#0D9488",
       "installCommand": "npx openclaw install agent-proxy-guardian",
       "updatedAt": "2026-03-21T05:05:12.817Z"
     },
@@ -7522,7 +7435,7 @@
       "stars": 1,
       "downloads": 279,
       "version": "1.0.0",
-      "color": "#0891B2",
+      "color": "#DC2626",
       "installCommand": "npx openclaw install github-analyzer",
       "updatedAt": "2026-03-21T05:37:40.477Z"
     },
@@ -7538,7 +7451,7 @@
         "essentials",
         "essential",
         "commands",
-        "and"
+        "workflows"
       ],
       "stars": 0,
       "downloads": 279,
@@ -7564,7 +7477,7 @@
       "stars": 0,
       "downloads": 279,
       "version": "1.0.8",
-      "color": "#DC2626",
+      "color": "#D97706",
       "installCommand": "npx openclaw install cloud-doc-intelligent-assistant",
       "updatedAt": "2026-03-21T05:41:36.306Z"
     },
@@ -7580,7 +7493,7 @@
         "elite",
         "agentic",
         "finance",
-        "for"
+        "openclaw"
       ],
       "stars": 0,
       "downloads": 276,
@@ -7606,7 +7519,7 @@
       "stars": 0,
       "downloads": 274,
       "version": "1.0.0",
-      "color": "#2563EB",
+      "color": "#7C3AED",
       "installCommand": "npx openclaw install war-intel-monitor",
       "updatedAt": "2026-03-21T04:52:00.929Z"
     },
@@ -7620,9 +7533,9 @@
         "render",
         "deploy",
         "applications",
-        "with",
         "codebase",
-        "analysis"
+        "analysis",
+        "render.yaml"
       ],
       "stars": 0,
       "downloads": 273,
@@ -7642,13 +7555,13 @@
         "google",
         "workspace",
         "cli",
-        "for",
-        "gmail"
+        "gmail",
+        "calendar"
       ],
       "stars": 0,
       "downloads": 273,
       "version": "1.0.0",
-      "color": "#4F46E5",
+      "color": "#DB2777",
       "installCommand": "npx openclaw install gog-1-0-0",
       "updatedAt": "2026-03-02T15:58:24.379Z"
     },
@@ -7660,16 +7573,16 @@
       "category": "UI/UX",
       "tags": [
         "frontend",
-        "design",
         "skill",
-        "build",
         "polished",
-        "conversion"
+        "conversion",
+        "aware",
+        "frontends"
       ],
       "stars": 1,
       "downloads": 269,
       "version": "1.0.2",
-      "color": "#059669",
+      "color": "#2563EB",
       "installCommand": "npx openclaw install frontend-design-skill",
       "updatedAt": "2026-03-12T07:01:50.913Z"
     },
@@ -7687,7 +7600,7 @@
       "stars": 1,
       "downloads": 263,
       "version": "0.1.0",
-      "color": "#DB2777",
+      "color": "#0891B2",
       "installCommand": "npx openclaw install joplin-cli",
       "updatedAt": "2026-03-02T15:37:37.718Z"
     },
@@ -7708,7 +7621,7 @@
       "stars": 0,
       "downloads": 263,
       "version": "1.0.0",
-      "color": "#4F46E5",
+      "color": "#DB2777",
       "installCommand": "npx openclaw install dx-data-navigator",
       "updatedAt": "2026-03-05T16:05:26.462Z"
     },
@@ -7728,7 +7641,7 @@
       "stars": 0,
       "downloads": 261,
       "version": "1.0.0",
-      "color": "#D97706",
+      "color": "#059669",
       "installCommand": "npx openclaw install cc-coder",
       "updatedAt": "2026-03-21T05:21:19.327Z"
     },
@@ -7749,7 +7662,7 @@
       "stars": 0,
       "downloads": 257,
       "version": "1.0.0",
-      "color": "#DC2626",
+      "color": "#D97706",
       "installCommand": "npx openclaw install comprehensive-tech-documentation",
       "updatedAt": "2026-03-05T13:28:14.392Z"
     },
@@ -7802,13 +7715,13 @@
         "google",
         "workspace",
         "cli",
-        "for",
-        "gmail"
+        "gmail",
+        "calendar"
       ],
       "stars": 0,
       "downloads": 253,
       "version": "1.0.0",
-      "color": "#EA580C",
+      "color": "#4F46E5",
       "installCommand": "npx openclaw install gog2",
       "updatedAt": "2026-02-25T20:35:35.908Z"
     },
@@ -7822,9 +7735,9 @@
         "reddi",
         "llm",
         "judge",
-        "build",
         "cost",
-        "efficient"
+        "efficient",
+        "evaluation"
       ],
       "stars": 0,
       "downloads": 252,
@@ -7850,7 +7763,7 @@
       "stars": 0,
       "downloads": 252,
       "version": "1.0.0",
-      "color": "#DB2777",
+      "color": "#0891B2",
       "installCommand": "npx openclaw install rust-patterns",
       "updatedAt": "2026-03-04T15:54:55.210Z"
     },
@@ -7887,12 +7800,12 @@
         "swiss",
         "army",
         "knife",
-        "for"
+        "toc"
       ],
       "stars": 0,
       "downloads": 250,
       "version": "3.1.0",
-      "color": "#4F46E5",
+      "color": "#DB2777",
       "installCommand": "npx openclaw install markdown-toolkit",
       "updatedAt": "2026-03-19T18:01:48.040Z"
     },
@@ -7906,14 +7819,14 @@
         "fastapi",
         "patterns",
         "production",
-        "with",
         "pydantic",
-        "async"
+        "async",
+        "endpoints"
       ],
       "stars": 0,
       "downloads": 247,
       "version": "1.0.0",
-      "color": "#DB2777",
+      "color": "#0891B2",
       "installCommand": "npx openclaw install fastapi-patterns",
       "updatedAt": "2026-03-04T15:54:47.114Z"
     },
@@ -7934,7 +7847,7 @@
       "stars": 0,
       "downloads": 242,
       "version": "1.0.0",
-      "color": "#DB2777",
+      "color": "#0891B2",
       "installCommand": "npx openclaw install iam-policy-auditor",
       "updatedAt": "2026-03-01T05:05:52.065Z"
     },
@@ -7948,9 +7861,9 @@
         "writing",
         "agent",
         "assistant",
-        "that",
         "generates",
-        "structured"
+        "structured",
+        "articles"
       ],
       "stars": 0,
       "downloads": 239,
@@ -7972,7 +7885,7 @@
       "stars": 0,
       "downloads": 239,
       "version": "1.0.0",
-      "color": "#DC2626",
+      "color": "#D97706",
       "installCommand": "npx openclaw install content-analytics",
       "updatedAt": "2026-03-21T05:51:25.142Z"
     },
@@ -7984,11 +7897,11 @@
       "category": "Security",
       "tags": [
         "twofactor",
-        "this",
         "skill",
         "provides",
         "guidance",
-        "and"
+        "enforcement",
+        "rules"
       ],
       "stars": 0,
       "downloads": 232,
@@ -8012,7 +7925,7 @@
       "stars": 0,
       "downloads": 232,
       "version": "1.0.0",
-      "color": "#2563EB",
+      "color": "#7C3AED",
       "installCommand": "npx openclaw install openclaw-zh",
       "updatedAt": "2026-03-05T19:09:41.526Z"
     },
@@ -8027,13 +7940,13 @@
         "data",
         "analysis",
         "analyze",
-        "and",
-        "transform"
+        "transform",
+        "multiple"
       ],
       "stars": 0,
       "downloads": 232,
       "version": "1.0.0",
-      "color": "#EA580C",
+      "color": "#4F46E5",
       "installCommand": "npx openclaw install rupert-data-analysis",
       "updatedAt": "2026-03-13T11:41:50.355Z"
     },
@@ -8047,9 +7960,9 @@
         "llm",
         "judge",
         "ensemble",
-        "build",
         "cost",
-        "efficient"
+        "efficient",
+        "evaluation"
       ],
       "stars": 0,
       "downloads": 231,
@@ -8069,13 +7982,13 @@
         "wan",
         "animate",
         "characters",
-        "from",
-        "images"
+        "images",
+        "driving"
       ],
       "stars": 0,
       "downloads": 231,
       "version": "1.0.0",
-      "color": "#0D9488",
+      "color": "#EA580C",
       "installCommand": "npx openclaw install wavespeed-wan-22-animate",
       "updatedAt": "2026-03-03T07:39:09.731Z"
     },
@@ -8096,7 +8009,7 @@
       "stars": 0,
       "downloads": 231,
       "version": "1.0.0",
-      "color": "#4F46E5",
+      "color": "#DB2777",
       "installCommand": "npx openclaw install anomaly-explainer",
       "updatedAt": "2026-03-21T04:49:07.647Z"
     },
@@ -8117,7 +8030,7 @@
       "stars": 0,
       "downloads": 231,
       "version": "1.0.0",
-      "color": "#7C3AED",
+      "color": "#4F46E5",
       "installCommand": "npx openclaw install agentfinobs",
       "updatedAt": "2026-03-21T04:46:12.277Z"
     },
@@ -8131,9 +8044,9 @@
         "frontend",
         "doctor",
         "diagnose",
-        "and",
         "fix",
-        "common"
+        "common",
+        "issues"
       ],
       "stars": 0,
       "downloads": 230,
@@ -8152,9 +8065,9 @@
         "redis",
         "connect",
         "query",
-        "and",
         "monitor",
-        "instances"
+        "instances",
+        "checking"
       ],
       "stars": 0,
       "downloads": 230,
@@ -8176,7 +8089,7 @@
       "stars": 0,
       "downloads": 230,
       "version": "1.0.52",
-      "color": "#059669",
+      "color": "#2563EB",
       "installCommand": "npx openclaw install ab-test-analyzer",
       "updatedAt": "2026-03-21T06:21:48.872Z"
     },
@@ -8197,7 +8110,7 @@
       "stars": 0,
       "downloads": 230,
       "version": "1.1.0",
-      "color": "#0D9488",
+      "color": "#EA580C",
       "installCommand": "npx openclaw install dessix-skill",
       "updatedAt": "2026-02-26T08:50:19.232Z"
     },
@@ -8212,13 +8125,13 @@
         "voice",
         "gui",
         "input",
-        "and",
-        "microphone"
+        "microphone",
+        "button"
       ],
       "stars": 0,
       "downloads": 229,
       "version": "0.1.1",
-      "color": "#7C3AED",
+      "color": "#0D9488",
       "installCommand": "npx openclaw install webchat-voice-gui",
       "updatedAt": "2026-03-21T05:16:10.722Z"
     },
@@ -8236,7 +8149,7 @@
       "stars": 0,
       "downloads": 228,
       "version": "1.0.4",
-      "color": "#2563EB",
+      "color": "#7C3AED",
       "installCommand": "npx openclaw install apihz-cn-skill",
       "updatedAt": "2026-03-21T05:34:21.949Z"
     },
@@ -8257,7 +8170,7 @@
       "stars": 0,
       "downloads": 228,
       "version": "1.0.0",
-      "color": "#EA580C",
+      "color": "#4F46E5",
       "installCommand": "npx openclaw install spend-analyzer",
       "updatedAt": "2026-03-21T04:50:03.554Z"
     },
@@ -8278,7 +8191,7 @@
       "stars": 0,
       "downloads": 225,
       "version": "1.0.0",
-      "color": "#7C3AED",
+      "color": "#0D9488",
       "installCommand": "npx openclaw install api-monitor-dashboard",
       "updatedAt": "2026-03-21T05:08:06.060Z"
     },
@@ -8293,13 +8206,13 @@
         "check",
         "automatically",
         "polls",
-        "and",
-        "displays"
+        "displays",
+        "memory"
       ],
       "stars": 0,
       "downloads": 224,
       "version": "1.0.0",
-      "color": "#7C3AED",
+      "color": "#0D9488",
       "installCommand": "npx openclaw install gpu-check",
       "updatedAt": "2026-02-28T03:12:11.824Z"
     },
@@ -8314,36 +8227,15 @@
         "tracking",
         "set",
         "audit",
-        "and",
-        "debug"
+        "debug",
+        "implementation"
       ],
       "stars": 0,
       "downloads": 224,
       "version": "1.0.0",
-      "color": "#D97706",
+      "color": "#059669",
       "installCommand": "npx openclaw install cs-analytics-tracking",
       "updatedAt": "2026-03-11T15:51:49.002Z"
-    },
-    {
-      "id": "typescript-coder",
-      "name": "TypeScript Coder",
-      "author": "jhauga",
-      "description": "Expert 10x engineer with extensive knowledge of TypeScript fundamentals, migration strategies, and best practices. Use when asked to \"add TypeScript\", \"migra...",
-      "category": "Database",
-      "tags": [
-        "typescript",
-        "coder",
-        "expert",
-        "engineer",
-        "with",
-        "extensive"
-      ],
-      "stars": 0,
-      "downloads": 221,
-      "version": "3.0.0",
-      "color": "#DB2777",
-      "installCommand": "npx openclaw install typescript-coder",
-      "updatedAt": "2026-03-09T22:11:52.234Z"
     },
     {
       "id": "clip-history",
@@ -8356,13 +8248,13 @@
         "history",
         "clipboard",
         "manager",
-        "for",
-        "saving"
+        "saving",
+        "searching"
       ],
       "stars": 0,
       "downloads": 221,
       "version": "3.0.0",
-      "color": "#2563EB",
+      "color": "#7C3AED",
       "installCommand": "npx openclaw install clip-history",
       "updatedAt": "2026-03-21T06:11:58.826Z"
     },
@@ -8420,7 +8312,7 @@
         "memory",
         "habit",
         "formation",
-        "and"
+        "procedural"
       ],
       "stars": 0,
       "downloads": 215,
@@ -8439,9 +8331,9 @@
         "androidtv",
         "netflix",
         "search",
-        "and",
         "play",
-        "content"
+        "content",
+        "android"
       ],
       "stars": 0,
       "downloads": 215,
@@ -8459,15 +8351,15 @@
       "tags": [
         "graphql",
         "builder",
-        "build",
-        "and",
         "validate",
-        "queries"
+        "queries",
+        "mutations",
+        "schemas"
       ],
       "stars": 0,
       "downloads": 215,
       "version": "3.0.0",
-      "color": "#DC2626",
+      "color": "#D97706",
       "installCommand": "npx openclaw install graphql-builder",
       "updatedAt": "2026-03-21T05:57:42.822Z"
     },
@@ -8481,14 +8373,14 @@
         "coding",
         "style",
         "memory",
-        "that",
         "adapts",
-        "your"
+        "preferences",
+        "conventions"
       ],
       "stars": 0,
       "downloads": 213,
       "version": "1.0.0",
-      "color": "#4F46E5",
+      "color": "#DB2777",
       "installCommand": "npx openclaw install coding-1-0-3",
       "updatedAt": "2026-03-05T17:22:24.756Z"
     },
@@ -8501,15 +8393,15 @@
       "tags": [
         "code",
         "documenter",
-        "use",
-        "when",
         "adding",
-        "docstrings"
+        "docstrings",
+        "creating",
+        "api"
       ],
       "stars": 0,
       "downloads": 210,
       "version": "0.1.0",
-      "color": "#EA580C",
+      "color": "#4F46E5",
       "installCommand": "npx openclaw install code-documenter",
       "updatedAt": "2026-03-07T14:18:02.802Z"
     },
@@ -8524,8 +8416,8 @@
         "playbook",
         "engineering",
         "excellence",
-        "use",
-        "for"
+        "architecture",
+        "decisions"
       ],
       "stars": 0,
       "downloads": 209,
@@ -8548,7 +8440,7 @@
       "stars": 0,
       "downloads": 209,
       "version": "1.0.2",
-      "color": "#059669",
+      "color": "#2563EB",
       "installCommand": "npx openclaw install apitest",
       "updatedAt": "2026-03-04T11:44:34.588Z"
     },
@@ -8569,9 +8461,30 @@
       "stars": 0,
       "downloads": 209,
       "version": "1.0.0",
-      "color": "#7C3AED",
+      "color": "#0D9488",
       "installCommand": "npx openclaw install vercel-config-generator",
       "updatedAt": "2026-03-03T14:45:29.363Z"
+    },
+    {
+      "id": "blockscout-analysis",
+      "name": "Blockchain Analysis",
+      "author": "akolotov",
+      "description": "MANDATORY — invoke this skill BEFORE making any Blockscout MCP tool calls or writing any blockchain data scripts, even when the Blockscout MCP server is alre...",
+      "category": "AI & ML",
+      "tags": [
+        "blockscout",
+        "analysis",
+        "mandatory",
+        "invoke",
+        "skill",
+        "making"
+      ],
+      "stars": 0,
+      "downloads": 209,
+      "version": "0.4.0",
+      "color": "#D97706",
+      "installCommand": "npx openclaw install blockscout-analysis",
+      "updatedAt": "2026-03-04T21:39:02.614Z"
     },
     {
       "id": "openclaw-fullstack-app",
@@ -8605,8 +8518,8 @@
         "devops",
         "mcp",
         "replacement",
-        "for",
-        "openclaw"
+        "openclaw",
+        "interact"
       ],
       "stars": 0,
       "downloads": 207,
@@ -8647,13 +8560,13 @@
         "google",
         "workspace",
         "cli",
-        "for",
-        "gmail"
+        "gmail",
+        "calendar"
       ],
       "stars": 0,
       "downloads": 207,
       "version": "1.0.1",
-      "color": "#0D9488",
+      "color": "#EA580C",
       "installCommand": "npx openclaw install gogifocus",
       "updatedAt": "2026-03-04T10:53:39.678Z"
     },
@@ -8672,7 +8585,7 @@
       "stars": 0,
       "downloads": 202,
       "version": "0.1.1",
-      "color": "#D97706",
+      "color": "#059669",
       "installCommand": "npx openclaw install gitlab-workflow",
       "updatedAt": "2026-03-21T05:09:50.379Z"
     },
@@ -8711,7 +8624,7 @@
       "stars": 0,
       "downloads": 197,
       "version": "2.0.0",
-      "color": "#4F46E5",
+      "color": "#DB2777",
       "installCommand": "npx openclaw install github-development-standard",
       "updatedAt": "2026-03-17T19:47:04.517Z"
     },
@@ -8732,7 +8645,7 @@
       "stars": 0,
       "downloads": 196,
       "version": "1.0.3",
-      "color": "#D97706",
+      "color": "#059669",
       "installCommand": "npx openclaw install pythesis-plot",
       "updatedAt": "2026-03-21T06:00:58.704Z"
     },
@@ -8753,7 +8666,7 @@
       "stars": 1,
       "downloads": 195,
       "version": "1.0.0",
-      "color": "#EA580C",
+      "color": "#4F46E5",
       "installCommand": "npx openclaw install github-trending-stable",
       "updatedAt": "2026-03-13T19:02:00.147Z"
     },
@@ -8774,7 +8687,7 @@
       "stars": 1,
       "downloads": 192,
       "version": "1.0.0",
-      "color": "#0891B2",
+      "color": "#DC2626",
       "installCommand": "npx openclaw install magic-api-generate",
       "updatedAt": "2026-03-11T04:31:47.706Z"
     },
@@ -8795,7 +8708,7 @@
       "stars": 0,
       "downloads": 190,
       "version": "1.0.0",
-      "color": "#DC2626",
+      "color": "#D97706",
       "installCommand": "npx openclaw install openclaw-claude-code-bailian",
       "updatedAt": "2026-03-21T05:29:02.646Z"
     },
@@ -8811,7 +8724,7 @@
         "translate",
         "languages",
         "skill",
-        "use"
+        "user"
       ],
       "stars": 0,
       "downloads": 189,
@@ -8837,7 +8750,7 @@
       "stars": 0,
       "downloads": 189,
       "version": "1.0.0",
-      "color": "#DB2777",
+      "color": "#0891B2",
       "installCommand": "npx openclaw install devtest-optimizer",
       "updatedAt": "2026-03-03T11:44:24.047Z"
     },
@@ -8913,13 +8826,13 @@
         "obsidian",
         "sync",
         "cli",
-        "for",
-        "syncing"
+        "syncing",
+        "vaults"
       ],
       "stars": 0,
       "downloads": 182,
       "version": "0.1.2",
-      "color": "#2563EB",
+      "color": "#7C3AED",
       "installCommand": "npx openclaw install obsync",
       "updatedAt": "2026-03-05T16:52:24.477Z"
     },
@@ -8932,13 +8845,12 @@
       "tags": [
         "designer",
         "automation",
-        "skill",
-        "for"
+        "skill"
       ],
       "stars": 0,
       "downloads": 182,
       "version": "1.0.0",
-      "color": "#4F46E5",
+      "color": "#DB2777",
       "installCommand": "npx openclaw install ui-designer",
       "updatedAt": "2026-03-13T06:56:58.527Z"
     },
@@ -8959,7 +8871,7 @@
       "stars": 0,
       "downloads": 181,
       "version": "1.0.3",
-      "color": "#0891B2",
+      "color": "#DC2626",
       "installCommand": "npx openclaw install module-analyzer-generate-doc",
       "updatedAt": "2026-03-10T03:16:51.980Z"
     },
@@ -8980,7 +8892,7 @@
       "stars": 0,
       "downloads": 180,
       "version": "0.1.0",
-      "color": "#DC2626",
+      "color": "#D97706",
       "installCommand": "npx openclaw install cypress-agent-skill",
       "updatedAt": "2026-03-21T05:23:51.383Z"
     },
@@ -9001,7 +8913,7 @@
       "stars": 0,
       "downloads": 180,
       "version": "1.0.0",
-      "color": "#0891B2",
+      "color": "#DC2626",
       "installCommand": "npx openclaw install meta-ads-analytics",
       "updatedAt": "2026-03-14T14:11:48.624Z"
     },
@@ -9037,13 +8949,13 @@
         "reader",
         "document",
         "beautifier",
-        "for",
-        "agents"
+        "agents",
+        "converts"
       ],
       "stars": 1,
       "downloads": 178,
       "version": "1.3.7",
-      "color": "#2563EB",
+      "color": "#7C3AED",
       "installCommand": "npx openclaw install agent-reader",
       "updatedAt": "2026-03-17T09:51:46.765Z"
     },
@@ -9057,14 +8969,14 @@
         "bandwidth",
         "optimizer",
         "identify",
-        "and",
         "reduce",
-        "azure"
+        "azure",
+        "egress"
       ],
       "stars": 0,
       "downloads": 178,
       "version": "1.0.0",
-      "color": "#0891B2",
+      "color": "#DC2626",
       "installCommand": "npx openclaw install bandwidth-optimizer",
       "updatedAt": "2026-03-03T11:44:18.673Z"
     },
@@ -9083,7 +8995,7 @@
       "stars": 0,
       "downloads": 177,
       "version": "1.0.1",
-      "color": "#4F46E5",
+      "color": "#DB2777",
       "installCommand": "npx openclaw install china-express-query",
       "updatedAt": "2026-03-13T23:56:47.683Z"
     },
@@ -9104,7 +9016,7 @@
       "stars": 0,
       "downloads": 175,
       "version": "1.0.1",
-      "color": "#0D9488",
+      "color": "#EA580C",
       "installCommand": "npx openclaw install developer-docs-framework",
       "updatedAt": "2026-03-05T04:25:20.296Z"
     },
@@ -9118,14 +9030,14 @@
         "vvvv",
         "testing",
         "set",
-        "and",
         "run",
-        "automated"
+        "automated",
+        "tests"
       ],
       "stars": 0,
       "downloads": 172,
       "version": "1.0.0",
-      "color": "#4F46E5",
+      "color": "#DB2777",
       "installCommand": "npx openclaw install vvvv-testing",
       "updatedAt": "2026-03-05T17:33:44.114Z"
     },
@@ -9146,7 +9058,7 @@
       "stars": 0,
       "downloads": 172,
       "version": "1.0.0",
-      "color": "#4F46E5",
+      "color": "#DB2777",
       "installCommand": "npx openclaw install nsg-firewall-auditor",
       "updatedAt": "2026-03-04T11:04:45.538Z"
     },
@@ -9163,7 +9075,7 @@
       "stars": 0,
       "downloads": 171,
       "version": "1.1.0",
-      "color": "#2563EB",
+      "color": "#7C3AED",
       "installCommand": "npx openclaw install playwright-han",
       "updatedAt": "2026-03-14T03:59:07.282Z"
     },
@@ -9180,7 +9092,7 @@
       "stars": 0,
       "downloads": 171,
       "version": "1.0.3",
-      "color": "#DB2777",
+      "color": "#0891B2",
       "installCommand": "npx openclaw install api-debugger-cn",
       "updatedAt": "2026-03-15T19:01:47.823Z"
     },
@@ -9201,7 +9113,7 @@
       "stars": 0,
       "downloads": 170,
       "version": "1.0.0",
-      "color": "#059669",
+      "color": "#2563EB",
       "installCommand": "npx openclaw install blender-bpy",
       "updatedAt": "2026-03-15T10:26:47.707Z"
     },
@@ -9235,13 +9147,13 @@
         "clinical",
         "support",
         "system",
-        "for",
-        "nurses"
+        "nurses",
+        "frontline"
       ],
       "stars": 0,
       "downloads": 165,
       "version": "1.0.0",
-      "color": "#7C3AED",
+      "color": "#0D9488",
       "installCommand": "npx openclaw install nurse",
       "updatedAt": "2026-03-21T05:31:29.015Z"
     },
@@ -9262,7 +9174,7 @@
       "stars": 0,
       "downloads": 164,
       "version": "1.0.0",
-      "color": "#D97706",
+      "color": "#059669",
       "installCommand": "npx openclaw install ai-autotester",
       "updatedAt": "2026-03-08T03:41:51.272Z"
     },
@@ -9276,14 +9188,14 @@
         "qelt",
         "blockchain",
         "query",
-        "and",
         "interact",
-        "with"
+        "chain",
+        "via"
       ],
       "stars": 0,
       "downloads": 161,
       "version": "0.1.0",
-      "color": "#2563EB",
+      "color": "#7C3AED",
       "installCommand": "npx openclaw install qelt-blockchain",
       "updatedAt": "2026-03-06T05:59:04.689Z"
     },
@@ -9304,7 +9216,7 @@
       "stars": 1,
       "downloads": 158,
       "version": "0.1.1",
-      "color": "#4F46E5",
+      "color": "#DB2777",
       "installCommand": "npx openclaw install nlm-cli",
       "updatedAt": "2026-03-21T05:53:01.515Z"
     },
@@ -9325,7 +9237,7 @@
       "stars": 0,
       "downloads": 153,
       "version": "1.0.0",
-      "color": "#DC2626",
+      "color": "#D97706",
       "installCommand": "npx openclaw install rdk-x5-app",
       "updatedAt": "2026-03-11T06:46:52.666Z"
     },
@@ -9363,7 +9275,7 @@
       "stars": 0,
       "downloads": 148,
       "version": "1.1.0",
-      "color": "#2563EB",
+      "color": "#7C3AED",
       "installCommand": "npx openclaw install shadows-doc-forge",
       "updatedAt": "2026-03-07T15:24:51.141Z"
     },
@@ -9384,9 +9296,30 @@
       "stars": 0,
       "downloads": 145,
       "version": "1.0.0",
-      "color": "#0891B2",
+      "color": "#DC2626",
       "installCommand": "npx openclaw install text-game-arcade-universe-v3",
       "updatedAt": "2026-03-11T15:56:57.592Z"
+    },
+    {
+      "id": "skill-108",
+      "name": "Skill 108",
+      "author": "timbohnett-farther",
+      "description": "Master platform engineering principles to build self-service internal platforms that optimize developer experience, infrastructure abstraction, observability...",
+      "category": "Database",
+      "tags": [
+        "skill",
+        "108",
+        "master",
+        "platform",
+        "engineering",
+        "principles"
+      ],
+      "stars": 0,
+      "downloads": 145,
+      "version": "1.0.0",
+      "color": "#EA580C",
+      "installCommand": "npx openclaw install skill-108",
+      "updatedAt": "2026-03-08T20:51:57.101Z"
     },
     {
       "id": "dapr-dotnet",
@@ -9400,12 +9333,12 @@
         "expertise",
         "backend",
         "development",
-        "using"
+        "net7"
       ],
       "stars": 0,
       "downloads": 136,
       "version": "1.0.1",
-      "color": "#D97706",
+      "color": "#059669",
       "installCommand": "npx openclaw install dapr-dotnet",
       "updatedAt": "2026-03-13T03:36:31.829Z"
     },
@@ -9426,7 +9359,7 @@
       "stars": 0,
       "downloads": 134,
       "version": "1.0.0",
-      "color": "#0D9488",
+      "color": "#EA580C",
       "installCommand": "npx openclaw install consulting-slide-generator",
       "updatedAt": "2026-03-13T11:46:50.146Z"
     },
@@ -9460,10 +9393,10 @@
       "tags": [
         "fullstack",
         "softwareddeveloper",
-        "design",
-        "and",
         "develop",
-        "secure"
+        "secure",
+        "golang",
+        "backend"
       ],
       "stars": 1,
       "downloads": 129,
@@ -9528,7 +9461,7 @@
       "stars": 0,
       "downloads": 125,
       "version": "1.0.0",
-      "color": "#059669",
+      "color": "#2563EB",
       "installCommand": "npx openclaw install cs-playwright-pro",
       "updatedAt": "2026-03-11T16:11:58.462Z"
     },
@@ -9587,7 +9520,7 @@
       "stars": 0,
       "downloads": 122,
       "version": "1.0.0",
-      "color": "#DB2777",
+      "color": "#0891B2",
       "installCommand": "npx openclaw install text-adventure-game-skill",
       "updatedAt": "2026-03-21T06:17:37.307Z"
     },
@@ -9608,7 +9541,7 @@
       "stars": 0,
       "downloads": 119,
       "version": "1.0.0",
-      "color": "#059669",
+      "color": "#2563EB",
       "installCommand": "npx openclaw install presentation-agent",
       "updatedAt": "2026-03-21T06:10:11.177Z"
     },
@@ -9620,16 +9553,16 @@
       "category": "UI/UX",
       "tags": [
         "express",
-        "use",
-        "for",
         "shipment",
         "tracking",
-        "shipping"
+        "shipping",
+        "guidance",
+        "service"
       ],
       "stars": 0,
       "downloads": 117,
       "version": "1.0.2",
-      "color": "#EA580C",
+      "color": "#4F46E5",
       "installCommand": "npx openclaw install sf-express",
       "updatedAt": "2026-03-21T03:31:50.955Z"
     },
@@ -9663,15 +9596,15 @@
       "tags": [
         "easycode",
         "skill",
-        "use",
-        "when",
         "users",
-        "ask"
+        "ask",
+        "generate",
+        "java"
       ],
       "stars": 0,
       "downloads": 115,
       "version": "1.0.3",
-      "color": "#DB2777",
+      "color": "#0891B2",
       "installCommand": "npx openclaw install easycode-skill",
       "updatedAt": "2026-03-21T06:26:20.002Z"
     },
@@ -9687,7 +9620,7 @@
         "local",
         "speech",
         "text",
-        "with"
+        "whisper"
       ],
       "stars": 0,
       "downloads": 112,
@@ -9712,7 +9645,7 @@
       "stars": 1,
       "downloads": 110,
       "version": "1.2.0",
-      "color": "#EA580C",
+      "color": "#4F46E5",
       "installCommand": "npx openclaw install axure-prototype-generator",
       "updatedAt": "2026-03-21T15:11:47.417Z"
     },
@@ -9748,8 +9681,8 @@
         "sql",
         "builder",
         "describe",
-        "your",
-        "data"
+        "data",
+        "query"
       ],
       "stars": 0,
       "downloads": 105,
@@ -9796,7 +9729,7 @@
       "stars": 0,
       "downloads": 104,
       "version": "1.0.0",
-      "color": "#0891B2",
+      "color": "#DC2626",
       "installCommand": "npx openclaw install documentation-writer",
       "updatedAt": "2026-03-16T22:35:50.439Z"
     },
@@ -9812,12 +9745,12 @@
         "functional",
         "python",
         "code",
-        "and"
+        "detailed"
       ],
       "stars": 1,
       "downloads": 101,
       "version": "1.0.0",
-      "color": "#7C3AED",
+      "color": "#0D9488",
       "installCommand": "npx openclaw install pyc",
       "updatedAt": "2026-03-16T04:11:32.596Z"
     },
@@ -9831,9 +9764,9 @@
         "langchain",
         "skill",
         "python",
-        "using",
         "manage",
-        "conversation"
+        "conversation",
+        "memory"
       ],
       "stars": 0,
       "downloads": 100,
@@ -9854,7 +9787,7 @@
         "schema",
         "complete",
         "reference",
-        "for"
+        "server"
       ],
       "stars": 0,
       "downloads": 99,
@@ -9880,7 +9813,7 @@
       "stars": 0,
       "downloads": 97,
       "version": "1.2.1",
-      "color": "#EA580C",
+      "color": "#4F46E5",
       "installCommand": "npx openclaw install cli-tool-generator",
       "updatedAt": "2026-03-21T06:41:48.126Z"
     },
@@ -9914,15 +9847,15 @@
       "tags": [
         "developer",
         "utils",
-        "all",
         "one",
         "toolkit",
-        "for"
+        "encoding",
+        "formatting"
       ],
       "stars": 0,
       "downloads": 93,
       "version": "1.0.2",
-      "color": "#059669",
+      "color": "#2563EB",
       "installCommand": "npx openclaw install developer-utils",
       "updatedAt": "2026-03-15T05:46:50.645Z"
     },
@@ -9934,11 +9867,11 @@
       "category": "Web Dev",
       "tags": [
         "claw",
-        "use",
         "android",
         "control",
-        "and",
-        "interact"
+        "interact",
+        "real",
+        "phones"
       ],
       "stars": 0,
       "downloads": 92,
@@ -9964,7 +9897,7 @@
       "stars": 0,
       "downloads": 91,
       "version": "1.0.0",
-      "color": "#EA580C",
+      "color": "#4F46E5",
       "installCommand": "npx openclaw install google-analytics-intelligence",
       "updatedAt": "2026-03-17T22:01:48.024Z"
     },
@@ -10004,7 +9937,7 @@
       "stars": 0,
       "downloads": 88,
       "version": "1.0.0",
-      "color": "#DC2626",
+      "color": "#D97706",
       "installCommand": "npx openclaw install gitlab-weekly-report",
       "updatedAt": "2026-03-21T06:07:20.152Z"
     },
@@ -10020,12 +9953,12 @@
         "litiao",
         "turn",
         "raw",
-        "into"
+        "decisions"
       ],
       "stars": 0,
       "downloads": 88,
       "version": "1.0.0",
-      "color": "#0D9488",
+      "color": "#EA580C",
       "installCommand": "npx openclaw install data-analysis-litiao",
       "updatedAt": "2026-03-17T04:06:50.871Z"
     },
@@ -10059,15 +9992,15 @@
       "tags": [
         "lap",
         "account",
-        "and",
         "transaction",
         "api",
-        "specification"
+        "specification",
+        "skill"
       ],
       "stars": 0,
       "downloads": 86,
       "version": "1.0.0",
-      "color": "#4F46E5",
+      "color": "#DB2777",
       "installCommand": "npx openclaw install lap-account-and-transaction-api-specification",
       "updatedAt": "2026-03-21T06:38:11.383Z"
     },
@@ -10082,13 +10015,13 @@
         "protocol",
         "implementation",
         "guide",
-        "for",
-        "telegram"
+        "telegram",
+        "backend"
       ],
       "stars": 0,
       "downloads": 85,
       "version": "1.0.1",
-      "color": "#D97706",
+      "color": "#059669",
       "installCommand": "npx openclaw install mtproto-2-0",
       "updatedAt": "2026-03-15T02:41:55.509Z"
     },
@@ -10109,7 +10042,7 @@
       "stars": 0,
       "downloads": 85,
       "version": "1.0.0",
-      "color": "#0891B2",
+      "color": "#DC2626",
       "installCommand": "npx openclaw install watadot-aws-ec2",
       "updatedAt": "2026-03-16T15:49:29.220Z"
     },
@@ -10130,7 +10063,7 @@
       "stars": 0,
       "downloads": 84,
       "version": "1.0.1",
-      "color": "#7C3AED",
+      "color": "#0D9488",
       "installCommand": "npx openclaw install setup-solidity-contracts",
       "updatedAt": "2026-03-21T06:25:11.422Z"
     },
@@ -10148,7 +10081,7 @@
       "stars": 0,
       "downloads": 83,
       "version": "1.0.0",
-      "color": "#0D9488",
+      "color": "#EA580C",
       "installCommand": "npx openclaw install express-monitor",
       "updatedAt": "2026-03-21T06:24:48.830Z"
     },
@@ -10169,7 +10102,7 @@
       "stars": 0,
       "downloads": 81,
       "version": "1.0.0",
-      "color": "#4F46E5",
+      "color": "#DB2777",
       "installCommand": "npx openclaw install cursor-rules",
       "updatedAt": "2026-03-16T23:16:53.652Z"
     },
@@ -10190,7 +10123,7 @@
       "stars": 1,
       "downloads": 79,
       "version": "1.0.0",
-      "color": "#EA580C",
+      "color": "#4F46E5",
       "installCommand": "npx openclaw install snapshot-to-api",
       "updatedAt": "2026-03-18T05:44:37.089Z"
     },
@@ -10211,7 +10144,7 @@
       "stars": 0,
       "downloads": 78,
       "version": "1.0.0",
-      "color": "#DC2626",
+      "color": "#D97706",
       "installCommand": "npx openclaw install watadot-aws-s3",
       "updatedAt": "2026-03-16T16:13:03.757Z"
     },
@@ -10225,9 +10158,9 @@
         "paw",
         "chat",
         "install",
-        "and",
         "manage",
-        "standalone"
+        "standalone",
+        "web"
       ],
       "stars": 0,
       "downloads": 77,
@@ -10266,14 +10199,14 @@
         "animation",
         "generate",
         "css",
-        "and",
         "svg",
-        "code"
+        "code",
+        "snippets"
       ],
       "stars": 0,
       "downloads": 77,
       "version": "1.0.0",
-      "color": "#DB2777",
+      "color": "#0891B2",
       "installCommand": "npx openclaw install animation",
       "updatedAt": "2026-03-18T13:37:03.276Z"
     },
@@ -10294,7 +10227,7 @@
       "stars": 0,
       "downloads": 77,
       "version": "1.0.0",
-      "color": "#2563EB",
+      "color": "#7C3AED",
       "installCommand": "npx openclaw install watadot-aws-lambda",
       "updatedAt": "2026-03-16T16:09:31.052Z"
     },
@@ -10315,7 +10248,7 @@
       "stars": 0,
       "downloads": 75,
       "version": "1.0.0",
-      "color": "#0D9488",
+      "color": "#EA580C",
       "installCommand": "npx openclaw install coding-agent-backup-fixed-2026q1",
       "updatedAt": "2026-03-21T06:49:18.069Z"
     },
@@ -10327,16 +10260,16 @@
       "category": "API",
       "tags": [
         "api",
-        "design",
         "fastapi",
-        "and",
-        "implement",
-        "restful"
+        "restful",
+        "endpoints",
+        "following",
+        "best"
       ],
       "stars": 0,
       "downloads": 74,
       "version": "1.0.0",
-      "color": "#4F46E5",
+      "color": "#DB2777",
       "installCommand": "npx openclaw install gi-api-design-fastapi",
       "updatedAt": "2026-03-16T17:00:43.473Z"
     },
@@ -10357,7 +10290,7 @@
       "stars": 0,
       "downloads": 73,
       "version": "1.0.1",
-      "color": "#059669",
+      "color": "#2563EB",
       "installCommand": "npx openclaw install todo-webapp",
       "updatedAt": "2026-03-21T06:44:57.800Z"
     },
@@ -10373,7 +10306,7 @@
         "patterns",
         "write",
         "queries",
-        "using"
+        "tkms"
       ],
       "stars": 0,
       "downloads": 72,
@@ -10392,14 +10325,14 @@
         "zonefoundry",
         "local",
         "sonos",
-        "use",
-        "this",
-        "skill"
+        "skill",
+        "agent",
+        "needs"
       ],
       "stars": 0,
       "downloads": 72,
       "version": "1.5.9",
-      "color": "#059669",
+      "color": "#2563EB",
       "installCommand": "npx openclaw install zonefoundry-local-sonos",
       "updatedAt": "2026-03-21T16:21:50.474Z"
     },
@@ -10415,12 +10348,12 @@
         "games",
         "auto",
         "claim",
-        "from"
+        "store"
       ],
       "stars": 0,
       "downloads": 71,
       "version": "1.2.0",
-      "color": "#4F46E5",
+      "color": "#DB2777",
       "installCommand": "npx openclaw install epic-free-games",
       "updatedAt": "2026-03-20T05:06:21.211Z"
     },
@@ -10435,13 +10368,13 @@
         "aws",
         "cloudwatch",
         "observability",
-        "and",
-        "monitoring"
+        "monitoring",
+        "studio"
       ],
       "stars": 0,
       "downloads": 70,
       "version": "1.0.0",
-      "color": "#059669",
+      "color": "#2563EB",
       "installCommand": "npx openclaw install watadot-aws-cloudwatch",
       "updatedAt": "2026-03-16T12:52:02.595Z"
     },
@@ -10454,10 +10387,10 @@
       "tags": [
         "elite",
         "frontend",
-        "design",
         "landing",
         "page",
-        "dashboard"
+        "dashboard",
+        "react"
       ],
       "stars": 0,
       "downloads": 66,
@@ -10504,7 +10437,7 @@
       "stars": 0,
       "downloads": 66,
       "version": "1.0.6",
-      "color": "#DB2777",
+      "color": "#0891B2",
       "installCommand": "npx openclaw install baidu-cloud-bos",
       "updatedAt": "2026-03-21T06:54:42.088Z"
     },
@@ -10525,7 +10458,7 @@
       "stars": 0,
       "downloads": 65,
       "version": "1.0.0",
-      "color": "#D97706",
+      "color": "#059669",
       "installCommand": "npx openclaw install watadot-aws-iam",
       "updatedAt": "2026-03-16T16:30:21.746Z"
     },
@@ -10538,15 +10471,15 @@
       "tags": [
         "analytics",
         "tracking",
-        "when",
-        "the",
         "user",
-        "wants"
+        "wants",
+        "set",
+        "audit"
       ],
       "stars": 0,
       "downloads": 64,
       "version": "1.3.0",
-      "color": "#DB2777",
+      "color": "#0891B2",
       "installCommand": "npx openclaw install analytics-tracking-analytics",
       "updatedAt": "2026-03-17T02:46:49.015Z"
     },
@@ -10567,7 +10500,7 @@
       "stars": 0,
       "downloads": 64,
       "version": "1.0.0",
-      "color": "#0D9488",
+      "color": "#EA580C",
       "installCommand": "npx openclaw install uplo-data-analytics",
       "updatedAt": "2026-03-18T06:21:48.245Z"
     },
@@ -10581,14 +10514,14 @@
         "abm",
         "analytics",
         "tracking",
-        "when",
-        "the",
-        "user"
+        "user",
+        "wants",
+        "set"
       ],
       "stars": 0,
       "downloads": 60,
       "version": "1.0.0",
-      "color": "#4F46E5",
+      "color": "#DB2777",
       "installCommand": "npx openclaw install abm-analytics-tracking",
       "updatedAt": "2026-03-18T02:51:57.022Z"
     },
@@ -10606,7 +10539,7 @@
       "stars": 0,
       "downloads": 58,
       "version": "1.0.0",
-      "color": "#0D9488",
+      "color": "#EA580C",
       "installCommand": "npx openclaw install ai-intelligent-api-management",
       "updatedAt": "2026-03-21T06:59:41.641Z"
     },
@@ -10648,7 +10581,7 @@
       "stars": 0,
       "downloads": 48,
       "version": "1.2.1",
-      "color": "#0D9488",
+      "color": "#EA580C",
       "installCommand": "npx openclaw install sjykj-cli-tool-generator",
       "updatedAt": "2026-03-21T06:52:01.234Z"
     },
@@ -10690,7 +10623,7 @@
       "stars": 0,
       "downloads": 46,
       "version": "1.1.1",
-      "color": "#7C3AED",
+      "color": "#0D9488",
       "installCommand": "npx openclaw install coding-agent-backup-fixed",
       "updatedAt": "2026-03-21T06:48:45.462Z"
     },
@@ -10705,13 +10638,13 @@
         "review",
         "automatically",
         "fetches",
-        "and",
-        "reviews"
+        "reviews",
+        "merge"
       ],
       "stars": 0,
       "downloads": 43,
       "version": "1.0.0",
-      "color": "#0891B2",
+      "color": "#DC2626",
       "installCommand": "npx openclaw install gitlab-mr-review",
       "updatedAt": "2026-03-21T06:55:34.937Z"
     },
@@ -10753,7 +10686,7 @@
       "stars": 0,
       "downloads": 42,
       "version": "1.0.0",
-      "color": "#DC2626",
+      "color": "#D97706",
       "installCommand": "npx openclaw install smart-contract-security-auditor",
       "updatedAt": "2026-03-17T03:59:19.952Z"
     },
@@ -10771,7 +10704,7 @@
       "stars": 0,
       "downloads": 41,
       "version": "1.0.3",
-      "color": "#DB2777",
+      "color": "#0891B2",
       "installCommand": "npx openclaw install gitlab-daily-report",
       "updatedAt": "2026-03-21T07:06:49.776Z"
     },
@@ -10785,9 +10718,9 @@
         "vue",
         "component",
         "guide",
-        "design",
-        "and",
-        "implement"
+        "components",
+        "following",
+        "best"
       ],
       "stars": 0,
       "downloads": 39,
@@ -10849,13 +10782,13 @@
         "coding",
         "style",
         "memory",
-        "that",
-        "adapts"
+        "adapts",
+        "preferences"
       ],
       "stars": 0,
       "downloads": 38,
       "version": "1.0.4",
-      "color": "#EA580C",
+      "color": "#4F46E5",
       "installCommand": "npx openclaw install taizi-coding",
       "updatedAt": "2026-03-18T01:31:53.993Z"
     },
@@ -10872,7 +10805,7 @@
       "stars": 0,
       "downloads": 38,
       "version": "3.1.0",
-      "color": "#EA580C",
+      "color": "#4F46E5",
       "installCommand": "npx openclaw install kuuila-game",
       "updatedAt": "2026-03-21T01:46:53.397Z"
     },
@@ -10892,7 +10825,7 @@
       "stars": 0,
       "downloads": 37,
       "version": "1.0.1",
-      "color": "#2563EB",
+      "color": "#7C3AED",
       "installCommand": "npx openclaw install dependency-tracker",
       "updatedAt": "2026-03-21T06:58:59.253Z"
     },
@@ -10929,14 +10862,35 @@
         "strong",
         "execution",
         "mode",
-        "for"
+        "current"
       ],
       "stars": 0,
       "downloads": 35,
       "version": "1.0.1",
-      "color": "#7C3AED",
+      "color": "#0D9488",
       "installCommand": "npx openclaw install gpt-go",
       "updatedAt": "2026-03-19T09:11:54.050Z"
+    },
+    {
+      "id": "api-expert",
+      "name": "FastAPI开发专家",
+      "author": "dapan0902",
+      "description": "FastAPI development best practices and conventions. Use when building, reviewing, or debugging FastAPI applications, REST APIs, or Pydantic models.",
+      "category": "API",
+      "tags": [
+        "api",
+        "expert",
+        "fastapi",
+        "development",
+        "best",
+        "practices"
+      ],
+      "stars": 0,
+      "downloads": 34,
+      "version": "1.0.4",
+      "color": "#4F46E5",
+      "installCommand": "npx openclaw install api-expert",
+      "updatedAt": "2026-03-19T06:16:46.613Z"
     },
     {
       "id": "java-api-lin-skill",
@@ -10955,7 +10909,7 @@
       "stars": 0,
       "downloads": 34,
       "version": "1.0.1",
-      "color": "#2563EB",
+      "color": "#7C3AED",
       "installCommand": "npx openclaw install java-api-lin-skill",
       "updatedAt": "2026-03-21T06:48:13.081Z"
     },
@@ -10990,7 +10944,7 @@
       "stars": 0,
       "downloads": 33,
       "version": "1.6.0",
-      "color": "#0D9488",
+      "color": "#EA580C",
       "installCommand": "npx openclaw install feishu-calendar-oauth",
       "updatedAt": "2026-03-20T20:14:53.364Z"
     },
@@ -11005,13 +10959,13 @@
         "screen",
         "recorder",
         "expertise",
-        "using",
-        "and"
+        "extending",
+        "open"
       ],
       "stars": 0,
       "downloads": 33,
       "version": "1.0.0",
-      "color": "#0D9488",
+      "color": "#EA580C",
       "installCommand": "npx openclaw install recordly-screen-recorder",
       "updatedAt": "2026-03-21T06:54:43.256Z"
     },
@@ -11030,7 +10984,7 @@
       "stars": 0,
       "downloads": 32,
       "version": "1.0.2",
-      "color": "#0D9488",
+      "color": "#DB2777",
       "installCommand": "npx openclaw install openclaw-observability",
       "updatedAt": "2026-03-21T06:56:20.431Z"
     },
@@ -11045,8 +10999,8 @@
         "authenticate",
         "wallet",
         "agnicpay",
-        "using",
-        "browser"
+        "browser",
+        "oauth"
       ],
       "stars": 0,
       "downloads": 31,
@@ -11072,7 +11026,7 @@
       "stars": 0,
       "downloads": 31,
       "version": "1.0.0",
-      "color": "#DC2626",
+      "color": "#D97706",
       "installCommand": "npx openclaw install phy-css-dead-code",
       "updatedAt": "2026-03-18T00:56:49.003Z"
     },
@@ -11085,15 +11039,15 @@
       "tags": [
         "china",
         "express",
-        "use",
-        "when",
-        "the",
-        "user"
+        "user",
+        "wants",
+        "directly",
+        "get"
       ],
       "stars": 0,
       "downloads": 31,
       "version": "3.0.0",
-      "color": "#7C3AED",
+      "color": "#0D9488",
       "installCommand": "npx openclaw install china-express",
       "updatedAt": "2026-03-20T21:17:06.387Z"
     },
@@ -11133,7 +11087,7 @@
       "stars": 0,
       "downloads": 30,
       "version": "1.0.0",
-      "color": "#EA580C",
+      "color": "#4F46E5",
       "installCommand": "npx openclaw install openclaw-cursor-agent",
       "updatedAt": "2026-03-19T03:52:49.075Z"
     },
@@ -11147,9 +11101,9 @@
         "ocmap",
         "pairing",
         "auth",
-        "implement",
         "one",
-        "time"
+        "time",
+        "code"
       ],
       "stars": 0,
       "downloads": 29,
@@ -11173,7 +11127,7 @@
       "stars": 0,
       "downloads": 29,
       "version": "1.0.0",
-      "color": "#059669",
+      "color": "#2563EB",
       "installCommand": "npx openclaw install ai-intelligent-blockchain-platform",
       "updatedAt": "2026-03-21T07:09:58.050Z"
     },
@@ -11186,10 +11140,10 @@
       "tags": [
         "devops",
         "journey",
-        "this",
         "repository",
         "started",
-        "out"
+        "out",
+        "learning"
       ],
       "stars": 0,
       "downloads": 28,
@@ -11208,9 +11162,9 @@
         "memory",
         "hybrid",
         "stack",
-        "use",
-        "this",
-        "skill"
+        "skill",
+        "read",
+        "write"
       ],
       "stars": 0,
       "downloads": 28,
@@ -11236,7 +11190,7 @@
       "stars": 0,
       "downloads": 28,
       "version": "1.0.1",
-      "color": "#0891B2",
+      "color": "#DC2626",
       "installCommand": "npx openclaw install cloud-upload-tencent",
       "updatedAt": "2026-03-19T12:21:47.743Z"
     },
@@ -11251,8 +11205,8 @@
         "render",
         "generative",
         "framework",
-        "that",
-        "renders"
+        "renders",
+        "generated"
       ],
       "stars": 0,
       "downloads": 27,
@@ -11292,9 +11246,9 @@
         "mobilerun",
         "official",
         "give",
-        "your",
         "openclaw",
-        "agent"
+        "agent",
+        "hands"
       ],
       "stars": 0,
       "downloads": 27,
@@ -11318,7 +11272,7 @@
       "stars": 0,
       "downloads": 27,
       "version": "1.0.0",
-      "color": "#0D9488",
+      "color": "#EA580C",
       "installCommand": "npx openclaw install rule-pasta-zoo-game",
       "updatedAt": "2026-03-21T06:48:52.488Z"
     },
@@ -11335,7 +11289,7 @@
       "stars": 0,
       "downloads": 27,
       "version": "1.0.2",
-      "color": "#2563EB",
+      "color": "#7C3AED",
       "installCommand": "npx openclaw install endless-downstairs",
       "updatedAt": "2026-03-21T02:06:54.957Z"
     },
@@ -11351,7 +11305,7 @@
         "tools",
         "run",
         "scripts",
-        "for"
+        "aws"
       ],
       "stars": 0,
       "downloads": 25,
@@ -11359,27 +11313,6 @@
       "color": "#4F46E5",
       "installCommand": "npx openclaw install devops-bash-tools",
       "updatedAt": "2026-03-19T23:31:52.345Z"
-    },
-    {
-      "id": "observability",
-      "name": "Observability",
-      "author": "bytesagain",
-      "description": "SigNoz is an open-source observability platform native to OpenTelemetry with logs, traces and metric observability, typescript, apm, application-monitoring.",
-      "category": "Monitoring",
-      "tags": [
-        "observability",
-        "signoz",
-        "open",
-        "source",
-        "platform",
-        "native"
-      ],
-      "stars": 0,
-      "downloads": 25,
-      "version": "2.0.0",
-      "color": "#EA580C",
-      "installCommand": "npx openclaw install observability",
-      "updatedAt": "2026-03-19T05:24:22.665Z"
     },
     {
       "id": "code-runner-local",
@@ -11398,7 +11331,7 @@
       "stars": 0,
       "downloads": 24,
       "version": "1.0.0",
-      "color": "#4F46E5",
+      "color": "#DB2777",
       "installCommand": "npx openclaw install code-runner-local",
       "updatedAt": "2026-03-20T10:56:56.016Z"
     },
@@ -11412,9 +11345,9 @@
         "llm",
         "judge",
         "methodology",
-        "for",
         "comparing",
-        "code"
+        "code",
+        "implementations"
       ],
       "stars": 0,
       "downloads": 23,
@@ -11435,12 +11368,12 @@
         "control",
         "hosted",
         "instance",
-        "through"
+        "service"
       ],
       "stars": 0,
       "downloads": 23,
       "version": "0.1.0",
-      "color": "#7C3AED",
+      "color": "#0D9488",
       "installCommand": "npx openclaw install openclaw-api-control",
       "updatedAt": "2026-03-20T22:26:53.992Z"
     },
@@ -11452,7 +11385,6 @@
       "category": "UI/UX",
       "tags": [
         "minimalist",
-        "design",
         "system",
         "tailwind",
         "css"
@@ -11460,7 +11392,7 @@
       "stars": 0,
       "downloads": 22,
       "version": "1.0.0",
-      "color": "#7C3AED",
+      "color": "#0D9488",
       "installCommand": "npx openclaw install minimalist-design-system",
       "updatedAt": "2026-03-20T07:41:46.834Z"
     },
@@ -11476,12 +11408,12 @@
         "converter",
         "convert",
         "documents",
-        "and"
+        "files"
       ],
       "stars": 0,
       "downloads": 21,
       "version": "1.0.0",
-      "color": "#EA580C",
+      "color": "#4F46E5",
       "installCommand": "npx openclaw install hami-markdown-converter",
       "updatedAt": "2026-03-20T11:21:56.651Z"
     },
@@ -11514,11 +11446,11 @@
       "category": "Frontend",
       "tags": [
         "frontend",
-        "design",
-        "create",
         "distinctive",
         "production",
-        "grade"
+        "grade",
+        "interfaces",
+        "high"
       ],
       "stars": 0,
       "downloads": 20,
@@ -11538,8 +11470,8 @@
         "convert",
         "markdown",
         "files",
-        "into",
-        "high"
+        "high",
+        "contrast"
       ],
       "stars": 0,
       "downloads": 19,
@@ -11561,7 +11493,7 @@
       "stars": 0,
       "downloads": 19,
       "version": "0.1.0",
-      "color": "#D97706",
+      "color": "#059669",
       "installCommand": "npx openclaw install visual",
       "updatedAt": "2026-03-19T16:41:53.502Z"
     },
@@ -11584,27 +11516,6 @@
       "updatedAt": "2026-03-20T20:24:21.932Z"
     },
     {
-      "id": "mcp-oauth",
-      "name": "MCP OAuth",
-      "author": "lucaperret",
-      "description": "Add OAuth 2.0 PKCE authentication to a remote MCP server. Use this skill whenever the user wants to add authentication to an MCP server, protect MCP tools wi...",
-      "category": "Security",
-      "tags": [
-        "mcp",
-        "oauth",
-        "add",
-        "pkce",
-        "authentication",
-        "remote"
-      ],
-      "stars": 0,
-      "downloads": 18,
-      "version": "1.0.0",
-      "color": "#EA580C",
-      "installCommand": "npx openclaw install mcp-oauth",
-      "updatedAt": "2026-03-19T23:46:50.570Z"
-    },
-    {
       "id": "solidity-audit",
       "name": "solidity-audit",
       "author": "xiaominger",
@@ -11621,7 +11532,7 @@
       "stars": 0,
       "downloads": 18,
       "version": "1.0.1",
-      "color": "#2563EB",
+      "color": "#7C3AED",
       "installCommand": "npx openclaw install solidity-audit",
       "updatedAt": "2026-03-20T20:20:19.612Z"
     },
@@ -11642,7 +11553,7 @@
       "stars": 0,
       "downloads": 18,
       "version": "1.0.0",
-      "color": "#059669",
+      "color": "#2563EB",
       "installCommand": "npx openclaw install docs-style",
       "updatedAt": "2026-03-20T07:56:46.676Z"
     },
@@ -11658,12 +11569,12 @@
         "write",
         "minimal",
         "efficient",
-        "for"
+        "small"
       ],
       "stars": 0,
       "downloads": 17,
       "version": "1.0.0",
-      "color": "#D97706",
+      "color": "#059669",
       "installCommand": "npx openclaw install tiny-css",
       "updatedAt": "2026-03-19T20:36:46.718Z"
     },
@@ -11682,7 +11593,7 @@
       "stars": 0,
       "downloads": 17,
       "version": "1.0.0",
-      "color": "#EA580C",
+      "color": "#4F46E5",
       "installCommand": "npx openclaw install rust-db-contracts",
       "updatedAt": "2026-03-20T02:41:54.466Z"
     },
@@ -11702,7 +11613,7 @@
       "stars": 0,
       "downloads": 17,
       "version": "1.0.0",
-      "color": "#7C3AED",
+      "color": "#0D9488",
       "installCommand": "npx openclaw install cloudcc-cli-dev",
       "updatedAt": "2026-03-20T17:17:14.835Z"
     },
@@ -11715,15 +11626,15 @@
       "tags": [
         "web",
         "animation",
-        "design",
-        "and",
-        "implement",
-        "animations"
+        "animations",
+        "feel",
+        "natural",
+        "purposeful"
       ],
       "stars": 0,
       "downloads": 16,
       "version": "1.0.0",
-      "color": "#4F46E5",
+      "color": "#DB2777",
       "installCommand": "npx openclaw install web-animation-design",
       "updatedAt": "2026-03-20T22:56:46.614Z"
     },
@@ -11735,13 +11646,12 @@
       "category": "UI/UX",
       "tags": [
         "game",
-        "numeric",
-        "design"
+        "numeric"
       ],
       "stars": 0,
       "downloads": 15,
       "version": "1.0.0",
-      "color": "#7C3AED",
+      "color": "#0D9488",
       "installCommand": "npx openclaw install game-numeric-design",
       "updatedAt": "2026-03-20T20:12:54.247Z"
     },
@@ -11800,7 +11710,7 @@
       "stars": 0,
       "downloads": 13,
       "version": "1.5.0",
-      "color": "#D97706",
+      "color": "#059669",
       "installCommand": "npx openclaw install unipile-linkedin-sdk",
       "updatedAt": "2026-03-21T13:31:55.995Z"
     },
@@ -11815,13 +11725,13 @@
         "cli",
         "management",
         "manage",
-        "and",
-        "execute"
+        "execute",
+        "tools"
       ],
       "stars": 0,
       "downloads": 12,
       "version": "1.0.0",
-      "color": "#2563EB",
+      "color": "#7C3AED",
       "installCommand": "npx openclaw install coding-cli-management",
       "updatedAt": "2026-03-20T09:36:46.661Z"
     },
@@ -11834,15 +11744,15 @@
       "tags": [
         "aiotnetwork",
         "blockchain",
-        "did",
         "decentralized",
         "identity",
-        "management"
+        "management",
+        "chain"
       ],
       "stars": 0,
       "downloads": 12,
       "version": "1.0.1",
-      "color": "#D97706",
+      "color": "#059669",
       "installCommand": "npx openclaw install aiotnetwork-blockchain-did",
       "updatedAt": "2026-03-20T08:11:48.710Z"
     },
@@ -11875,18 +11785,39 @@
       "category": "UI/UX",
       "tags": [
         "jtexpress",
-        "use",
         "express",
-        "for",
         "shipment",
-        "tracking"
+        "tracking",
+        "shipping",
+        "guidance"
       ],
       "stars": 0,
       "downloads": 11,
       "version": "1.0.1",
-      "color": "#D97706",
+      "color": "#059669",
       "installCommand": "npx openclaw install jtexpress",
       "updatedAt": "2026-03-21T03:36:50.002Z"
+    },
+    {
+      "id": "cloud-misconfig-scanner",
+      "name": "Cloud Misconfig Scanner",
+      "author": "krishnakumarmahadevan-cmd",
+      "description": "Automated security scanner for identifying and reporting misconfigurations across cloud infrastructure providers.",
+      "category": "Security",
+      "tags": [
+        "cloud",
+        "misconfig",
+        "scanner",
+        "automated",
+        "security",
+        "identifying"
+      ],
+      "stars": 0,
+      "downloads": 9,
+      "version": "1.0.0",
+      "color": "#DB2777",
+      "installCommand": "npx openclaw install cloud-misconfig-scanner",
+      "updatedAt": "2026-03-21T08:16:51.280Z"
     },
     {
       "id": "vefaas-cli",
@@ -11898,16 +11829,37 @@
         "vefaas",
         "cli",
         "deploy",
-        "and",
         "manage",
-        "serverless"
+        "serverless",
+        "applications"
       ],
       "stars": 0,
       "downloads": 7,
       "version": "1.0.0",
-      "color": "#059669",
+      "color": "#2563EB",
       "installCommand": "npx openclaw install vefaas-cli",
       "updatedAt": "2026-03-21T04:16:50.494Z"
+    },
+    {
+      "id": "cloud-compliance-checker",
+      "name": "Cloud Compliance Checker",
+      "author": "krishnakumarmahadevan-cmd",
+      "description": "Validates cloud infrastructure configurations against industry compliance standards and regulatory frameworks.",
+      "category": "AI & ML",
+      "tags": [
+        "cloud",
+        "compliance",
+        "checker",
+        "validates",
+        "infrastructure",
+        "configurations"
+      ],
+      "stars": 0,
+      "downloads": 6,
+      "version": "1.0.0",
+      "color": "#4F46E5",
+      "installCommand": "npx openclaw install cloud-compliance-checker",
+      "updatedAt": "2026-03-21T08:16:46.466Z"
     },
     {
       "id": "ai-video-gen-1-0-0",
@@ -11920,8 +11872,8 @@
         "gen",
         "end",
         "generation",
-        "create",
-        "videos"
+        "videos",
+        "text"
       ],
       "stars": 0,
       "downloads": 3,
@@ -11942,7 +11894,7 @@
         "code",
         "review",
         "reviews",
-        "for"
+        "correctness"
       ],
       "stars": 0,
       "downloads": 3,
@@ -11968,7 +11920,7 @@
       "stars": 0,
       "downloads": 3,
       "version": "1.0.1",
-      "color": "#2563EB",
+      "color": "#7C3AED",
       "installCommand": "npx openclaw install differential-gene-analysis",
       "updatedAt": "2026-03-21T12:21:55.088Z"
     },
@@ -11989,7 +11941,7 @@
       "stars": 0,
       "downloads": 3,
       "version": "1.0.2",
-      "color": "#059669",
+      "color": "#2563EB",
       "installCommand": "npx openclaw install differential-gene-analysis-rna-seq",
       "updatedAt": "2026-03-21T12:16:53.010Z"
     },
@@ -12010,7 +11962,7 @@
       "stars": 0,
       "downloads": 2,
       "version": "1.0.0",
-      "color": "#7C3AED",
+      "color": "#0D9488",
       "installCommand": "npx openclaw install pagination",
       "updatedAt": "2026-03-21T12:32:01.091Z"
     },
@@ -12046,8 +11998,7 @@
         "images",
         "openai",
         "gemini",
-        "generatecontent",
-        "use"
+        "generatecontent"
       ],
       "stars": 0,
       "downloads": 0,
@@ -12086,10 +12037,10 @@
       "tags": [
         "ios",
         "animation",
-        "design",
-        "and",
         "plan",
-        "animations"
+        "animations",
+        "structured",
+        "specs"
       ],
       "stars": 0,
       "downloads": 0,
@@ -12129,12 +12080,12 @@
         "helps",
         "users",
         "discover",
-        "and"
+        "install"
       ],
       "stars": 0,
       "downloads": 0,
       "version": "1.0.0",
-      "color": "#DC2626",
+      "color": "#D97706",
       "installCommand": "npx openclaw install find-skills-cn",
       "updatedAt": "2026-03-21T16:21:49.526Z"
     },
@@ -12155,7 +12106,7 @@
       "stars": 0,
       "downloads": 0,
       "version": "1.0.0",
-      "color": "#4F46E5",
+      "color": "#DB2777",
       "installCommand": "npx openclaw install node",
       "updatedAt": "2026-03-21T15:26:50.769Z"
     },
@@ -12170,13 +12121,13 @@
         "browser",
         "fast",
         "rust",
-        "based",
-        "headless"
+        "headless",
+        "automation"
       ],
       "stars": 0,
       "downloads": 0,
       "version": "1.0.0",
-      "color": "#DC2626",
+      "color": "#D97706",
       "installCommand": "npx openclaw install agent-browser-cn",
       "updatedAt": "2026-03-21T16:01:49.529Z"
     },
@@ -12190,14 +12141,14 @@
         "meta",
         "mcp",
         "creator",
-        "use",
-        "the",
-        "mcphero"
+        "mcphero",
+        "server",
+        "inside"
       ],
       "stars": 0,
       "downloads": 0,
       "version": "1.0.0",
-      "color": "#2563EB",
+      "color": "#7C3AED",
       "installCommand": "npx openclaw install meta-mcp-creator",
       "updatedAt": "2026-03-21T16:06:47.495Z"
     }
