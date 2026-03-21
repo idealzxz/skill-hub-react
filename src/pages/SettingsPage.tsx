@@ -8,9 +8,7 @@ export default function SettingsPage() {
   const { state, dispatch, toast } = useApp()
   const [tokenInput, setTokenInput] = useState('')
   const [connecting, setConnecting] = useState(false)
-  const [repoOwner, setRepoOwner] = useState('')
-  const [repoName, setRepoName] = useState('')
-  const [repoLabel, setRepoLabel] = useState('')
+  const [repoInput, setRepoInput] = useState('')
   const [addingRepo, setAddingRepo] = useState(false)
 
   const connectGitHub = async () => {
@@ -45,14 +43,21 @@ export default function SettingsPage() {
     toast('已断开 GitHub 连接')
   }
 
+  const parseRepoInput = (input: string): { owner: string; repo: string } | null => {
+    const trimmed = input.trim().replace(/\/+$/, '')
+    const ghMatch = trimmed.match(/github\.com\/([^/]+)\/([^/]+)/)
+    if (ghMatch) return { owner: ghMatch[1], repo: ghMatch[2].replace(/\.git$/, '') }
+    const shortMatch = trimmed.match(/^([^/\s]+)\/([^/\s]+)$/)
+    if (shortMatch) return { owner: shortMatch[1], repo: shortMatch[2] }
+    return null
+  }
+
   const addTeamRepo = async () => {
-    const owner = repoOwner.trim()
-    const repo = repoName.trim()
-    const label = repoLabel.trim() || `${owner}/${repo}`
-    if (!owner || !repo) { toast('请填写仓库拥有者和名称'); return }
+    const parsed = parseRepoInput(repoInput)
+    if (!parsed) { toast('请输入仓库地址，如 org/repo 或 GitHub 链接'); return }
+    const { owner, repo } = parsed
     if (state.teamRepos.some((r) => r.owner === owner && r.repo === repo)) {
-      toast('该仓库已添加')
-      return
+      toast('该仓库已添加'); return
     }
     setAddingRepo(true)
     try {
@@ -65,12 +70,10 @@ export default function SettingsPage() {
       if (!res.ok) throw new Error(res.status === 404 ? '仓库不存在或无权访问' : '检查仓库失败')
       dispatch({
         type: 'ADD_TEAM_REPO',
-        repo: { id: `tr-${Date.now()}`, owner, repo, label },
+        repo: { id: `tr-${Date.now()}`, owner, repo, label: `${owner}/${repo}` },
       })
-      setRepoOwner('')
-      setRepoName('')
-      setRepoLabel('')
-      toast(`已添加团队仓库: ${label}`)
+      setRepoInput('')
+      toast(`已添加团队仓库: ${owner}/${repo}`)
     } catch (err) {
       toast('添加失败: ' + String(err))
     }
@@ -160,9 +163,16 @@ export default function SettingsPage() {
               <Users className="w-5 h-5" />
               <h3 className="font-semibold">团队仓库管理</h3>
             </div>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-              订阅 GitHub 仓库作为团队技能源。支持公开仓库（无需 Token）和私有仓库（需绑定 Token）。
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
+              订阅 GitHub 仓库作为团队技能源，同步仓库中的所有技能供团队使用。
             </p>
+            <div className={`text-xs rounded-xl p-3 mb-4 ${state.githubToken ? 'bg-green-50 dark:bg-green-500/10 text-green-700 dark:text-green-300' : 'bg-amber-50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-300'}`}>
+              {state.githubToken ? (
+                <span>已绑定 GitHub Token — 支持添加公开和私有仓库</span>
+              ) : (
+                <span>当前未绑定 Token，仅支持公开仓库。如需添加私有仓库，请先在上方绑定 GitHub 账号</span>
+              )}
+            </div>
 
             {state.teamRepos.length > 0 && (
               <div className="space-y-2 mb-4">
@@ -199,37 +209,22 @@ export default function SettingsPage() {
               </div>
             )}
 
-            <div className="space-y-3">
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <input
-                  type="text"
-                  value={repoOwner}
-                  onChange={(e) => setRepoOwner(e.target.value)}
-                  placeholder="拥有者 (如 my-org)"
-                  className="px-4 py-2.5 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all"
-                />
-                <input
-                  type="text"
-                  value={repoName}
-                  onChange={(e) => setRepoName(e.target.value)}
-                  placeholder="仓库名 (如 team-skills)"
-                  className="px-4 py-2.5 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all"
-                />
-                <input
-                  type="text"
-                  value={repoLabel}
-                  onChange={(e) => setRepoLabel(e.target.value)}
-                  placeholder="显示名称 (可选)"
-                  className="px-4 py-2.5 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all"
-                />
-              </div>
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={repoInput}
+                onChange={(e) => setRepoInput(e.target.value)}
+                placeholder="org/repo 或 https://github.com/org/repo"
+                className="flex-1 px-4 py-2.5 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all"
+                onKeyDown={(e) => e.key === 'Enter' && addTeamRepo()}
+              />
               <button
                 onClick={addTeamRepo}
                 disabled={addingRepo}
-                className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-sm font-medium cursor-pointer hover:opacity-90 transition-colors disabled:opacity-50"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-sm font-medium cursor-pointer hover:opacity-90 transition-colors disabled:opacity-50 shrink-0"
               >
                 {addingRepo ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
-                {addingRepo ? '验证中...' : '添加仓库'}
+                {addingRepo ? '验证中...' : '添加'}
               </button>
             </div>
           </div>
