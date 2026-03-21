@@ -3,6 +3,7 @@ export interface Skill {
   name: string
   author: string
   description: string
+  descriptionZh?: string
   category: string
   tags: string[]
   stars: number
@@ -10,6 +11,7 @@ export interface Skill {
   version: string
   color: string
   installCommand: string
+  homepage?: string
   updatedAt: string
 }
 

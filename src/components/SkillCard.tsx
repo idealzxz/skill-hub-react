@@ -57,7 +57,7 @@ export default function SkillCard({ skill }: Props) {
       </div>
 
       <p className="text-xs text-gray-500 dark:text-gray-400 mb-3 line-clamp-2 leading-relaxed">
-        {skill.description}
+        {skill.descriptionZh || skill.description}
       </p>
 
       <div className="flex items-center justify-between">

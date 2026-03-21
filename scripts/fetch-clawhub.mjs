@@ -1,77 +1,36 @@
 /**
- * 从 ClawHub 公开 API 拉取技能数据，输出到 public/clawhub-skills.json。
+ * 从腾讯 SkillHub（ClawHub 国内镜像）拉取技能数据，输出到 public/clawhub-skills.json。
  * 供 GitHub Actions 定时执行，也可本地 `node scripts/fetch-clawhub.mjs` 手动跑。
+ *
+ * API 源: https://lightmake.site (skillhub.tencent.com 后端)
+ * 优势: 国内高速镜像、中文描述、原生分类、分页接口更高效
  */
 import { writeFileSync, mkdirSync } from 'fs'
 import { join } from 'path'
 
-const API = 'https://clawhub.ai/api'
+const API = 'https://lightmake.site/api'
+const CLAWHUB_API = 'https://clawhub.ai/api'
+const PAGE_SIZE = 100
+const MAX_PAGES = 20
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 
-// ── 搜索关键词，覆盖不同方向 ──────────────────────────
-const SEARCH_QUERIES = [
-  'react', 'vue', 'svelte', 'angular', 'frontend',
-  'nextjs', 'web', 'fullstack',
-  'ai', 'llm', 'machine learning', 'openai', 'langchain',
-  'devops', 'docker', 'kubernetes', 'terraform', 'deploy',
-  'database', 'sql', 'mongodb', 'prisma', 'redis',
-  'mobile', 'flutter', 'react native', 'ios', 'android',
-  'security', 'auth', 'oauth', 'encryption',
-  'testing', 'test', 'jest', 'playwright', 'cypress',
-  'ui', 'design', 'tailwind', 'css', 'animation',
-  'backend', 'api', 'graphql', 'nestjs', 'express',
-  'python', 'fastapi', 'django',
-  'typescript', 'node', 'rust', 'go', 'java',
-  'git', 'github', 'gitlab',
-  'cloud', 'aws', 'azure', 'serverless',
-  'cursor', 'coding', 'agent', 'mcp',
-  'data', 'analytics',
-  'blockchain', 'solidity',
-  'game', 'unity',
-  'cli', 'automation', 'workflow',
-  'documentation', 'markdown',
-  'monitoring', 'observability',
-]
-
-// ── 分类推断 ──────────────────────────────────────────
-const CATEGORY_KEYWORDS = {
-  'AI & ML': ['ai', 'ml', 'llm', 'machine-learning', 'openai', 'langchain', 'gpt', 'deep-learning', 'neural', 'model', 'embedding', 'agent', 'prompt', 'diffusion', 'rag'],
-  'Frontend': ['react', 'vue', 'svelte', 'angular', 'frontend', 'component', 'hooks', 'state-management', 'jsx', 'tsx', 'solid'],
-  'Web Dev': ['web', 'nextjs', 'next', 'nuxt', 'fullstack', 'astro', 'html', 'http', 'seo', 'pwa', 'remix'],
-  'DevOps': ['devops', 'docker', 'kubernetes', 'k8s', 'terraform', 'ci-cd', 'deploy', 'pipeline', 'container', 'helm', 'jenkins', 'cloudflare'],
-  'Database': ['database', 'sql', 'mongodb', 'prisma', 'redis', 'supabase', 'postgres', 'mysql', 'orm', 'migration', 'schema', 'nosql', 'sqlite'],
-  'Mobile': ['mobile', 'react-native', 'flutter', 'ios', 'android', 'swift', 'kotlin', 'swiftui', 'dart', 'expo'],
-  'Security': ['security', 'auth', 'oauth', 'jwt', 'encryption', 'penetration', 'owasp', 'firewall', 'ssl', 'tls', 'vulnerability'],
-  'Testing': ['testing', 'test', 'jest', 'playwright', 'cypress', 'vitest', 'e2e', 'unit-test', 'storybook', 'coverage'],
-  'UI/UX': ['design', 'ui', 'ux', 'figma', 'tailwind', 'css', 'animation', 'responsive', 'accessibility', 'a11y', 'color', 'typography', 'layout', 'style'],
-  'Backend': ['backend', 'nestjs', 'express', 'fastapi', 'server', 'middleware', 'microservice', 'django', 'flask', 'spring'],
-  'Data Science': ['data', 'analytics', 'pandas', 'jupyter', 'visualization', 'statistics', 'notebook'],
-  'Blockchain': ['blockchain', 'crypto', 'ethereum', 'solidity', 'web3', 'nft', 'defi', 'smart-contract'],
-  'Game Dev': ['game', 'unity', 'unreal', 'godot', 'physics', 'sprite', '3d-game', '2d-game'],
-  'CLI Tools': ['cli', 'terminal', 'bash', 'shell', 'command-line', 'zsh', 'powershell'],
-  'Documentation': ['documentation', 'docs', 'markdown', 'readme', 'wiki', 'jsdoc', 'typedoc'],
-  'Monitoring': ['monitoring', 'logging', 'observability', 'metrics', 'alert', 'grafana', 'prometheus'],
-  'API': ['api', 'rest', 'graphql', 'grpc', 'swagger', 'openapi', 'endpoint'],
-  'Cloud': ['cloud', 'aws', 'azure', 'gcp', 'serverless', 'lambda', 'ec2', 's3'],
-  'IoT': ['iot', 'embedded', 'arduino', 'raspberry', 'sensor', 'mqtt'],
-  'Automation': ['automation', 'workflow', 'scraping', 'bot', 'cron', 'scheduler', 'task'],
+// ── SkillHub 分类 → 可读名称映射 ─────────────────────────
+const CATEGORY_MAP = {
+  'developer-tools': 'DevOps',
+  'ai-intelligence': 'AI & ML',
+  'content-creation': 'UI/UX',
+  'productivity': 'Automation',
+  'security-compliance': 'Security',
+  'data-analysis': 'Data Science',
+  'office-collaboration': 'Documentation',
+  'communication-collaboration': 'Documentation',
+  'other': 'Automation',
 }
 
 const SKILL_COLORS = [
   '#7C3AED', '#2563EB', '#059669', '#D97706', '#DC2626',
   '#0891B2', '#DB2777', '#4F46E5', '#EA580C', '#0D9488',
 ]
-
-function inferCategory(slug, displayName, summary) {
-  const text = `${slug} ${displayName} ${summary}`.toLowerCase()
-  let best = 'Automation'
-  let bestScore = 0
-  for (const [cat, keywords] of Object.entries(CATEGORY_KEYWORDS)) {
-    const score = keywords.reduce((s, kw) => s + (text.includes(kw) ? 1 : 0), 0)
-    if (score > bestScore) { bestScore = score; best = cat }
-  }
-  return best
-}
 
 const STOP_WORDS = new Set([
   'the', 'and', 'for', 'with', 'use', 'when', 'that', 'this', 'from',
@@ -85,77 +44,154 @@ const STOP_WORDS = new Set([
   'save', 'design', 'implement', 'build', 'create', 'make',
 ])
 
-function extractTags(slug, summary) {
+// ── 二次推断分类（当 SkillHub 分类过于笼统时补充） ───────────
+const CATEGORY_KEYWORDS = {
+  'Frontend': ['react', 'vue', 'svelte', 'angular', 'frontend', 'component', 'hooks', 'jsx', 'tsx', 'solid'],
+  'Web Dev': ['web', 'nextjs', 'next', 'nuxt', 'fullstack', 'astro', 'html', 'http', 'seo', 'pwa', 'remix'],
+  'Backend': ['backend', 'nestjs', 'express', 'fastapi', 'server', 'middleware', 'microservice', 'django', 'flask', 'spring'],
+  'Database': ['database', 'sql', 'mongodb', 'prisma', 'redis', 'supabase', 'postgres', 'mysql', 'orm', 'migration', 'schema', 'sqlite'],
+  'Mobile': ['mobile', 'react-native', 'flutter', 'ios', 'android', 'swift', 'kotlin', 'swiftui', 'dart', 'expo'],
+  'Testing': ['testing', 'test', 'jest', 'playwright', 'cypress', 'vitest', 'e2e', 'unit-test', 'storybook'],
+  'API': ['api', 'rest', 'graphql', 'grpc', 'swagger', 'openapi', 'endpoint'],
+  'Cloud': ['cloud', 'aws', 'azure', 'gcp', 'serverless', 'lambda'],
+  'CLI Tools': ['cli', 'terminal', 'bash', 'shell', 'command-line'],
+  'Blockchain': ['blockchain', 'crypto', 'ethereum', 'solidity', 'web3'],
+  'Game Dev': ['game', 'unity', 'unreal', 'godot'],
+  'Monitoring': ['monitoring', 'logging', 'observability', 'metrics', 'grafana', 'prometheus'],
+  'IoT': ['iot', 'embedded', 'arduino', 'raspberry', 'sensor', 'mqtt'],
+}
+
+function refineCategory(rawCategory, slug, name, description) {
+  const mapped = CATEGORY_MAP[rawCategory]
+  if (!mapped) return rawCategory || 'Automation'
+
+  if (['DevOps', 'Automation'].includes(mapped)) {
+    const text = `${slug} ${name} ${description}`.toLowerCase()
+    let best = mapped
+    let bestScore = 0
+    for (const [cat, keywords] of Object.entries(CATEGORY_KEYWORDS)) {
+      const score = keywords.reduce((s, kw) => s + (text.includes(kw) ? 1 : 0), 0)
+      if (score > bestScore) { bestScore = score; best = cat }
+    }
+    if (bestScore > 0) return best
+  }
+
+  return mapped
+}
+
+function extractTags(slug, description) {
   const words = slug.split('-').filter((w) => w.length > 2 && !STOP_WORDS.has(w))
-  const extra = (summary.match(/\b[a-z][a-z0-9.]+\b/gi) || [])
+  const extra = (description.match(/\b[a-z][a-z0-9.]+\b/gi) || [])
     .map((w) => w.toLowerCase())
     .filter((w) => w.length > 2 && w.length < 16 && !STOP_WORDS.has(w))
   return [...new Set([...words, ...extra])].slice(0, 6)
 }
 
-// ── 请求 ──────────────────────────────────────────────
-async function fetchSearch(query) {
+// ── SkillHub API 请求 ──────────────────────────────────────
+async function fetchTopSkills() {
   try {
-    const res = await fetch(`${API}/search?q=${encodeURIComponent(query)}`)
+    const res = await fetch(`${API}/skills/top`)
+    if (!res.ok) return []
+    const data = await res.json()
+    return data.code === 0 ? (data.data?.skills || []) : []
+  } catch { return [] }
+}
+
+async function fetchSkillsPage(page, query = '') {
+  try {
+    const params = new URLSearchParams({ page: String(page), pageSize: String(PAGE_SIZE) })
+    if (query) params.set('q', query)
+    const res = await fetch(`${API}/skills?${params}`)
+    if (!res.ok) return { skills: [], total: 0 }
+    const data = await res.json()
+    if (data.code !== 0) return { skills: [], total: 0 }
+    return { skills: data.data?.skills || [], total: data.data?.total || 0 }
+  } catch { return { skills: [], total: 0 } }
+}
+
+// ── ClawHub 回退（SkillHub 异常时使用） ─────────────────────
+async function fetchFromClawHub(query) {
+  try {
+    const res = await fetch(`${CLAWHUB_API}/search?q=${encodeURIComponent(query)}`)
     if (!res.ok) return []
     const data = await res.json()
     return data.results || []
   } catch { return [] }
 }
 
-async function fetchDetail(slug) {
-  try {
-    const res = await fetch(`${API}/skill?slug=${encodeURIComponent(slug)}`)
-    if (!res.ok) return null
-    return res.json()
-  } catch { return null }
+// ── 转换为输出格式 ──────────────────────────────────────────
+function mapSkill(raw, idx) {
+  const slug = raw.slug || ''
+  const desc = raw.description || ''
+  const category = refineCategory(raw.category, slug, raw.name || '', desc)
+  return {
+    id: slug,
+    name: raw.name || slug,
+    author: raw.ownerName || 'unknown',
+    description: desc,
+    descriptionZh: raw.description_zh || '',
+    category,
+    tags: extractTags(slug, desc),
+    stars: raw.stars ?? 0,
+    downloads: raw.downloads ?? 0,
+    installs: raw.installs ?? 0,
+    version: raw.version || '1.0.0',
+    color: SKILL_COLORS[idx % SKILL_COLORS.length],
+    installCommand: `skillhub install ${slug}`,
+    homepage: raw.homepage || `https://clawhub.ai/${raw.ownerName}/${slug}`,
+    updatedAt: raw.updated_at ? new Date(raw.updated_at).toISOString() : new Date().toISOString(),
+  }
 }
 
-// ── 主流程 ─────────────────────────────────────────────
+// ── 主流程 ─────────────────────────────────────────────────
 async function main() {
-  console.log('Fetching skills from ClawHub…')
+  console.log('Fetching skills from Tencent SkillHub (lightmake.site)…')
 
   const slugMap = new Map()
-  for (const q of SEARCH_QUERIES) {
-    const results = await fetchSearch(q)
-    for (const r of results) {
-      if (!slugMap.has(r.slug)) slugMap.set(r.slug, r)
-    }
-    await sleep(120)
-  }
-  console.log(`  Unique skills found via search: ${slugMap.size}`)
 
+  // 1) 先拉取精选 Top 50
+  console.log('  Fetching Top 50 curated skills…')
+  const topSkills = await fetchTopSkills()
+  for (const s of topSkills) {
+    if (s.slug && !slugMap.has(s.slug)) slugMap.set(s.slug, s)
+  }
+  console.log(`  Top skills loaded: ${topSkills.length}`)
+
+  // 2) 分页拉取更多技能
+  console.log('  Fetching paginated skills…')
+  let page = 1
+  let total = Infinity
+  while (page <= MAX_PAGES && slugMap.size < total) {
+    const result = await fetchSkillsPage(page)
+    total = result.total
+    if (result.skills.length === 0) break
+    for (const s of result.skills) {
+      if (s.slug && !slugMap.has(s.slug)) slugMap.set(s.slug, s)
+    }
+    console.log(`  Page ${page}: +${result.skills.length} skills (total unique: ${slugMap.size})`)
+    page++
+    await sleep(200)
+  }
+
+  console.log(`  Unique skills collected: ${slugMap.size}`)
+
+  // 3) 转换格式并排序
   const skills = []
   let idx = 0
-  for (const [slug] of slugMap) {
-    const detail = await fetchDetail(slug)
-    await sleep(120)
-    if (!detail?.skill) continue
-
-    const { skill, latestVersion, owner } = detail
-    const category = inferCategory(slug, skill.displayName, skill.summary)
-
-    skills.push({
-      id: slug,
-      name: skill.displayName || slug,
-      author: owner?.handle || 'unknown',
-      description: skill.summary || '',
-      category,
-      tags: extractTags(slug, skill.summary),
-      stars: skill.stats?.stars ?? 0,
-      downloads: skill.stats?.downloads ?? 0,
-      version: latestVersion?.version || '1.0.0',
-      color: SKILL_COLORS[idx % SKILL_COLORS.length],
-      installCommand: `npx openclaw install ${slug}`,
-      updatedAt: new Date(skill.updatedAt).toISOString(),
-    })
+  for (const [, raw] of slugMap) {
+    skills.push(mapSkill(raw, idx))
     idx++
-    if (idx % 50 === 0) console.log(`  Fetched ${idx} details…`)
   }
 
   skills.sort((a, b) => b.downloads - a.downloads || b.stars - a.stars)
 
-  const output = { fetchedAt: new Date().toISOString(), count: skills.length, skills }
+  // 4) 输出
+  const output = {
+    fetchedAt: new Date().toISOString(),
+    source: 'skillhub.tencent.com',
+    count: skills.length,
+    skills,
+  }
   const outDir = join(process.cwd(), 'public')
   mkdirSync(outDir, { recursive: true })
   writeFileSync(join(outDir, 'clawhub-skills.json'), JSON.stringify(output, null, 2))

@@ -1,14 +1,18 @@
-import { X, Copy, Check } from 'lucide-react'
+import { X, Copy, Check, ChevronDown, ExternalLink } from 'lucide-react'
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { CAT_COLORS } from '../data/skills'
 import { useApp } from '../store/AppContext'
 import { formatNum, copyToClipboard } from '../utils'
 
+const SKILLHUB_CLI_CMD = 'curl -fsSL https://skillhub-1388575217.cos.ap-guangzhou.myqcloud.com/install/install.sh | bash'
+
 export default function SkillDetailModal() {
   const { state, toast, toggleFavorite, isFavorite, closeDetail } = useApp()
   const skill = state.detailSkill
   const [copied, setCopied] = useState(false)
+  const [copiedCli, setCopiedCli] = useState(false)
+  const [showPrereq, setShowPrereq] = useState(false)
 
   const fav = skill ? isFavorite(skill.id) : false
 
@@ -19,6 +23,15 @@ export default function SkillDetailModal() {
       setCopied(true)
       toast('已复制到剪贴板')
       setTimeout(() => setCopied(false), 2000)
+    }
+  }
+
+  const handleCopyCli = async () => {
+    const ok = await copyToClipboard(SKILLHUB_CLI_CMD)
+    if (ok) {
+      setCopiedCli(true)
+      toast('CLI 安装命令已复制')
+      setTimeout(() => setCopiedCli(false), 2000)
     }
   }
 
@@ -81,7 +94,7 @@ export default function SkillDetailModal() {
               </div>
 
               <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
-                {skill.description}
+                {skill.descriptionZh || skill.description}
               </p>
 
               <div className="grid grid-cols-3 gap-3 mb-6">
@@ -99,7 +112,7 @@ export default function SkillDetailModal() {
                 </div>
               </div>
 
-              <div className="mb-6">
+              <div className="mb-4">
                 <h4 className="text-sm font-semibold mb-2">安装命令</h4>
                 <div className="relative group/code">
                   <pre className="bg-gray-900/90 dark:bg-black/60 backdrop-blur-sm text-green-400 rounded-2xl p-4 text-sm font-mono overflow-x-auto border border-white/5">
@@ -110,6 +123,50 @@ export default function SkillDetailModal() {
                   </button>
                 </div>
               </div>
+
+              <div className="mb-6">
+                <button
+                  onClick={() => setShowPrereq(!showPrereq)}
+                  className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 cursor-pointer transition-colors"
+                >
+                  <ChevronDown className={`w-3.5 h-3.5 transition-transform ${showPrereq ? 'rotate-180' : ''}`} />
+                  首次使用？需先安装 SkillHub CLI
+                </button>
+                {showPrereq && (
+                  <div className="mt-2 p-4 rounded-2xl glass-subtle border border-amber-200/30 dark:border-amber-500/10">
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">
+                      运行以下命令安装 SkillHub CLI（国内加速，仅需一次）：
+                    </p>
+                    <div className="relative group/cli">
+                      <pre className="bg-gray-900/90 dark:bg-black/60 backdrop-blur-sm text-amber-400 rounded-xl p-3 text-xs font-mono overflow-x-auto border border-white/5">
+                        <code>{SKILLHUB_CLI_CMD}</code>
+                      </pre>
+                      <button onClick={handleCopyCli} className="absolute top-2 right-2 p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-gray-400 hover:text-white cursor-pointer transition-all opacity-0 group-hover/cli:opacity-100">
+                        {copiedCli ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                      </button>
+                    </div>
+                    <p className="text-xs text-gray-400 mt-2">
+                      安装完成后即可使用 <code className="px-1.5 py-0.5 rounded bg-gray-100 dark:bg-white/10 text-gray-600 dark:text-gray-300 font-mono text-[11px]">skillhub install</code> 命令。
+                      详见{' '}
+                      <a href="https://skillhub.tencent.com" target="_blank" rel="noopener noreferrer" className="text-primary dark:text-primary-light hover:underline">
+                        SkillHub 官网
+                      </a>
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {skill.homepage && (
+                <a
+                  href={skill.homepage}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-primary dark:hover:text-primary-light transition-colors mb-6"
+                >
+                  <ExternalLink className="w-3.5 h-3.5" />
+                  在 ClawHub 查看详情
+                </a>
+              )}
 
               <div className="flex gap-3">
                 <button

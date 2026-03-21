@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { Search, SearchX, ChevronLeft, ChevronRight } from 'lucide-react'
+import { Search, SearchX, ChevronLeft, ChevronRight, Info } from 'lucide-react'
 import { useApp } from '../store/AppContext'
 import { CATEGORIES } from '../data/skills'
 import SkillCard from '../components/SkillCard'
@@ -26,6 +26,7 @@ export default function MarketPage() {
           s.name.toLowerCase().includes(q) ||
           s.author.toLowerCase().includes(q) ||
           s.description.toLowerCase().includes(q) ||
+          (s.descriptionZh && s.descriptionZh.toLowerCase().includes(q)) ||
           s.tags.some((tag) => tag.toLowerCase().includes(q)) ||
           s.category.toLowerCase().includes(q),
       )
@@ -137,6 +138,20 @@ export default function MarketPage() {
             </button>
           </div>
         )}
+
+        <div className="mt-12 mb-2 px-4 py-4 rounded-2xl glass-subtle">
+          <div className="flex items-start gap-2.5 text-xs text-gray-400 dark:text-gray-500 leading-relaxed">
+            <Info className="w-4 h-4 mt-0.5 shrink-0" />
+            <p>
+              <span className="font-medium text-gray-500 dark:text-gray-400">免责声明：</span>
+              本页面展示的技能数据来源于{' '}
+              <a href="https://clawhub.ai/" target="_blank" rel="noopener noreferrer" className="text-primary/70 dark:text-primary-light/70 hover:underline">ClawHub</a>
+              {' '}和{' '}
+              <a href="https://skillhub.tencent.com" target="_blank" rel="noopener noreferrer" className="text-primary/70 dark:text-primary-light/70 hover:underline">SkillHub</a>
+              {' '}等第三方开源社区，仅供浏览与参考。技能内容由社区贡献者提供，本平台不对其准确性、安全性或适用性作任何保证。使用前请自行审查技能内容，因使用第三方技能产生的任何问题，本平台概不负责。
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   )
