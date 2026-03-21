@@ -1,6 +1,9 @@
 import { createContext, useContext, useReducer, useCallback, useEffect, type ReactNode } from 'react'
 import { generateDemoSkills, type Skill, type UserSkill, type SkillMeta, type TeamRepo, type TeamSkill, type SkillBundle } from '../data/skills'
 import { GitHubService, type GitHubUser } from '../services/github'
+import { GitLabService } from '../services/gitlab'
+import { GiteeService } from '../services/gitee'
+import type { GitProvider, GitProviderType } from '../services/git-provider'
 
 export type TabId = 'market' | 'favorites' | 'install' | 'settings' | 'dashboard' | 'recent' | 'myskills' | 'editor' | 'team'
 type Theme = 'light' | 'dark' | 'system'
@@ -20,6 +23,7 @@ export interface AppState {
   detailSkill: Skill | null
   githubToken: string | null
   githubUser: GitHubUser | null
+  gitProviderType: GitProviderType
   mySkills: UserSkill[]
   editingSkill: UserSkill | null
   syncStatus: 'idle' | 'syncing' | 'error'
@@ -44,7 +48,7 @@ export type Action =
   | { type: 'ADD_TOAST'; msg: string; id: number }
   | { type: 'REMOVE_TOAST'; id: number }
   | { type: 'SET_DETAIL'; skill: Skill | null }
-  | { type: 'SET_GITHUB_AUTH'; token: string | null; user: GitHubUser | null }
+  | { type: 'SET_GITHUB_AUTH'; token: string | null; user: GitHubUser | null; providerType?: GitProviderType }
   | { type: 'SET_MY_SKILLS'; skills: UserSkill[] }
   | { type: 'ADD_MY_SKILL'; skill: UserSkill }
   | { type: 'UPDATE_MY_SKILL'; skill: UserSkill }
@@ -98,7 +102,7 @@ function reducer(state: AppState, action: Action): AppState {
     case 'SET_DETAIL':
       return { ...state, detailSkill: action.skill }
     case 'SET_GITHUB_AUTH':
-      return { ...state, githubToken: action.token, githubUser: action.user }
+      return { ...state, githubToken: action.token, githubUser: action.user, gitProviderType: action.providerType || state.gitProviderType }
     case 'SET_MY_SKILLS':
       return { ...state, mySkills: action.skills }
     case 'ADD_MY_SKILL':
@@ -147,6 +151,7 @@ function reducer(state: AppState, action: Action): AppState {
         theme: 'light',
         githubToken: null,
         githubUser: null,
+        gitProviderType: 'github',
         indexSha: undefined,
         favSha: undefined,
         teamRepos: [],
@@ -167,6 +172,7 @@ interface AppContextValue {
   openDetail: (skill: Skill) => void
   closeDetail: () => void
   getGitHub: () => GitHubService | null
+  getProvider: () => GitProvider | null
   getMetas: () => SkillMeta[]
 }
 
@@ -189,6 +195,7 @@ function loadInitialState(): AppState {
     detailSkill: null,
     githubToken: localStorage.getItem('sh_github_token'),
     githubUser: JSON.parse(localStorage.getItem('sh_github_user') || 'null'),
+    gitProviderType: (localStorage.getItem('sh_git_provider') as GitProviderType) || 'github',
     mySkills: JSON.parse(localStorage.getItem('sh_my_skills') || '[]'),
     editingSkill: null,
     syncStatus: 'idle',
@@ -235,6 +242,15 @@ export function AppProvider({ children }: { children: ReactNode }) {
     return new GitHubService(state.githubToken)
   }, [state.githubToken])
 
+  const getProvider = useCallback((): GitProvider | null => {
+    if (!state.githubToken) return null
+    switch (state.gitProviderType) {
+      case 'gitlab': return new GitLabService(state.githubToken)
+      case 'gitee': return new GiteeService(state.githubToken)
+      default: return new GitHubService(state.githubToken)
+    }
+  }, [state.githubToken, state.gitProviderType])
+
   const getMetas = useCallback((): SkillMeta[] => {
     return state.mySkills.map((s) => ({
       id: s.id,
@@ -277,6 +293,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
   }, [state.githubUser])
 
   useEffect(() => {
+    localStorage.setItem('sh_git_provider', state.gitProviderType)
+  }, [state.gitProviderType])
+
+  useEffect(() => {
     localStorage.setItem('sh_my_skills', JSON.stringify(state.mySkills))
   }, [state.mySkills])
 
@@ -286,7 +306,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   return (
     <AppContext.Provider
-      value={{ state, dispatch, toast, toggleFavorite, isFavorite, openDetail, closeDetail, getGitHub, getMetas }}
+      value={{ state, dispatch, toast, toggleFavorite, isFavorite, openDetail, closeDetail, getGitHub, getProvider, getMetas }}
     >
       {children}
     </AppContext.Provider>

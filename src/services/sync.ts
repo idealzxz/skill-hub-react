@@ -1,4 +1,6 @@
 import { GitHubService, type GitHubUser } from './github'
+import type { GitProvider } from './git-provider'
+import type { GitUser } from './git-provider'
 import type { UserSkill, SkillMeta } from '../data/skills'
 import { pickColor } from '../data/skills'
 
@@ -40,6 +42,54 @@ export async function pullFromGitHub(
       version: meta.version,
       color: meta.color,
       installCommand: `git clone https://github.com/${user.login}/cursor-skills.git ~/.cursor/skills && cd ~/.cursor/skills/skills/${meta.name}`,
+      updatedAt: meta.updatedAt,
+      isOwned: true,
+      skillMdContent: file?.content || '',
+      repoPath: path,
+      sha: file?.sha,
+      lastSynced: new Date().toISOString(),
+      syncStatus: 'synced',
+    })
+  }
+
+  return {
+    mySkills: skills,
+    favorites,
+    indexSha: indexRes?.sha,
+    favSha: favRes?.sha,
+  }
+}
+
+export async function pullFromProvider(
+  provider: GitProvider,
+  user: GitUser,
+): Promise<SyncResult> {
+  await provider.ensureRepo(user.login)
+
+  const [indexRes, favRes] = await Promise.all([
+    provider.readIndex(user.login),
+    provider.readFavorites(user.login),
+  ])
+
+  const metas: SkillMeta[] = indexRes?.data || []
+  const favorites: string[] = favRes?.data || []
+
+  const skills: UserSkill[] = []
+  for (const meta of metas) {
+    const path = `skills/${meta.name}/SKILL.md`
+    const file = await provider.readFile(user.login, path)
+    skills.push({
+      id: meta.id,
+      name: meta.name,
+      author: meta.author,
+      description: meta.description,
+      category: meta.category,
+      tags: meta.tags,
+      stars: 0,
+      downloads: 0,
+      version: meta.version,
+      color: meta.color,
+      installCommand: `git clone ${provider.webUrl}/${user.login}/cursor-skills.git ~/.cursor/skills/${user.login}-cursor-skills`,
       updatedAt: meta.updatedAt,
       isOwned: true,
       skillMdContent: file?.content || '',

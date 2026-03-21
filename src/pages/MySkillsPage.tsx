@@ -5,6 +5,7 @@ import { CAT_COLORS, type UserSkill } from '../data/skills'
 import { createNewSkill } from '../services/sync'
 import { pullFromGitHub, deleteSkillRemote } from '../services/sync'
 import { copyToClipboard } from '../utils'
+import { DEFAULT_WEB_URLS } from '../services/git-provider'
 
 export default function MySkillsPage() {
   const { state, dispatch, toast, getGitHub, openDetail } = useApp()
@@ -70,7 +71,8 @@ export default function MySkillsPage() {
 
   const getCloneAllCommand = (): string | null => {
     if (!state.githubUser) return null
-    return `git clone https://github.com/${state.githubUser.login}/cursor-skills.git ~/.cursor/skills/${state.githubUser.login}-cursor-skills`
+    const webUrl = DEFAULT_WEB_URLS[state.gitProviderType]
+    return `git clone ${webUrl}/${state.githubUser.login}/cursor-skills.git ~/.cursor/skills/${state.githubUser.login}-cursor-skills`
   }
 
   const handleCopyCommand = async (cmd: string, id: string) => {
@@ -94,9 +96,10 @@ export default function MySkillsPage() {
 
   const generateInstallCommand = (skill: UserSkill): string => {
     if (state.githubUser) {
-      return `git clone https://github.com/${state.githubUser.login}/cursor-skills.git ~/.cursor/skills-sync && cp -r ~/.cursor/skills-sync/skills/${skill.name} ~/.cursor/skills/${skill.name}`
+      const webUrl = DEFAULT_WEB_URLS[state.gitProviderType]
+      return `git clone ${webUrl}/${state.githubUser.login}/cursor-skills.git ~/.cursor/skills-sync && cp -r ~/.cursor/skills-sync/skills/${skill.name} ~/.cursor/skills/${skill.name}`
     }
-    return `# 请先同步到 GitHub 后再获取安装命令`
+    return `# 请先绑定 Git 平台后再获取安装命令`
   }
 
   const syncIcon = (s: UserSkill['syncStatus']) => {

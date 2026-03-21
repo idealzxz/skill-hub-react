@@ -2,27 +2,42 @@ import { useState } from 'react'
 import { Github, LogOut, CheckCircle, RefreshCw, Users, Plus, Trash2, ExternalLink } from 'lucide-react'
 import { useApp } from '../store/AppContext'
 import { GitHubService } from '../services/github'
-import { pullFromGitHub } from '../services/sync'
+import { GitLabService } from '../services/gitlab'
+import { GiteeService } from '../services/gitee'
+import { pullFromProvider } from '../services/sync'
+import { type GitProviderType, PROVIDER_LABELS, PROVIDER_TOKEN_HINTS, detectPlatformFromUrl, DEFAULT_WEB_URLS } from '../services/git-provider'
+
+const PLATFORM_OPTIONS: { id: GitProviderType; label: string; icon: string }[] = [
+  { id: 'github', label: 'GitHub', icon: '🐙' },
+  { id: 'gitlab', label: 'GitLab', icon: '🦊' },
+  { id: 'gitee', label: 'Gitee', icon: '🟥' },
+]
 
 export default function SettingsPage() {
   const { state, dispatch, toast } = useApp()
   const [tokenInput, setTokenInput] = useState('')
   const [connecting, setConnecting] = useState(false)
+  const [selectedPlatform, setSelectedPlatform] = useState<GitProviderType>('github')
   const [repoInput, setRepoInput] = useState('')
   const [addingRepo, setAddingRepo] = useState(false)
 
-  const connectGitHub = async () => {
-    if (!tokenInput.trim()) { toast('请输入 GitHub Token'); return }
+  const connectProvider = async () => {
+    if (!tokenInput.trim()) { toast(`请输入 ${PROVIDER_LABELS[selectedPlatform]} Token`); return }
     setConnecting(true)
     try {
-      const gh = new GitHubService(tokenInput.trim())
-      const user = await gh.getUser()
-      dispatch({ type: 'SET_GITHUB_AUTH', token: tokenInput.trim(), user })
-      toast(`已连接: @${user.login}`)
+      let provider
+      switch (selectedPlatform) {
+        case 'gitlab': provider = new GitLabService(tokenInput.trim()); break
+        case 'gitee': provider = new GiteeService(tokenInput.trim()); break
+        default: provider = new GitHubService(tokenInput.trim()); break
+      }
+      const user = await provider.getUser()
+      dispatch({ type: 'SET_GITHUB_AUTH', token: tokenInput.trim(), user, providerType: selectedPlatform })
+      toast(`已连接 ${PROVIDER_LABELS[selectedPlatform]}: @${user.login}`)
       setTokenInput('')
 
       dispatch({ type: 'SET_SYNC_STATUS', status: 'syncing', message: '首次同步...' })
-      const result = await pullFromGitHub(gh, user)
+      const result = await pullFromProvider(provider, user)
       dispatch({ type: 'SET_MY_SKILLS', skills: result.mySkills })
       if (result.favorites.length > 0) dispatch({ type: 'SET_FAVORITES', favorites: result.favorites })
       if (result.indexSha) dispatch({ type: 'SET_INDEX_SHA', sha: result.indexSha })
@@ -36,44 +51,69 @@ export default function SettingsPage() {
     setConnecting(false)
   }
 
-  const disconnectGitHub = () => {
+  const disconnectProvider = () => {
     dispatch({ type: 'SET_GITHUB_AUTH', token: null, user: null })
     localStorage.removeItem('sh_github_token')
     localStorage.removeItem('sh_github_user')
-    toast('已断开 GitHub 连接')
+    localStorage.removeItem('sh_git_provider')
+    toast(`已断开 ${PROVIDER_LABELS[state.gitProviderType]} 连接`)
   }
 
-  const parseRepoInput = (input: string): { owner: string; repo: string } | null => {
+  const parseRepoInput = (input: string): { owner: string; repo: string; platform: GitProviderType } | null => {
     const trimmed = input.trim().replace(/\/+$/, '')
-    const ghMatch = trimmed.match(/github\.com\/([^/]+)\/([^/]+)/)
-    if (ghMatch) return { owner: ghMatch[1], repo: ghMatch[2].replace(/\.git$/, '') }
+    const platform = detectPlatformFromUrl(trimmed)
+    const urlMatch = trimmed.match(/(?:github\.com|gitlab\.com|gitee\.com)\/([^/]+)\/([^/]+)/)
+    if (urlMatch) return { owner: urlMatch[1], repo: urlMatch[2].replace(/\.git$/, ''), platform }
     const shortMatch = trimmed.match(/^([^/\s]+)\/([^/\s]+)$/)
-    if (shortMatch) return { owner: shortMatch[1], repo: shortMatch[2] }
+    if (shortMatch) return { owner: shortMatch[1], repo: shortMatch[2], platform: state.gitProviderType || 'github' }
     return null
+  }
+
+  const verifyRepo = async (owner: string, repo: string, platform: GitProviderType): Promise<boolean> => {
+    const token = state.githubToken && state.gitProviderType === platform ? state.githubToken : null
+    if (platform === 'github') {
+      const headers: Record<string, string> = { Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' }
+      if (token) headers.Authorization = `Bearer ${token}`
+      const res = await fetch(`https://api.github.com/repos/${owner}/${repo}`, { headers })
+      return res.ok
+    }
+    if (platform === 'gitlab') {
+      const pid = encodeURIComponent(`${owner}/${repo}`)
+      const url = token
+        ? `https://gitlab.com/api/v4/projects/${pid}`
+        : `https://gitlab.com/api/v4/projects/${pid}`
+      const headers: Record<string, string> = {}
+      if (token) headers['PRIVATE-TOKEN'] = token
+      const res = await fetch(url, { headers })
+      return res.ok
+    }
+    if (platform === 'gitee') {
+      const url = token
+        ? `https://gitee.com/api/v5/repos/${owner}/${repo}?access_token=${token}`
+        : `https://gitee.com/api/v5/repos/${owner}/${repo}`
+      const res = await fetch(url)
+      return res.ok
+    }
+    return false
   }
 
   const addTeamRepo = async () => {
     const parsed = parseRepoInput(repoInput)
-    if (!parsed) { toast('请输入仓库地址，如 org/repo 或 GitHub 链接'); return }
-    const { owner, repo } = parsed
-    if (state.teamRepos.some((r) => r.owner === owner && r.repo === repo)) {
+    if (!parsed) { toast('请输入仓库地址，如 org/repo 或完整链接'); return }
+    const { owner, repo, platform } = parsed
+    if (state.teamRepos.some((r) => r.owner === owner && r.repo === repo && r.platform === platform)) {
       toast('该仓库已添加'); return
     }
     setAddingRepo(true)
     try {
-      const headers: Record<string, string> = {
-        Accept: 'application/vnd.github+json',
-        'X-GitHub-Api-Version': '2022-11-28',
-      }
-      if (state.githubToken) headers.Authorization = `Bearer ${state.githubToken}`
-      const res = await fetch(`https://api.github.com/repos/${owner}/${repo}`, { headers })
-      if (!res.ok) throw new Error(res.status === 404 ? '仓库不存在或无权访问' : '检查仓库失败')
+      const ok = await verifyRepo(owner, repo, platform)
+      if (!ok) throw new Error('仓库不存在或无权访问')
       dispatch({
         type: 'ADD_TEAM_REPO',
-        repo: { id: `tr-${Date.now()}`, owner, repo, label: `${owner}/${repo}` },
+        repo: { id: `tr-${Date.now()}`, owner, repo, label: `${owner}/${repo}`, platform },
       })
       setRepoInput('')
-      toast(`已添加团队仓库: ${owner}/${repo}`)
+      toast(`已添加 ${PROVIDER_LABELS[platform]} 仓库: ${owner}/${repo}`)
     } catch (err) {
       toast('添加失败: ' + String(err))
     }
@@ -96,6 +136,7 @@ export default function SettingsPage() {
     localStorage.removeItem('sh_my_skills')
     localStorage.removeItem('sh_github_token')
     localStorage.removeItem('sh_github_user')
+    localStorage.removeItem('sh_git_provider')
     localStorage.removeItem('sh_team_repos')
     dispatch({ type: 'CLEAR_ALL' })
     toast('所有数据已清除')
@@ -107,14 +148,14 @@ export default function SettingsPage() {
         <h2 className="text-2xl font-bold mb-8">设置</h2>
         <div className="space-y-6">
 
-          {/* GitHub Binding */}
+          {/* Git Provider Binding */}
           <div className="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl p-6">
             <div className="flex items-center gap-2 mb-1">
               <Github className="w-5 h-5" />
-              <h3 className="font-semibold">GitHub 账号绑定</h3>
+              <h3 className="font-semibold">Git 平台绑定</h3>
             </div>
             <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-              绑定 GitHub 后，你的技能、收藏和设置会自动同步到 <code className="text-xs bg-gray-100 dark:bg-white/10 px-1.5 py-0.5 rounded">cursor-skills</code> 仓库
+              绑定 Git 平台后，你的技能、收藏和设置会自动同步到 <code className="text-xs bg-gray-100 dark:bg-white/10 px-1.5 py-0.5 rounded">cursor-skills</code> 仓库
             </p>
 
             {state.githubUser ? (
@@ -126,32 +167,49 @@ export default function SettingsPage() {
                     <p className="text-sm text-gray-500 dark:text-gray-400 font-mono">@{state.githubUser.login}</p>
                   </div>
                   <div className="flex items-center gap-1.5 text-accent text-sm">
-                    <CheckCircle className="w-4 h-4" />已连接
+                    <CheckCircle className="w-4 h-4" />
+                    <span>{PROVIDER_LABELS[state.gitProviderType]}</span>
                   </div>
                 </div>
-                <button onClick={disconnectGitHub} className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-red-200 dark:border-red-500/30 text-red-500 text-sm cursor-pointer hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors">
+                <button onClick={disconnectProvider} className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-red-200 dark:border-red-500/30 text-red-500 text-sm cursor-pointer hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors">
                   <LogOut className="w-4 h-4" />断开连接
                 </button>
               </div>
             ) : (
-              <div className="space-y-3">
+              <div className="space-y-4">
+                <div className="flex gap-2">
+                  {PLATFORM_OPTIONS.map((p) => (
+                    <button
+                      key={p.id}
+                      onClick={() => setSelectedPlatform(p.id)}
+                      className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-medium cursor-pointer transition-all ${
+                        selectedPlatform === p.id
+                          ? 'bg-primary text-white ring-2 ring-primary/30'
+                          : 'bg-gray-100 dark:bg-white/10 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/15'
+                      }`}
+                    >
+                      <span>{p.icon}</span>
+                      {p.label}
+                    </button>
+                  ))}
+                </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1.5">GitHub Personal Access Token</label>
+                  <label className="block text-sm font-medium mb-1.5">Personal Access Token</label>
                   <input
                     type="password"
                     value={tokenInput}
                     onChange={(e) => setTokenInput(e.target.value)}
-                    placeholder="ghp_xxxxxxxxxxxx"
+                    placeholder={PROVIDER_TOKEN_HINTS[selectedPlatform].placeholder}
                     className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all"
-                    onKeyDown={(e) => e.key === 'Enter' && connectGitHub()}
+                    onKeyDown={(e) => e.key === 'Enter' && connectProvider()}
                   />
                   <p className="text-xs text-gray-400 mt-1.5">
-                    在 <a href="https://github.com/settings/tokens/new" target="_blank" rel="noopener" className="text-primary hover:underline">GitHub Settings → Tokens (classic)</a> 创建，勾选 <code className="text-xs bg-gray-100 dark:bg-white/10 px-1 py-0.5 rounded">repo</code> 权限
+                    在 <a href={PROVIDER_TOKEN_HINTS[selectedPlatform].helpUrl} target="_blank" rel="noopener" className="text-primary hover:underline">{PROVIDER_TOKEN_HINTS[selectedPlatform].helpText}</a> 创建，勾选 <code className="text-xs bg-gray-100 dark:bg-white/10 px-1 py-0.5 rounded">{PROVIDER_TOKEN_HINTS[selectedPlatform].scope}</code> 权限
                   </p>
                 </div>
-                <button onClick={connectGitHub} disabled={connecting} className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-sm font-medium cursor-pointer hover:opacity-90 transition-colors disabled:opacity-50">
+                <button onClick={connectProvider} disabled={connecting} className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-sm font-medium cursor-pointer hover:opacity-90 transition-colors disabled:opacity-50">
                   {connecting ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Github className="w-4 h-4" />}
-                  {connecting ? '连接中...' : '连接 GitHub'}
+                  {connecting ? '连接中...' : `连接 ${PROVIDER_LABELS[selectedPlatform]}`}
                 </button>
               </div>
             )}
@@ -164,13 +222,13 @@ export default function SettingsPage() {
               <h3 className="font-semibold">团队仓库管理</h3>
             </div>
             <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
-              订阅 GitHub 仓库作为团队技能源，同步仓库中的所有技能供团队使用。
+              订阅 Git 仓库作为团队技能源，支持 GitHub / GitLab / Gitee。
             </p>
             <div className={`text-xs rounded-xl p-3 mb-4 ${state.githubToken ? 'bg-green-50 dark:bg-green-500/10 text-green-700 dark:text-green-300' : 'bg-amber-50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-300'}`}>
               {state.githubToken ? (
-                <span>已绑定 GitHub Token — 支持添加公开和私有仓库</span>
+                <span>已绑定 {PROVIDER_LABELS[state.gitProviderType]} — 同平台私有仓库可直接添加，其他平台仅支持公开仓库</span>
               ) : (
-                <span>当前未绑定 Token，仅支持公开仓库。如需添加私有仓库，请先在上方绑定 GitHub 账号</span>
+                <span>当前未绑定平台，仅支持公开仓库。如需添加私有仓库，请先在上方绑定账号</span>
               )}
             </div>
 
@@ -178,12 +236,12 @@ export default function SettingsPage() {
               <div className="space-y-2 mb-4">
                 {state.teamRepos.map((r) => (
                   <div key={r.id} className="flex items-center gap-3 p-3 rounded-xl bg-gray-50 dark:bg-white/5">
-                    <div className="w-8 h-8 rounded-lg bg-primary/10 dark:bg-primary/20 flex items-center justify-center shrink-0">
-                      <Github className="w-4 h-4 text-primary dark:text-primary-light" />
+                    <div className="w-8 h-8 rounded-lg bg-primary/10 dark:bg-primary/20 flex items-center justify-center shrink-0 text-sm">
+                      {r.platform === 'gitlab' ? '🦊' : r.platform === 'gitee' ? '🟥' : '🐙'}
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium truncate">{r.label}</p>
-                      <p className="text-xs text-gray-400 font-mono truncate">{r.owner}/{r.repo}</p>
+                      <p className="text-xs text-gray-400 font-mono truncate">{PROVIDER_LABELS[r.platform]} · {r.owner}/{r.repo}</p>
                     </div>
                     {r.lastSynced && (
                       <span className="text-[10px] text-gray-400 shrink-0 hidden sm:block">
@@ -191,7 +249,7 @@ export default function SettingsPage() {
                       </span>
                     )}
                     <a
-                      href={`https://github.com/${r.owner}/${r.repo}`}
+                      href={`${DEFAULT_WEB_URLS[r.platform]}/${r.owner}/${r.repo}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="p-1.5 rounded-lg hover:bg-gray-200 dark:hover:bg-white/10 cursor-pointer transition-colors shrink-0"
@@ -214,7 +272,7 @@ export default function SettingsPage() {
                 type="text"
                 value={repoInput}
                 onChange={(e) => setRepoInput(e.target.value)}
-                placeholder="org/repo 或 https://github.com/org/repo"
+                placeholder="org/repo 或 https://github.com|gitlab.com|gitee.com/org/repo"
                 className="flex-1 px-4 py-2.5 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all"
                 onKeyDown={(e) => e.key === 'Enter' && addTeamRepo()}
               />

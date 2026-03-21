@@ -1,18 +1,9 @@
 import type { SkillMeta, SkillBundle } from '../data/skills'
+import { type GitProvider, type GitUser, type FileResult, type GitProviderType, DEFAULT_API_URLS, getWebUrl } from './git-provider'
 
-const API = 'https://api.github.com'
 const REPO_NAME = 'cursor-skills'
 
-export interface GitHubUser {
-  login: string
-  avatar_url: string
-  name: string | null
-}
-
-interface FileResult {
-  content: string
-  sha: string
-}
+export type { GitUser as GitHubUser }
 
 function publicHeaders(): Record<string, string> {
   return {
@@ -75,11 +66,16 @@ export async function fetchTeamSkillMd(owner: string, repo: string, skillName: s
   return decodeURIComponent(escape(atob(data.content.replace(/\n/g, ''))))
 }
 
-export class GitHubService {
+export class GitHubService implements GitProvider {
+  readonly providerType: GitProviderType = 'github'
+  readonly apiUrl: string
+  readonly webUrl: string
   token: string
 
-  constructor(token: string) {
+  constructor(token: string, apiUrl?: string) {
     this.token = token
+    this.apiUrl = (apiUrl || DEFAULT_API_URLS.github).replace(/\/$/, '')
+    this.webUrl = getWebUrl('github', this.apiUrl)
   }
 
   private headers() {
@@ -90,17 +86,17 @@ export class GitHubService {
     }
   }
 
-  async getUser(): Promise<GitHubUser> {
-    const res = await fetch(`${API}/user`, { headers: this.headers() })
+  async getUser(): Promise<GitUser> {
+    const res = await fetch(`${this.apiUrl}/user`, { headers: this.headers() })
     if (!res.ok) throw new Error('Token 无效或已过期')
     return res.json()
   }
 
   async ensureRepo(owner: string): Promise<void> {
-    const res = await fetch(`${API}/repos/${owner}/${REPO_NAME}`, { headers: this.headers() })
+    const res = await fetch(`${this.apiUrl}/repos/${owner}/${REPO_NAME}`, { headers: this.headers() })
     if (res.ok) return
     if (res.status === 404) {
-      const create = await fetch(`${API}/user/repos`, {
+      const create = await fetch(`${this.apiUrl}/user/repos`, {
         method: 'POST',
         headers: { ...this.headers(), 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -118,7 +114,7 @@ export class GitHubService {
   }
 
   async readFile(owner: string, path: string): Promise<FileResult | null> {
-    const res = await fetch(`${API}/repos/${owner}/${REPO_NAME}/contents/${path}`, {
+    const res = await fetch(`${this.apiUrl}/repos/${owner}/${REPO_NAME}/contents/${path}`, {
       headers: this.headers(),
     })
     if (res.status === 404) return null
@@ -136,7 +132,7 @@ export class GitHubService {
       content: btoa(unescape(encodeURIComponent(content))),
     }
     if (sha) body.sha = sha
-    const res = await fetch(`${API}/repos/${owner}/${REPO_NAME}/contents/${path}`, {
+    const res = await fetch(`${this.apiUrl}/repos/${owner}/${REPO_NAME}/contents/${path}`, {
       method: 'PUT',
       headers: { ...this.headers(), 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
@@ -150,7 +146,7 @@ export class GitHubService {
   }
 
   async deleteFile(owner: string, path: string, sha: string): Promise<void> {
-    const res = await fetch(`${API}/repos/${owner}/${REPO_NAME}/contents/${path}`, {
+    const res = await fetch(`${this.apiUrl}/repos/${owner}/${REPO_NAME}/contents/${path}`, {
       method: 'DELETE',
       headers: { ...this.headers(), 'Content-Type': 'application/json' },
       body: JSON.stringify({ message: `删除 ${path}`, sha }),
@@ -188,6 +184,76 @@ export class GitHubService {
       sha,
       '更新收藏列表',
     )
+  }
+
+  async readRepoFile(owner: string, repo: string, path: string): Promise<FileResult | null> {
+    const res = await fetch(`${this.apiUrl}/repos/${owner}/${repo}/contents/${path}`, {
+      headers: this.headers(),
+    })
+    if (res.status === 404) return null
+    if (!res.ok) throw new Error(`读取文件失败: ${path}`)
+    const data = await res.json()
+    return {
+      content: decodeURIComponent(escape(atob(data.content.replace(/\n/g, '')))),
+      sha: data.sha,
+    }
+  }
+
+  async readRepoIndex(owner: string, repo: string): Promise<{ data: SkillMeta[]; sha: string } | null> {
+    const result = await this.readRepoFile(owner, repo, '.skill-hub/index.json')
+    if (!result) return null
+    return { data: JSON.parse(result.content), sha: result.sha }
+  }
+
+  async readRepoBundles(owner: string, repo: string): Promise<SkillBundle[]> {
+    const result = await this.readRepoFile(owner, repo, '.skill-hub/bundles.json')
+    if (!result) return []
+    return JSON.parse(result.content)
+  }
+
+  async writeRepoFile(owner: string, repo: string, path: string, content: string, sha?: string, message?: string): Promise<string> {
+    const body: Record<string, string> = {
+      message: message || `更新 ${path}`,
+      content: btoa(unescape(encodeURIComponent(content))),
+    }
+    if (sha) body.sha = sha
+    const res = await fetch(`${this.apiUrl}/repos/${owner}/${repo}/contents/${path}`, {
+      method: 'PUT',
+      headers: { ...this.headers(), 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    })
+    if (!res.ok) throw new Error(`写入文件失败: ${path}`)
+    const data = await res.json()
+    return data.content.sha
+  }
+
+  async forkRepo(owner: string, repo: string): Promise<string> {
+    const res = await fetch(`${this.apiUrl}/repos/${owner}/${repo}/forks`, {
+      method: 'POST',
+      headers: { ...this.headers(), 'Content-Type': 'application/json' },
+    })
+    if (!res.ok) throw new Error('Fork 仓库失败')
+    const data = await res.json()
+    await new Promise((r) => setTimeout(r, 2000))
+    return data.full_name
+  }
+
+  async createMergeRequest(
+    owner: string, repo: string,
+    title: string, body: string,
+    head: string, base = 'main',
+  ): Promise<string> {
+    const res = await fetch(`${this.apiUrl}/repos/${owner}/${repo}/pulls`, {
+      method: 'POST',
+      headers: { ...this.headers(), 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title, body, head, base }),
+    })
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}))
+      throw new Error(`创建 PR 失败: ${err.message || res.status}`)
+    }
+    const data = await res.json()
+    return data.html_url
   }
 
   async readSettings(owner: string): Promise<{ data: Record<string, unknown>; sha: string } | null> {

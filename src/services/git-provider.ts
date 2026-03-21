@@ -1,6 +1,6 @@
 import type { SkillMeta, SkillBundle } from '../data/skills'
 
-export type GitProviderType = 'github' | 'gitlab'
+export type GitProviderType = 'github' | 'gitlab' | 'gitee'
 
 export interface GitUser {
   login: string
@@ -44,11 +44,13 @@ export interface GitProviderConfig {
 export const DEFAULT_API_URLS: Record<GitProviderType, string> = {
   github: 'https://api.github.com',
   gitlab: 'https://gitlab.com',
+  gitee: 'https://gitee.com/api/v5',
 }
 
 export const DEFAULT_WEB_URLS: Record<GitProviderType, string> = {
   github: 'https://github.com',
   gitlab: 'https://gitlab.com',
+  gitee: 'https://gitee.com',
 }
 
 export function getWebUrl(type: GitProviderType, apiUrl?: string): string {
@@ -56,6 +58,9 @@ export function getWebUrl(type: GitProviderType, apiUrl?: string): string {
   if (type === 'github') {
     if (apiUrl === DEFAULT_API_URLS.github) return DEFAULT_WEB_URLS.github
     return apiUrl.replace(/\/api\/v3\/?$/, '')
+  }
+  if (type === 'gitee') {
+    return apiUrl.replace(/\/api\/v5\/?$/, '').replace(/\/$/, '')
   }
   return apiUrl.replace(/\/api\/v4\/?$/, '').replace(/\/$/, '')
 }
@@ -70,4 +75,32 @@ export function getRepoCloneUrl(
 export const PROVIDER_LABELS: Record<GitProviderType, string> = {
   github: 'GitHub',
   gitlab: 'GitLab',
+  gitee: 'Gitee',
+}
+
+export const PROVIDER_TOKEN_HINTS: Record<GitProviderType, { placeholder: string; helpUrl: string; helpText: string; scope: string }> = {
+  github: {
+    placeholder: 'ghp_xxxxxxxxxxxx',
+    helpUrl: 'https://github.com/settings/tokens/new',
+    helpText: 'GitHub Settings → Tokens (classic)',
+    scope: 'repo',
+  },
+  gitlab: {
+    placeholder: 'glpat-xxxxxxxxxxxx',
+    helpUrl: 'https://gitlab.com/-/user_settings/personal_access_tokens',
+    helpText: 'GitLab → User Settings → Access Tokens',
+    scope: 'api',
+  },
+  gitee: {
+    placeholder: 'xxxxxxxxxxxxxxxx',
+    helpUrl: 'https://gitee.com/personal_access_tokens',
+    helpText: 'Gitee → 设置 → 私人令牌',
+    scope: 'projects',
+  },
+}
+
+export function detectPlatformFromUrl(input: string): GitProviderType {
+  if (/gitlab\.com/i.test(input) || /gitlab\./i.test(input)) return 'gitlab'
+  if (/gitee\.com/i.test(input)) return 'gitee'
+  return 'github'
 }

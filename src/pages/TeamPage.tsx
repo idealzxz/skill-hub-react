@@ -1,8 +1,11 @@
 import { useState, useCallback } from 'react'
 import { Search, RefreshCw, Users, Package, Copy, Check, ChevronDown, ChevronUp, Settings } from 'lucide-react'
 import { useApp } from '../store/AppContext'
-import { CAT_COLORS, CATEGORIES, pickColor } from '../data/skills'
+import { type TeamSkill, type SkillBundle, type TeamRepo, CAT_COLORS, CATEGORIES, pickColor } from '../data/skills'
 import { fetchTeamIndex, fetchTeamBundles } from '../services/github'
+import { GitLabService } from '../services/gitlab'
+import { GiteeService } from '../services/gitee'
+import { DEFAULT_WEB_URLS, type GitProviderType } from '../services/git-provider'
 import { copyToClipboard } from '../utils'
 import SkillCard from '../components/SkillCard'
 
@@ -14,6 +17,57 @@ export default function TeamPage() {
   const [expandedBundle, setExpandedBundle] = useState<string | null>(null)
   const [copiedId, setCopiedId] = useState<string | null>(null)
 
+  const fetchRepoData = async (repo: TeamRepo) => {
+    const token = state.githubToken && state.gitProviderType === repo.platform ? state.githubToken : null
+    const webUrl = DEFAULT_WEB_URLS[repo.platform]
+
+    if (repo.platform === 'github') {
+      const [metas, bundles] = await Promise.all([
+        fetchTeamIndex(repo.owner, repo.repo, token),
+        fetchTeamBundles(repo.owner, repo.repo, token),
+      ])
+      return { metas, bundles, webUrl }
+    }
+
+    if (repo.platform === 'gitlab') {
+      if (token) {
+        const svc = new GitLabService(token)
+        const [indexRes, bundles] = await Promise.all([
+          svc.readRepoIndex(repo.owner, repo.repo),
+          svc.readRepoBundles(repo.owner, repo.repo),
+        ])
+        return { metas: indexRes?.data || [], bundles, webUrl }
+      }
+      const indexFile = await GitLabService.readPublicRepoFile('https://gitlab.com', repo.owner, repo.repo, '.skill-hub/index.json')
+      const bundleFile = await GitLabService.readPublicRepoFile('https://gitlab.com', repo.owner, repo.repo, '.skill-hub/bundles.json')
+      return {
+        metas: indexFile ? JSON.parse(indexFile.content) : [],
+        bundles: bundleFile ? JSON.parse(bundleFile.content) : [],
+        webUrl,
+      }
+    }
+
+    if (repo.platform === 'gitee') {
+      if (token) {
+        const svc = new GiteeService(token)
+        const [indexRes, bundles] = await Promise.all([
+          svc.readRepoIndex(repo.owner, repo.repo),
+          svc.readRepoBundles(repo.owner, repo.repo),
+        ])
+        return { metas: indexRes?.data || [], bundles, webUrl }
+      }
+      const indexFile = await GiteeService.readPublicRepoFile('', repo.owner, repo.repo, '.skill-hub/index.json')
+      const bundleFile = await GiteeService.readPublicRepoFile('', repo.owner, repo.repo, '.skill-hub/bundles.json')
+      return {
+        metas: indexFile ? JSON.parse(indexFile.content) : [],
+        bundles: bundleFile ? JSON.parse(bundleFile.content) : [],
+        webUrl,
+      }
+    }
+
+    return { metas: [], bundles: [], webUrl }
+  }
+
   const syncTeamRepos = useCallback(async () => {
     if (state.teamRepos.length === 0) return
     dispatch({ type: 'SET_TEAM_SYNC_STATUS', status: 'syncing', message: '正在同步团队技能...' })
@@ -23,10 +77,7 @@ export default function TeamPage() {
       const allBundles: SkillBundle[] = []
 
       for (const repo of state.teamRepos) {
-        const [metas, bundles] = await Promise.all([
-          fetchTeamIndex(repo.owner, repo.repo, state.githubToken),
-          fetchTeamBundles(repo.owner, repo.repo, state.githubToken),
-        ])
+        const { metas, bundles, webUrl } = await fetchRepoData(repo)
 
         for (const meta of metas) {
           allSkills.push({
@@ -40,7 +91,7 @@ export default function TeamPage() {
             downloads: 0,
             version: meta.version,
             color: meta.color || pickColor(allSkills.length),
-            installCommand: `git clone https://github.com/${repo.owner}/${repo.repo}.git ~/.cursor/skills-team/${repo.repo} && cd ~/.cursor/skills-team/${repo.repo}/skills/${meta.name}`,
+            installCommand: `git clone ${webUrl}/${repo.owner}/${repo.repo}.git ~/.cursor/skills-team/${repo.repo} && cd ~/.cursor/skills-team/${repo.repo}/skills/${meta.name}`,
             updatedAt: meta.updatedAt,
             repoId: repo.id,
             repoLabel: repo.label,
@@ -67,7 +118,8 @@ export default function TeamPage() {
       dispatch({ type: 'SET_TEAM_SYNC_STATUS', status: 'error', message: String(err) })
       toast('同步失败: ' + String(err))
     }
-  }, [state.teamRepos, state.githubToken, dispatch, toast])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.teamRepos, state.githubToken, state.gitProviderType, dispatch, toast])
 
   const handleCopyInstall = async (command: string, id: string) => {
     const ok = await copyToClipboard(command)
@@ -82,8 +134,9 @@ export default function TeamPage() {
     const repoId = bundle.id.split('--')[0]
     const repo = state.teamRepos.find((r) => r.id === repoId)
     if (!repo) return ''
+    const webUrl = DEFAULT_WEB_URLS[repo.platform]
     const commands = bundle.skillNames.map(
-      (name) => `# ${name}\ngit clone https://github.com/${repo.owner}/${repo.repo}.git ~/.cursor/skills-team/${repo.repo} 2>/dev/null; cp -r ~/.cursor/skills-team/${repo.repo}/skills/${name} ~/.cursor/skills/${name}`
+      (name) => `# ${name}\ngit clone ${webUrl}/${repo.owner}/${repo.repo}.git ~/.cursor/skills-team/${repo.repo} 2>/dev/null; cp -r ~/.cursor/skills-team/${repo.repo}/skills/${name} ~/.cursor/skills/${name}`
     )
     return commands.join('\n\n')
   }

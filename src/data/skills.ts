@@ -41,6 +41,7 @@ export interface TeamRepo {
   owner: string
   repo: string
   label: string
+  platform: 'github' | 'gitlab' | 'gitee'
   lastSynced?: string
 }
 
