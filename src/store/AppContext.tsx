@@ -304,6 +304,20 @@ export function AppProvider({ children }: { children: ReactNode }) {
     localStorage.setItem('sh_team_repos', JSON.stringify(state.teamRepos))
   }, [state.teamRepos])
 
+  useEffect(() => {
+    fetch(`${import.meta.env.BASE_URL}clawhub-skills.json`)
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`)
+        return res.json()
+      })
+      .then((data) => {
+        if (Array.isArray(data.skills) && data.skills.length > 0) {
+          dispatch({ type: 'SET_SKILLS', skills: data.skills })
+        }
+      })
+      .catch(() => {/* 保留 generateDemoSkills 作为回退 */})
+  }, [])
+
   return (
     <AppContext.Provider
       value={{ state, dispatch, toast, toggleFavorite, isFavorite, openDetail, closeDetail, getGitHub, getProvider, getMetas }}
