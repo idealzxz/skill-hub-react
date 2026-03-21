@@ -98,7 +98,7 @@ export default function SettingsPage() {
                     onKeyDown={(e) => e.key === 'Enter' && connectGitHub()}
                   />
                   <p className="text-xs text-gray-400 mt-1.5">
-                    在 <a href="https://github.com/settings/tokens?type=beta" target="_blank" rel="noopener" className="text-primary hover:underline">GitHub Settings → Fine-grained tokens</a> 创建，需要 Contents 读写权限
+                    在 <a href="https://github.com/settings/tokens/new" target="_blank" rel="noopener" className="text-primary hover:underline">GitHub Settings → Tokens (classic)</a> 创建，勾选 <code className="text-xs bg-gray-100 dark:bg-white/10 px-1 py-0.5 rounded">repo</code> 权限
                   </p>
                 </div>
                 <button onClick={connectGitHub} disabled={connecting} className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-sm font-medium cursor-pointer hover:opacity-90 transition-colors disabled:opacity-50">
