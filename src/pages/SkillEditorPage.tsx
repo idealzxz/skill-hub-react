@@ -170,7 +170,7 @@ export default function SkillEditorPage() {
 
           {/* Markdown Editor */}
           <div className="glass-elevated rounded-2xl overflow-hidden flex flex-col" style={{ minHeight: '500px' }}>
-            <div className="flex items-center justify-between px-4 py-3 border-b border-white/20 dark:border-white/8">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-black/[0.06] dark:border-white/8">
               <h3 className="font-semibold text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wide">SKILL.md</h3>
               <div className="flex gap-1">
                 <button onClick={() => setPreview(false)} className={`p-1.5 rounded-xl border cursor-pointer transition-all ${!preview ? 'glass-subtle text-primary' : 'border-transparent text-gray-400 hover:bg-white/30 dark:hover:bg-white/10'}`}>

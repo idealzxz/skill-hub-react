@@ -36,7 +36,7 @@ export default function Sidebar() {
 
   return (
     <aside className="hidden md:flex flex-col w-64 lg:w-72 shrink-0 rounded-2xl glass-elevated">
-      <div className="p-6 border-b border-white/20 dark:border-white/8">
+      <div className="p-6 border-b border-black/[0.06] dark:border-white/8">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-2xl glass-icon flex items-center justify-center">
             <Zap className="w-5 h-5 text-primary dark:text-primary-light" />
@@ -60,8 +60,8 @@ export default function Sidebar() {
               onClick={() => dispatch({ type: 'SET_TAB', tab: tab.id })}
               className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl border cursor-pointer text-left transition-colors duration-200 ${
                 active
-                  ? 'bg-white/30 dark:bg-white/[0.06] border-white/35 dark:border-white/[0.08] text-primary dark:text-primary-light shadow-sm backdrop-blur-sm'
-                  : 'border-transparent text-gray-600 dark:text-gray-400 hover:bg-white/20 dark:hover:bg-white/5'
+                  ? 'bg-white/50 dark:bg-white/[0.06] border-black/[0.06] dark:border-white/[0.08] text-primary dark:text-primary-light shadow-sm backdrop-blur-sm'
+                  : 'border-transparent text-gray-600 dark:text-gray-400 hover:bg-white/30 dark:hover:bg-white/5'
               }`}
             >
               {Icon && <Icon className="w-5 h-5 shrink-0" />}
@@ -87,7 +87,7 @@ export default function Sidebar() {
       </nav>
 
       {/* Sync & Auth Footer */}
-      <div className="p-4 border-t border-white/20 dark:border-white/8 space-y-3">
+      <div className="p-4 border-t border-black/[0.06] dark:border-white/8 space-y-3">
         {state.githubUser && (
           <div className="flex items-center gap-2 px-2">
             <img

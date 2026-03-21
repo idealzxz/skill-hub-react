@@ -64,7 +64,7 @@ export default function SkillDetailModal() {
                   {skill.name.charAt(0).toUpperCase()}
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold">{skill.name}</h3>
+                  <h3 className="text-xl font-bold text-heading">{skill.name}</h3>
                   <p className="text-sm text-gray-500 dark:text-gray-400">@{skill.author}</p>
                 </div>
               </div>

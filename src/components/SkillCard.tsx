@@ -25,7 +25,7 @@ export default function SkillCard({ skill }: Props) {
             {skill.name.charAt(0).toUpperCase()}
           </div>
           <div className="min-w-0">
-            <h3 className="font-semibold text-sm truncate group-hover:text-primary dark:group-hover:text-primary-light transition-colors">
+            <h3 className="font-bold text-sm truncate text-heading group-hover:text-primary dark:group-hover:text-primary-light transition-colors">
               {skill.name}
             </h3>
             <p className="text-xs text-gray-400 truncate">@{skill.author}</p>

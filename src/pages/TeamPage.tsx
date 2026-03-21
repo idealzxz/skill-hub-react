@@ -315,7 +315,7 @@ export default function TeamPage() {
                     </div>
 
                     {isExpanded && (
-                      <div className="border-t border-white/20 dark:border-white/8 p-4 bg-white/20 dark:bg-white/[0.02] space-y-2">
+                      <div className="border-t border-black/[0.06] dark:border-white/8 p-4 bg-white/20 dark:bg-white/[0.02] space-y-2">
                         {bundle.skillNames.map((name) => {
                           const s = state.teamSkills.find((sk) => sk.name === name)
                           return (

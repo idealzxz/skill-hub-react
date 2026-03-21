@@ -16,7 +16,7 @@ export default function MobileNav() {
 
   return (
     <>
-      <header className="md:hidden flex items-center justify-between p-4 glass border-0 border-b border-white/20 dark:border-white/8">
+      <header className="md:hidden flex items-center justify-between p-4 glass border-0 border-b border-black/[0.06] dark:border-white/8">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-xl glass-icon flex items-center justify-center">
             <Zap className="w-4 h-4 text-primary dark:text-primary-light" />
@@ -33,7 +33,7 @@ export default function MobileNav() {
         </button>
       </header>
 
-      <nav className="md:hidden flex glass border-0 border-t border-white/20 dark:border-white/8">
+      <nav className="md:hidden flex glass border-0 border-t border-black/[0.06] dark:border-white/8">
         {visibleTabs.map((tab) => {
           const Icon = ICON_MAP[tab.icon]
           const active = state.currentTab === tab.id
