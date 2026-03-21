@@ -66,7 +66,7 @@ export function getWebUrl(type: GitProviderType, apiUrl?: string): string {
 }
 
 export function getRepoCloneUrl(
-  type: GitProviderType, webUrl: string,
+  _type: GitProviderType, webUrl: string,
   owner: string, repo: string,
 ): string {
   return `${webUrl}/${owner}/${repo}.git`

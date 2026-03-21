@@ -2,6 +2,7 @@ import type { SkillMeta, SkillBundle } from '../data/skills'
 import { type GitProvider, type GitUser, type FileResult, type GitProviderType, DEFAULT_API_URLS, getWebUrl } from './git-provider'
 
 const REPO_NAME = 'cursor-skills'
+const API = DEFAULT_API_URLS.github
 
 export type { GitUser as GitHubUser }
 

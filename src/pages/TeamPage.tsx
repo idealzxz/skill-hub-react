@@ -5,7 +5,7 @@ import { type TeamSkill, type SkillBundle, type TeamRepo, CAT_COLORS, CATEGORIES
 import { fetchTeamIndex, fetchTeamBundles } from '../services/github'
 import { GitLabService } from '../services/gitlab'
 import { GiteeService } from '../services/gitee'
-import { DEFAULT_WEB_URLS, type GitProviderType } from '../services/git-provider'
+import { DEFAULT_WEB_URLS } from '../services/git-provider'
 import { copyToClipboard } from '../utils'
 import SkillCard from '../components/SkillCard'
 
