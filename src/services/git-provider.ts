@@ -45,13 +45,13 @@ export interface GitProviderConfig {
 
 export const DEFAULT_API_URLS: Record<GitProviderType, string> = {
   github: 'https://api.github.com',
-  gitlab: 'https://gitlab.com',
+  gitlab: 'http://gitlab2.dui88.com/',
   gitee: 'https://gitee.com/api/v5',
 }
 
 export const DEFAULT_WEB_URLS: Record<GitProviderType, string> = {
   github: 'https://github.com',
-  gitlab: 'https://gitlab.com',
+  gitlab: 'http://gitlab2.dui88.com',
   gitee: 'https://gitee.com',
 }
 
@@ -89,7 +89,7 @@ export const PROVIDER_TOKEN_HINTS: Record<GitProviderType, { placeholder: string
   },
   gitlab: {
     placeholder: 'glpat-xxxxxxxxxxxx',
-    helpUrl: 'https://gitlab.com/-/user_settings/personal_access_tokens',
+    helpUrl: 'http://gitlab2.dui88.com/-/user_settings/personal_access_tokens',
     helpText: 'GitLab → User Settings → Access Tokens',
     scope: 'api',
   },
