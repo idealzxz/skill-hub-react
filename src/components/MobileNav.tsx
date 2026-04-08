@@ -11,7 +11,7 @@ export default function MobileNav() {
   }
 
   const visibleTabs = TABS.filter((tab) =>
-    ['market', 'myskills', 'team', 'favorites', 'settings'].includes(tab.id),
+    ['myskills', 'team', 'favorites', 'settings'].includes(tab.id),
   )
 
   return (

@@ -1,16 +1,18 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { Search, RefreshCw, Users, Package, Copy, Check, ChevronDown, ChevronUp, Settings } from 'lucide-react'
 import { useApp } from '../store/AppContext'
-import { type TeamSkill, type SkillBundle, type TeamRepo, CAT_COLORS, CATEGORIES, pickColor } from '../data/skills'
-import { fetchTeamIndex, fetchTeamBundles } from '../services/github'
+import { type TeamSkill, type SkillBundle, type TeamRepo, type Skill, CAT_COLORS, CATEGORIES, pickColor } from '../data/skills'
+import { fetchTeamIndex, fetchTeamBundles, normalizeSkillIndexData, normalizeSkillBundlesData } from '../services/github'
+import { syncTeamSkillFromRemote } from '../services/teamSkillSync'
 import { GitLabService } from '../services/gitlab'
 import { GiteeService } from '../services/gitee'
-import { DEFAULT_WEB_URLS } from '../services/git-provider'
-import { copyToClipboard } from '../utils'
+import { DEFAULT_API_URLS, DEFAULT_WEB_URLS } from '../services/git-provider'
+import { copyToClipboard, formatProviderError } from '../utils'
+import { buildTeamSkillInstallCommand } from '../utils/installCommands'
 import SkillCard from '../components/SkillCard'
 
 export default function TeamPage() {
-  const { state, dispatch, toast } = useApp()
+  const { state, dispatch, toast, openDetail } = useApp()
   const [search, setSearch] = useState('')
   const [selectedRepo, setSelectedRepo] = useState<string>('all')
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
@@ -41,8 +43,8 @@ export default function TeamPage() {
       const indexFile = await GitLabService.readPublicRepoFile('https://gitlab.com', repo.owner, repo.repo, '.skill-hub/index.json')
       const bundleFile = await GitLabService.readPublicRepoFile('https://gitlab.com', repo.owner, repo.repo, '.skill-hub/bundles.json')
       return {
-        metas: indexFile ? JSON.parse(indexFile.content) : [],
-        bundles: bundleFile ? JSON.parse(bundleFile.content) : [],
+        metas: indexFile ? normalizeSkillIndexData(JSON.parse(indexFile.content)) : [],
+        bundles: bundleFile ? normalizeSkillBundlesData(JSON.parse(bundleFile.content)) : [],
         webUrl,
       }
     }
@@ -59,8 +61,8 @@ export default function TeamPage() {
       const indexFile = await GiteeService.readPublicRepoFile('', repo.owner, repo.repo, '.skill-hub/index.json')
       const bundleFile = await GiteeService.readPublicRepoFile('', repo.owner, repo.repo, '.skill-hub/bundles.json')
       return {
-        metas: indexFile ? JSON.parse(indexFile.content) : [],
-        bundles: bundleFile ? JSON.parse(bundleFile.content) : [],
+        metas: indexFile ? normalizeSkillIndexData(JSON.parse(indexFile.content)) : [],
+        bundles: bundleFile ? normalizeSkillBundlesData(JSON.parse(bundleFile.content)) : [],
         webUrl,
       }
     }
@@ -68,7 +70,7 @@ export default function TeamPage() {
     return { metas: [], bundles: [], webUrl }
   }
 
-  const syncTeamRepos = useCallback(async () => {
+  const syncTeamRepos = useCallback(async (options?: { quiet?: boolean }) => {
     if (state.teamRepos.length === 0) return
     dispatch({ type: 'SET_TEAM_SYNC_STATUS', status: 'syncing', message: '正在同步团队技能...' })
 
@@ -77,27 +79,29 @@ export default function TeamPage() {
       const allBundles: SkillBundle[] = []
 
       for (const repo of state.teamRepos) {
-        const { metas, bundles, webUrl } = await fetchRepoData(repo)
+        const { metas, bundles } = await fetchRepoData(repo)
 
         for (const meta of metas) {
-          allSkills.push({
+          const ts: TeamSkill = {
             id: `${repo.id}--${meta.id}`,
             name: meta.name,
-            author: meta.author,
+            author: repo.owner,
             description: meta.description,
             category: meta.category,
-            tags: meta.tags,
+            tags: meta.tags ?? [],
             stars: 0,
             downloads: 0,
             version: meta.version,
             color: meta.color || pickColor(allSkills.length),
-            installCommand: `git clone ${webUrl}/${repo.owner}/${repo.repo}.git ~/.cursor/skills-team/${repo.repo} && cd ~/.cursor/skills-team/${repo.repo}/skills/${meta.name}`,
+            installCommand: '',
             updatedAt: meta.updatedAt,
             repoId: repo.id,
             repoLabel: repo.label,
             repoOwner: repo.owner,
             repoName: repo.repo,
-          })
+            repoPlatform: repo.platform,
+          }
+          allSkills.push({ ...ts, installCommand: buildTeamSkillInstallCommand(ts) })
         }
 
         for (const bundle of bundles) {
@@ -113,13 +117,42 @@ export default function TeamPage() {
       dispatch({ type: 'SET_TEAM_SKILLS', skills: allSkills })
       dispatch({ type: 'SET_TEAM_BUNDLES', bundles: allBundles })
       dispatch({ type: 'SET_TEAM_SYNC_STATUS', status: 'idle' })
-      toast(`同步完成，共 ${allSkills.length} 个技能`)
+      if (!options?.quiet) toast(`同步完成，共 ${allSkills.length} 个技能`)
     } catch (err) {
-      dispatch({ type: 'SET_TEAM_SYNC_STATUS', status: 'error', message: String(err) })
-      toast('同步失败: ' + String(err))
+      const msg = formatProviderError(err, { apiUrl: DEFAULT_API_URLS[state.gitProviderType] })
+      dispatch({ type: 'SET_TEAM_SYNC_STATUS', status: 'error', message: msg })
+      toast('同步失败: ' + msg)
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.teamRepos, state.githubToken, state.gitProviderType, dispatch, toast])
+
+  useEffect(() => {
+    if (state.teamRepos.length === 0) return
+    void syncTeamRepos({ quiet: true })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.teamRepos.length, state.githubToken, state.gitProviderType])
+
+  const handleTeamSkillCardClick = async (skill: Skill) => {
+    const ts = skill as TeamSkill
+    const repo = ts.repoId ? state.teamRepos.find((r) => r.id === ts.repoId) : undefined
+    if (!repo) {
+      openDetail(skill)
+      return
+    }
+    // 先打开详情，避免网络慢时误以为「点击无反应」；拉取完成后再刷新弹窗内容
+    openDetail(ts)
+    dispatch({ type: 'SET_TEAM_SYNC_STATUS', status: 'syncing', message: '正在拉取最新技能...' })
+    try {
+      const fresh = await syncTeamSkillFromRemote(ts, repo, state.githubToken, state.gitProviderType)
+      dispatch({ type: 'UPDATE_TEAM_SKILL', skill: fresh })
+      openDetail(fresh)
+    } catch (err) {
+      const msg = formatProviderError(err, { apiUrl: DEFAULT_API_URLS[state.gitProviderType] })
+      toast('拉取失败: ' + msg)
+    } finally {
+      dispatch({ type: 'SET_TEAM_SYNC_STATUS', status: 'idle' })
+    }
+  }
 
   const handleCopyInstall = async (command: string, id: string) => {
     const ok = await copyToClipboard(command)
@@ -135,8 +168,8 @@ export default function TeamPage() {
     const repo = state.teamRepos.find((r) => r.id === repoId)
     if (!repo) return ''
     const webUrl = DEFAULT_WEB_URLS[repo.platform]
-    const commands = bundle.skillNames.map(
-      (name) => `# ${name}\ngit clone ${webUrl}/${repo.owner}/${repo.repo}.git ~/.cursor/skills-team/${repo.repo} 2>/dev/null; cp -r ~/.cursor/skills-team/${repo.repo}/skills/${name} ~/.cursor/skills/${name}`
+    const commands = (bundle.skillNames ?? []).map(
+      (name) => `# ${name}\nmkdir -p ~/.cursor/skills ~/.cursor/skills-team && git clone ${webUrl}/${repo.owner}/${repo.repo}.git ~/.cursor/skills-team/${repo.repo} && cp -r ~/.cursor/skills-team/${repo.repo}/skills/${name} ~/.cursor/skills/${name}`
     )
     return commands.join('\n\n')
   }
@@ -149,8 +182,8 @@ export default function TeamPage() {
       return (
         s.name.toLowerCase().includes(q) ||
         s.description.toLowerCase().includes(q) ||
-        s.author.toLowerCase().includes(q) ||
-        s.tags.some((t) => t.toLowerCase().includes(q))
+        (s.author ?? '').toLowerCase().includes(q) ||
+        (s.tags ?? []).some((t) => t.toLowerCase().includes(q))
       )
     }
     return true
@@ -198,7 +231,7 @@ export default function TeamPage() {
             </p>
           </div>
           <button
-            onClick={syncTeamRepos}
+            onClick={() => void syncTeamRepos()}
             disabled={state.teamSyncStatus === 'syncing'}
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-primary/90 backdrop-blur-sm text-white text-sm font-medium cursor-pointer hover:bg-primary transition-all shadow-lg shadow-primary/20 disabled:opacity-50"
           >
@@ -251,7 +284,7 @@ export default function TeamPage() {
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {state.teamBundles.map((bundle) => {
                 const isExpanded = expandedBundle === bundle.id
-                const bundleSkills = bundle.skillNames
+                const bundleSkills = (bundle.skillNames ?? [])
                   .map((name) => state.teamSkills.find((s) => s.name === name))
                   .filter(Boolean)
                 const installCmd = getBundleInstallCommand(bundle)
@@ -269,7 +302,7 @@ export default function TeamPage() {
                           </div>
                           <div>
                             <h4 className="font-semibold text-sm">{bundle.name}</h4>
-                            <p className="text-xs text-gray-400">@{bundle.author}</p>
+                            <p className="text-xs text-gray-400">@{bundle.author || '未知'}</p>
                           </div>
                         </div>
                         <span className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary dark:text-primary-light font-medium">
@@ -363,12 +396,7 @@ export default function TeamPage() {
             </h3>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {filtered.map((skill) => (
-                <div key={skill.id} className="relative">
-                  <SkillCard skill={skill} />
-                  <span className="absolute top-3 right-12 text-[10px] px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-500/20 text-blue-600 dark:text-blue-300 font-medium">
-                    {skill.repoLabel}
-                  </span>
-                </div>
+                <SkillCard key={skill.id} skill={skill} onCardClick={handleTeamSkillCardClick} />
               ))}
             </div>
           </>
@@ -377,7 +405,7 @@ export default function TeamPage() {
             <RefreshCw className="w-12 h-12 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
             <p className="text-gray-500 dark:text-gray-400 mb-4">尚未同步团队技能</p>
             <button
-              onClick={syncTeamRepos}
+              onClick={() => void syncTeamRepos()}
               disabled={state.teamSyncStatus === 'syncing'}
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-primary/90 backdrop-blur-sm text-white text-sm font-medium cursor-pointer hover:bg-primary transition-all shadow-lg shadow-primary/20 disabled:opacity-50"
             >

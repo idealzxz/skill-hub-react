@@ -1,41 +1,28 @@
 import { useMemo, useRef, useState } from 'react'
-import { Heart, Download, Upload, Copy, Check, Terminal, GitBranch, Monitor, Apple, Package, Cloud, RefreshCw, CheckCircle, AlertCircle } from 'lucide-react'
+import { Heart, Download, Upload, Copy, Check, Terminal, Monitor, Apple, Package, Cloud, RefreshCw, CheckCircle, AlertCircle } from 'lucide-react'
 import { useApp } from '../store/AppContext'
-import { copyToClipboard } from '../utils'
+import { copyToClipboard, resolveFavoriteSkills } from '../utils'
 import SkillCard from '../components/SkillCard'
-
-type InstallFormat = 'skillhub' | 'git'
-type Platform = 'Windows' | 'macOS' | 'Linux'
+import { type Platform, buildBatchInstallCommand, buildSingleInstallCommand } from '../utils/installCommands'
+import type { TeamSkill } from '../data/skills'
 
 export default function FavoritesPage() {
   const { state, dispatch, toast, syncFavorites } = useApp()
   const fileRef = useRef<HTMLInputElement>(null)
   const [showBatchPanel, setShowBatchPanel] = useState(false)
-  const [installFormat, setInstallFormat] = useState<InstallFormat>('skillhub')
   const [platform, setPlatform] = useState<Platform>('Windows')
   const [copiedKey, setCopiedKey] = useState('')
 
   const favoriteSkills = useMemo(
-    () => state.skills.filter((s) => state.favorites.includes(s.id)),
-    [state.skills, state.favorites],
+    () => resolveFavoriteSkills(state.favorites, state.skills, state.mySkills, state.teamSkills),
+    [state.favorites, state.skills, state.mySkills, state.teamSkills],
   )
 
   const orphanCount = state.favorites.length - favoriteSkills.length
 
-  const isWin = platform === 'Windows'
-
   const batchCommand = useMemo(() => {
-    if (favoriteSkills.length === 0) return ''
-    if (installFormat === 'skillhub') {
-      return favoriteSkills
-        .map((s) => `skillhub install ${s.name}`)
-        .join(isWin ? ' && ' : ' && \\\n')
-    }
-    const base = isWin ? '%USERPROFILE%\\.cursor\\skills' : '~/.cursor/skills'
-    return favoriteSkills
-      .map((s) => `git clone https://github.com/${s.author}/${s.name}.git ${base}/${s.name}`)
-      .join(isWin ? ' && ' : ' && \\\n')
-  }, [favoriteSkills, installFormat, isWin])
+    return buildBatchInstallCommand(favoriteSkills, platform)
+  }, [favoriteSkills, platform])
 
   const handleCopy = async (text: string, key: string) => {
     const ok = await copyToClipboard(text)
@@ -142,8 +129,8 @@ export default function FavoritesPage() {
               {state.githubUser ? (
                 <button
                   onClick={async () => {
-                    await syncFavorites()
-                    toast('收藏已同步到仓库')
+                    const ok = await syncFavorites()
+                    toast(ok ? '收藏已同步到仓库' : '收藏同步失败，请检查网络与 Token 权限')
                   }}
                   disabled={state.favSyncStatus === 'syncing'}
                   className="flex items-center gap-2 px-4 py-2 rounded-2xl glass-subtle hover:bg-white/40 dark:hover:bg-white/10 text-sm cursor-pointer transition-all disabled:opacity-50"
@@ -175,7 +162,7 @@ export default function FavoritesPage() {
         {showBatchPanel && favoriteSkills.length > 0 && (
           <div className="mb-8 glass-elevated rounded-2xl p-6 space-y-5">
             <div className="flex items-center justify-between">
-              <h3 className="font-bold text-lg">一键安装 {favoriteSkills.length} 个技能</h3>
+              <h3 className="font-bold text-lg">一键安装 {favoriteSkills.length} 个技能（Git HTTPS）</h3>
               <button
                 onClick={() => handleCopy(batchCommand, 'batch')}
                 className="flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-primary/90 backdrop-blur-sm text-white cursor-pointer hover:bg-primary transition-all text-sm font-medium shadow-lg shadow-primary/20"
@@ -185,49 +172,24 @@ export default function FavoritesPage() {
               </button>
             </div>
 
-            <div className="flex items-center gap-4">
+            <div className="flex flex-wrap items-center gap-4">
               <div className="flex items-center gap-1.5">
-                <span className="text-xs text-gray-500 dark:text-gray-400 mr-1">安装方式</span>
-                <button
-                  onClick={() => setInstallFormat('skillhub')}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium cursor-pointer transition-all ${
-                    installFormat === 'skillhub'
-                      ? 'bg-primary/15 dark:bg-primary/25 text-primary dark:text-primary-light border border-primary/30'
-                      : 'glass-subtle hover:bg-white/40 dark:hover:bg-white/10'
-                  }`}
-                >
-                  <Terminal className="w-3 h-3" />SkillHub CLI
-                </button>
-                <button
-                  onClick={() => setInstallFormat('git')}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium cursor-pointer transition-all ${
-                    installFormat === 'git'
-                      ? 'bg-primary/15 dark:bg-primary/25 text-primary dark:text-primary-light border border-primary/30'
-                      : 'glass-subtle hover:bg-white/40 dark:hover:bg-white/10'
-                  }`}
-                >
-                  <GitBranch className="w-3 h-3" />Git Clone
-                </button>
+                <span className="text-xs text-gray-500 dark:text-gray-400 mr-1">平台</span>
+                {(['Windows', 'macOS', 'Linux'] as Platform[]).map((p) => (
+                  <button
+                    key={p}
+                    onClick={() => setPlatform(p)}
+                    className={`flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-medium cursor-pointer transition-all ${
+                      platform === p
+                        ? 'bg-primary/15 dark:bg-primary/25 text-primary dark:text-primary-light border border-primary/30'
+                        : 'glass-subtle hover:bg-white/40 dark:hover:bg-white/10'
+                    }`}
+                  >
+                    {platformIcons[p]}{p}
+                  </button>
+                ))}
               </div>
 
-              {installFormat === 'git' && (
-                <div className="flex items-center gap-1.5">
-                  <span className="text-xs text-gray-500 dark:text-gray-400 mr-1">平台</span>
-                  {(['Windows', 'macOS', 'Linux'] as Platform[]).map((p) => (
-                    <button
-                      key={p}
-                      onClick={() => setPlatform(p)}
-                      className={`flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-medium cursor-pointer transition-all ${
-                        platform === p
-                          ? 'bg-primary/15 dark:bg-primary/25 text-primary dark:text-primary-light border border-primary/30'
-                          : 'glass-subtle hover:bg-white/40 dark:hover:bg-white/10'
-                      }`}
-                    >
-                      {platformIcons[p]}{p}
-                    </button>
-                  ))}
-                </div>
-              )}
             </div>
 
             <div className="relative group/code">
@@ -246,9 +208,7 @@ export default function FavoritesPage() {
               <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">逐个安装</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {favoriteSkills.map((skill) => {
-                  const cmd = installFormat === 'skillhub'
-                    ? `skillhub install ${skill.name}`
-                    : `git clone https://github.com/${skill.author}/${skill.name}.git ${isWin ? '%USERPROFILE%\\.cursor\\skills' : '~/.cursor/skills'}/${skill.name}`
+                  const cmd = buildSingleInstallCommand(skill, platform)
                   const key = `single-${skill.id}`
                   return (
                     <div
@@ -277,23 +237,18 @@ export default function FavoritesPage() {
               </div>
             </div>
 
-            {installFormat === 'skillhub' && (
-              <p className="text-[11px] text-gray-400 dark:text-gray-500 leading-relaxed">
-                需要先安装 SkillHub CLI：
-                <code
-                  className="ml-1 px-1.5 py-0.5 rounded bg-gray-100 dark:bg-white/10 text-gray-600 dark:text-gray-300 font-mono text-[10px] cursor-pointer hover:text-primary dark:hover:text-primary-light transition-colors"
-                  onClick={() => handleCopy('curl -fsSL https://skillhub-1388575217.cos.ap-guangzhou.myqcloud.com/install/install.sh | bash', 'cli')}
-                >
-                  {copiedKey === 'cli' ? '已复制 ✓' : '点击复制安装命令'}
-                </code>
-              </p>
-            )}
           </div>
         )}
 
         {favoriteSkills.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {favoriteSkills.map((skill) => <SkillCard key={skill.id} skill={skill} />)}
+            {favoriteSkills.map((skill) => (
+              <SkillCard
+                key={skill.id}
+                skill={skill}
+                captionOverride={'repoId' in skill ? (skill as TeamSkill).repoLabel : undefined}
+              />
+            ))}
           </div>
         ) : (
           <div className="text-center py-20">
@@ -301,10 +256,18 @@ export default function FavoritesPage() {
               <Heart className="w-10 h-10 text-gray-300 dark:text-gray-600" />
             </div>
             <p className="text-gray-500 dark:text-gray-400 text-lg mb-2">还没有收藏任何技能</p>
-            <p className="text-gray-400 dark:text-gray-500 text-sm mb-6">去技能市场发现感兴趣的技能吧</p>
-            <button onClick={() => dispatch({ type: 'SET_TAB', tab: 'market' })} className="px-6 py-3 rounded-2xl bg-primary/90 backdrop-blur-sm text-white cursor-pointer hover:bg-primary transition-all shadow-lg shadow-primary/20">
-              去逛逛
-            </button>
+            <p className="text-gray-400 dark:text-gray-500 text-sm mb-6">在数据看板、我的技能或团队技能中收藏技能后即可在此查看</p>
+            <div className="flex flex-wrap gap-2 justify-center">
+              <button onClick={() => dispatch({ type: 'SET_TAB', tab: 'dashboard' })} className="px-5 py-2.5 rounded-2xl bg-primary/90 backdrop-blur-sm text-white text-sm cursor-pointer hover:bg-primary transition-all shadow-lg shadow-primary/20">
+                数据看板
+              </button>
+              <button onClick={() => dispatch({ type: 'SET_TAB', tab: 'myskills' })} className="px-5 py-2.5 rounded-2xl glass-subtle text-sm cursor-pointer hover:bg-white/40 dark:hover:bg-white/10">
+                我的技能
+              </button>
+              <button onClick={() => dispatch({ type: 'SET_TAB', tab: 'team' })} className="px-5 py-2.5 rounded-2xl glass-subtle text-sm cursor-pointer hover:bg-white/40 dark:hover:bg-white/10">
+                团队技能
+              </button>
+            </div>
           </div>
         )}
       </div>

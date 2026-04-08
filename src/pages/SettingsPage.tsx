@@ -4,8 +4,9 @@ import { useApp } from '../store/AppContext'
 import { GitHubService } from '../services/github'
 import { GitLabService } from '../services/gitlab'
 import { GiteeService } from '../services/gitee'
-import { pullFromProvider } from '../services/sync'
-import { type GitProviderType, PROVIDER_LABELS, PROVIDER_TOKEN_HINTS, detectPlatformFromUrl, DEFAULT_WEB_URLS } from '../services/git-provider'
+import { pullFromProvider, mergeRemoteMySkills } from '../services/sync'
+import { type GitProviderType, PROVIDER_LABELS, PROVIDER_TOKEN_HINTS, detectPlatformFromUrl, DEFAULT_API_URLS, DEFAULT_WEB_URLS } from '../services/git-provider'
+import { formatProviderError } from '../utils'
 
 const PLATFORM_OPTIONS: { id: GitProviderType; label: string; icon: string }[] = [
   { id: 'github', label: 'GitHub', icon: '🐙' },
@@ -38,7 +39,7 @@ export default function SettingsPage() {
 
       dispatch({ type: 'SET_SYNC_STATUS', status: 'syncing', message: '首次同步...' })
       const result = await pullFromProvider(provider, user)
-      dispatch({ type: 'SET_MY_SKILLS', skills: result.mySkills })
+      dispatch({ type: 'SET_MY_SKILLS', skills: mergeRemoteMySkills(state.mySkills, result.mySkills) })
       if (result.favorites.length > 0) dispatch({ type: 'SET_FAVORITES', favorites: result.favorites })
       if (result.indexSha) dispatch({ type: 'SET_INDEX_SHA', sha: result.indexSha })
       if (result.favSha) dispatch({ type: 'SET_FAV_SHA', sha: result.favSha })
@@ -50,8 +51,9 @@ export default function SettingsPage() {
       dispatch({ type: 'SET_SYNC_STATUS', status: 'idle' })
       toast('同步完成')
     } catch (err) {
-      toast('连接失败: ' + String(err))
-      dispatch({ type: 'SET_SYNC_STATUS', status: 'error', message: String(err) })
+      const msg = formatProviderError(err, { apiUrl: DEFAULT_API_URLS[selectedPlatform] })
+      toast('连接失败: ' + msg)
+      dispatch({ type: 'SET_SYNC_STATUS', status: 'error', message: msg })
     }
     setConnecting(false)
   }
@@ -120,7 +122,7 @@ export default function SettingsPage() {
       setRepoInput('')
       toast(`已添加 ${PROVIDER_LABELS[platform]} 仓库: ${owner}/${repo}`)
     } catch (err) {
-      toast('添加失败: ' + String(err))
+      toast('添加失败: ' + formatProviderError(err))
     }
     setAddingRepo(false)
   }
@@ -321,9 +323,9 @@ export default function SettingsPage() {
             <h3 className="font-semibold mb-4">键盘快捷键</h3>
             <div className="space-y-3">
               {[
-                { keys: 'Ctrl + K', action: '搜索' },
+                { keys: 'Ctrl + K', action: '打开「我的技能」' },
                 { keys: 'Ctrl + J', action: '切换主题' },
-                { keys: 'Alt + 1~8', action: '技能市场 / 我的技能 / 团队技能 / ...' },
+                { keys: 'Alt + 1~7', action: '我的技能 / 团队技能 / 我的收藏 / ...' },
               ].map((s) => (
                 <div key={s.keys} className="flex items-center justify-between">
                   <span className="text-sm text-gray-600 dark:text-gray-400">{s.action}</span>

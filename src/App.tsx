@@ -4,7 +4,6 @@ import Sidebar from './components/Sidebar'
 import MobileNav from './components/MobileNav'
 import SkillDetailModal from './components/SkillDetailModal'
 import Toast from './components/Toast'
-import MarketPage from './pages/MarketPage'
 import FavoritesPage from './pages/FavoritesPage'
 import InstallPage from './pages/InstallPage'
 import SettingsPage from './pages/SettingsPage'
@@ -20,7 +19,6 @@ function AppContent() {
 
   const renderPage = () => {
     switch (state.currentTab) {
-      case 'market': return <MarketPage />
       case 'favorites': return <FavoritesPage />
       case 'install': return <InstallPage />
       case 'settings': return <SettingsPage />
@@ -29,7 +27,7 @@ function AppContent() {
       case 'myskills': return <MySkillsPage />
       case 'team': return <TeamPage />
       case 'editor': return <SkillEditorPage />
-      default: return <MarketPage />
+      default: return <MySkillsPage />
     }
   }
 

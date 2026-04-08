@@ -1,19 +1,26 @@
 import { Star, Download } from 'lucide-react'
 import { type Skill, CAT_COLORS } from '../data/skills'
 import { useApp } from '../store/AppContext'
-import { formatNum } from '../utils'
+import { formatNum, skillSubtitleLine } from '../utils'
 
 interface Props {
   skill: Skill
+  /** 若提供则替代默认的 openDetail（例如团队技能需先拉取远程再打开详情） */
+  onCardClick?: (skill: Skill) => void | Promise<void>
+  /** 覆盖副标题行（默认 @作者）；收藏页团队技能可传仓库展示名 */
+  captionOverride?: string
 }
 
-export default function SkillCard({ skill }: Props) {
+export default function SkillCard({ skill, onCardClick, captionOverride }: Props) {
   const { openDetail, toggleFavorite, isFavorite } = useApp()
   const fav = isFavorite(skill.id)
 
   return (
     <div
-      onClick={() => openDetail(skill)}
+      onClick={() => {
+        if (onCardClick) void onCardClick(skill)
+        else openDetail(skill)
+      }}
       className="group relative glass-elevated glass-hover rounded-2xl p-5 cursor-pointer"
     >
       <div className="flex items-start justify-between mb-3">
@@ -28,7 +35,7 @@ export default function SkillCard({ skill }: Props) {
             <h3 className="font-bold text-sm truncate text-heading group-hover:text-primary dark:group-hover:text-primary-light transition-colors">
               {skill.name}
             </h3>
-            <p className="text-xs text-gray-400 truncate">@{skill.author}</p>
+            <p className="text-xs text-gray-400 truncate">{skillSubtitleLine(skill, captionOverride)}</p>
           </div>
         </div>
         <button

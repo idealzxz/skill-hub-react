@@ -59,9 +59,9 @@ export default function RecentPage() {
               <Clock className="w-10 h-10 text-gray-300 dark:text-gray-600" />
             </div>
             <p className="text-gray-500 dark:text-gray-400 text-lg mb-2">还没有浏览过任何技能</p>
-            <p className="text-gray-400 dark:text-gray-500 text-sm mb-6">去技能市场看看吧</p>
-            <button onClick={() => dispatch({ type: 'SET_TAB', tab: 'market' })} className="px-6 py-3 rounded-2xl bg-primary/90 backdrop-blur-sm text-white cursor-pointer hover:bg-primary transition-all shadow-lg shadow-primary/20">
-              去逛逛
+            <p className="text-gray-400 dark:text-gray-500 text-sm mb-6">在数据看板查看热门技能</p>
+            <button onClick={() => dispatch({ type: 'SET_TAB', tab: 'dashboard' })} className="px-6 py-3 rounded-2xl bg-primary/90 backdrop-blur-sm text-white cursor-pointer hover:bg-primary transition-all shadow-lg shadow-primary/20">
+              打开数据看板
             </button>
           </div>
         )}

@@ -2,11 +2,13 @@ import { useState, useCallback } from 'react'
 import { ArrowLeft, Save, Cloud, Eye, Edit3, X } from 'lucide-react'
 import { useApp } from '../store/AppContext'
 import { CATEGORIES, type UserSkill, pickColor } from '../data/skills'
-import { pushSkill } from '../services/sync'
+import { pushSkillToProvider } from '../services/sync'
+import { DEFAULT_WEB_URLS } from '../services/git-provider'
 import MarkdownPreview from '../components/MarkdownPreview'
+import { formatProviderError } from '../utils'
 
 export default function SkillEditorPage() {
-  const { state, dispatch, toast, getGitHub, getMetas } = useApp()
+  const { state, dispatch, toast, getProvider, getMetas } = useApp()
 
   const skill = state.editingSkill
   const [form, setForm] = useState<UserSkill>(
@@ -50,31 +52,32 @@ export default function SkillEditorPage() {
       updatedAt: now,
       repoPath: `skills/${form.name}/SKILL.md`,
       installCommand: state.githubUser
-        ? `git clone https://github.com/${state.githubUser.login}/cursor-skills.git ~/.cursor/skills && cd ~/.cursor/skills/skills/${form.name}`
+        ? `mkdir -p ~/.cursor/skills && git clone ${DEFAULT_WEB_URLS[state.gitProviderType]}/${state.githubUser.login}/cursor-skills.git ~/.cursor/skills-sync && cp -r ~/.cursor/skills-sync/skills/${form.name} ~/.cursor/skills/${form.name}`
         : form.installCommand,
     }
 
     if (syncToGitHub) {
-      const gh = getGitHub()
-      if (!gh || !state.githubUser) {
-        toast('请先在设置中绑定 GitHub')
+      const provider = getProvider()
+      if (!provider || !state.githubUser) {
+        toast('请先在设置中绑定 Git 平台')
         return
       }
 
       setSaving(true)
       try {
-        dispatch({ type: 'SET_SYNC_STATUS', status: 'syncing', message: '正在保存到 GitHub...' })
+        dispatch({ type: 'SET_SYNC_STATUS', status: 'syncing', message: '正在保存到远程仓库...' })
         const metas = getMetas()
-        const { fileSha, newIndexSha } = await pushSkill(gh, state.githubUser, updated, metas, state.indexSha)
+        const { fileSha, newIndexSha } = await pushSkillToProvider(provider, state.githubUser, updated, metas, state.indexSha)
         updated.sha = fileSha
         updated.syncStatus = 'synced'
         updated.lastSynced = now
         dispatch({ type: 'SET_INDEX_SHA', sha: newIndexSha })
         dispatch({ type: 'SET_SYNC_STATUS', status: 'idle' })
-        toast('已保存并同步到 GitHub')
+        toast('已保存并同步到远程仓库')
       } catch (err) {
-        dispatch({ type: 'SET_SYNC_STATUS', status: 'error', message: String(err) })
-        toast('同步失败: ' + String(err))
+        const msg = formatProviderError(err, { apiUrl: provider?.apiUrl })
+        dispatch({ type: 'SET_SYNC_STATUS', status: 'error', message: msg })
+        toast('同步失败: ' + msg)
         setSaving(false)
         return
       }

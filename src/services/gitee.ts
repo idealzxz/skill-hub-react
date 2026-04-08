@@ -1,7 +1,12 @@
 import type { SkillMeta, SkillBundle } from '../data/skills'
 import { type GitProvider, type GitUser, type FileResult, type GitProviderType, DEFAULT_API_URLS, getWebUrl } from './git-provider'
+import { normalizeSkillIndexData, normalizeSkillBundlesData } from './github'
 
 const REPO_NAME = 'cursor-skills'
+
+function encodeContentsPath(path: string): string {
+  return encodeURIComponent(path)
+}
 
 export class GiteeService implements GitProvider {
   readonly providerType: GitProviderType = 'gitee'
@@ -41,7 +46,7 @@ export class GiteeService implements GitProvider {
           access_token: this.token,
           name: REPO_NAME,
           description: 'Cursor Skills 管理仓库 - 由 Skill Hub 自动创建',
-          private: true,
+          private: false,
           auto_init: true,
         }),
       })
@@ -77,7 +82,12 @@ export class GiteeService implements GitProvider {
   async readIndex(owner: string): Promise<{ data: SkillMeta[]; sha: string } | null> {
     const result = await this.readFile(owner, '.skill-hub/index.json')
     if (!result) return null
-    return { data: JSON.parse(result.content), sha: result.sha }
+    try {
+      const raw = JSON.parse(result.content.replace(/^\uFEFF/, ''))
+      return { data: normalizeSkillIndexData(raw), sha: result.sha }
+    } catch {
+      return { data: [], sha: result.sha }
+    }
   }
 
   async writeIndex(owner: string, data: SkillMeta[], sha?: string): Promise<string> {
@@ -101,13 +111,13 @@ export class GiteeService implements GitProvider {
   async readRepoIndex(owner: string, repo: string): Promise<{ data: SkillMeta[]; sha: string } | null> {
     const result = await this.readRepoFile(owner, repo, '.skill-hub/index.json')
     if (!result) return null
-    return { data: JSON.parse(result.content), sha: result.sha }
+    return { data: normalizeSkillIndexData(JSON.parse(result.content)), sha: result.sha }
   }
 
   async readRepoBundles(owner: string, repo: string): Promise<SkillBundle[]> {
     const result = await this.readRepoFile(owner, repo, '.skill-hub/bundles.json')
     if (!result) return []
-    return JSON.parse(result.content)
+    return normalizeSkillBundlesData(JSON.parse(result.content))
   }
 
   async writeRepoFile(owner: string, repo: string, path: string, content: string, sha?: string, message?: string): Promise<string> {
@@ -167,8 +177,9 @@ export class GiteeService implements GitProvider {
     content: string, sha?: string, message?: string,
   ): Promise<string> {
     const url = `${this.apiUrl}/repos/${owner}/${repo}/contents/${path}`
+
     let fileSha = sha
-    let method = sha ? 'PUT' : 'POST'
+    let method: 'PUT' | 'POST' = sha ? 'PUT' : 'POST'
 
     if (!fileSha) {
       const existing = await this._readFile(owner, repo, path)
@@ -178,30 +189,60 @@ export class GiteeService implements GitProvider {
       }
     }
 
-    const body: Record<string, string> = {
-      access_token: this.token,
-      message: message || `更新 ${path}`,
-      content: btoa(unescape(encodeURIComponent(content))),
-    }
-    if (fileSha) body.sha = fileSha
+    const encoded = btoa(unescape(encodeURIComponent(content)))
 
-    const res = await fetch(url, {
-      method,
-      headers: this.jsonHeaders(),
-      body: JSON.stringify(body),
-    })
-    if (!res.ok) {
+    const maxAttempts = 6
+    for (let i = 0; i < maxAttempts; i++) {
+      const body: Record<string, string> = {
+        access_token: this.token,
+        message: message || `更新 ${path}`,
+        content: encoded,
+      }
+      if (fileSha) body.sha = fileSha
+
+      const res = await fetch(url, {
+        method,
+        headers: this.jsonHeaders(),
+        body: JSON.stringify(body),
+      })
+      if (res.ok) {
+        const data = await res.json()
+        return data.content?.sha || fileSha || ''
+      }
       const err = await res.json().catch(() => ({}))
-      throw new Error(`写入文件失败: ${path} - ${err.message || res.status}`)
+      if ((res.status === 422 || res.status === 409) && i < maxAttempts - 1) {
+        const existing = await this._readFile(owner, repo, path)
+        if (existing?.sha && existing.sha !== fileSha) {
+          fileSha = existing.sha
+          method = 'PUT'
+          continue
+        }
+      }
+      throw new Error(`写入文件失败: ${path} - ${(err as { message?: string }).message || res.status}`)
     }
+    throw new Error(`写入文件失败: ${path}`)
+  }
+
+  async listSkillFolderNames(owner: string): Promise<string[]> {
+    const path = encodeContentsPath('skills')
+    const res = await fetch(`${this.apiUrl}/repos/${owner}/${REPO_NAME}/contents/${path}?${this.authParam()}`)
+    if (res.status === 404) return []
+    if (!res.ok) throw new Error('列出 skills 目录失败')
     const data = await res.json()
-    return data.content?.sha || fileSha || ''
+    if (!Array.isArray(data)) return []
+    return data
+      .filter((item: { type?: string }) => item.type === 'dir')
+      .map((item: { name: string }) => item.name)
   }
 
   async readSettings(owner: string): Promise<{ data: Record<string, unknown>; sha: string } | null> {
     const result = await this.readFile(owner, '.skill-hub/settings.json')
     if (!result) return null
-    return { data: JSON.parse(result.content), sha: result.sha }
+    try {
+      return { data: JSON.parse(result.content.replace(/^\uFEFF/, '')), sha: result.sha }
+    } catch {
+      return null
+    }
   }
 
   async writeSettings(owner: string, data: Record<string, unknown>, sha?: string): Promise<string> {

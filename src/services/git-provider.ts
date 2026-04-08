@@ -2,6 +2,17 @@ import type { SkillMeta, SkillBundle } from '../data/skills'
 
 export type GitProviderType = 'github' | 'gitlab' | 'gitee'
 
+/** 无 /api/v4 后缀，供 Web 链接与默认 API 根路径 */
+function gitlabDefaultOrigin(): string {
+  const v = typeof import.meta !== 'undefined' && import.meta.env?.VITE_GITLAB_API_BASE
+  if (v && String(v).trim()) {
+    return String(v)
+      .replace(/\/$/, '')
+      .replace(/\/api\/v4$/, '')
+  }
+  return 'https://gitlab2.dui88.com'
+}
+
 export interface GitUser {
   login: string
   avatar_url: string
@@ -35,6 +46,8 @@ export interface GitProvider {
   createMergeRequest(owner: string, repo: string, title: string, body: string, head: string, base?: string): Promise<string>
   readSettings(owner: string): Promise<{ data: Record<string, unknown>; sha: string } | null>
   writeSettings(owner: string, data: Record<string, unknown>, sha?: string): Promise<string>
+  /** 列出 cursor-skills 仓库下 skills/ 的一级子目录名（用于 index.json 为空 [] 时自动发现技能） */
+  listSkillFolderNames(owner: string): Promise<string[]>
 }
 
 export interface GitProviderConfig {
@@ -45,14 +58,39 @@ export interface GitProviderConfig {
 
 export const DEFAULT_API_URLS: Record<GitProviderType, string> = {
   github: 'https://api.github.com',
-  gitlab: 'http://gitlab2.dui88.com/',
+  /** GitLabService 会再拼 /api/v4；默认用 HTTPS，避免在 HTTPS 站点上出现混合内容导致 Failed to fetch */
+  gitlab: `${gitlabDefaultOrigin()}/`,
   gitee: 'https://gitee.com/api/v5',
 }
 
 export const DEFAULT_WEB_URLS: Record<GitProviderType, string> = {
   github: 'https://github.com',
-  gitlab: 'http://gitlab2.dui88.com',
+  gitlab: gitlabDefaultOrigin(),
   gitee: 'https://gitee.com',
+}
+
+/** 浏览器直连 api.github.com 失败时，开发环境可在 .env 设 VITE_DEV_GITHUB_PROXY=1，请求走 Vite 代理（见 vite.config.ts） */
+export const GITHUB_API_PROXY_PATH = '/__skillhub_github'
+
+/**
+ * GitHub REST API 根 URL。支持 VITE_GITHUB_API_BASE 覆盖（如企业反代）。
+ * 开发环境 VITE_DEV_GITHUB_PROXY=1 时使用同域代理路径，避免部分网络下浏览器无法访问 api.github.com。
+ */
+export function resolveGitHubApiBase(): string {
+  const custom = typeof import.meta !== 'undefined' && import.meta.env?.VITE_GITHUB_API_BASE
+  if (custom != null && String(custom).trim() !== '') {
+    return String(custom).replace(/\/$/, '')
+  }
+  if (typeof import.meta !== 'undefined' && import.meta.env?.DEV && import.meta.env?.VITE_DEV_GITHUB_PROXY === '1') {
+    return GITHUB_API_PROXY_PATH
+  }
+  return DEFAULT_API_URLS.github
+}
+
+/** 代理路径仅用于 API；克隆/网页链接仍指向 github.com */
+export function githubApiBaseForWebUrl(apiBase: string): string {
+  if (apiBase.startsWith('/')) return DEFAULT_API_URLS.github
+  return apiBase
 }
 
 export function getWebUrl(type: GitProviderType, apiUrl?: string): string {
@@ -89,7 +127,7 @@ export const PROVIDER_TOKEN_HINTS: Record<GitProviderType, { placeholder: string
   },
   gitlab: {
     placeholder: 'glpat-xxxxxxxxxxxx',
-    helpUrl: 'http://gitlab2.dui88.com/-/user_settings/personal_access_tokens',
+    helpUrl: `${gitlabDefaultOrigin()}/-/user_settings/personal_access_tokens`,
     helpText: 'GitLab → User Settings → Access Tokens',
     scope: 'api',
   },

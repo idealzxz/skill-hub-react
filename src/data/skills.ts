@@ -62,6 +62,8 @@ export interface TeamSkill extends Skill {
   repoLabel: string
   repoOwner: string
   repoName: string
+  /** 团队仓库所在平台；用于一键安装命令。旧数据可能缺省，按 github 处理 */
+  repoPlatform?: 'github' | 'gitlab' | 'gitee'
   skillMdContent?: string
 }
 
@@ -159,7 +161,7 @@ export function generateDemoSkills(): Skill[] {
     downloads: s.downloads,
     version: `${(i % 3) + 1}.${i % 10}.${i % 20}`,
     color: SKILL_COLORS[i % SKILL_COLORS.length],
-    installCommand: `git clone https://github.com/${s.author}/${s.name}.git ~/.cursor/skills/${s.name}`,
+    installCommand: `mkdir -p ~/.cursor/skills && cd ~/.cursor/skills && git clone https://github.com/${s.author}/${s.name}.git "${s.name}"`,
     updatedAt: new Date(2026, i % 3, (i % 28) + 1).toISOString(),
   }))
 }

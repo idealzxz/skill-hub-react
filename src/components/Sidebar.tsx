@@ -1,11 +1,11 @@
 import {
-  Zap, Store, Heart, DownloadCloud, Settings,
+  Zap, Heart, DownloadCloud, Settings,
   BarChart3, Clock, Sun, Moon, FolderEdit, RefreshCw, Users,
 } from 'lucide-react'
 import { useApp, type TabId } from '../store/AppContext'
+import { resolveFavoriteSkills } from '../utils'
 
 const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
-  store: Store,
   heart: Heart,
   'download-cloud': DownloadCloud,
   settings: Settings,
@@ -16,7 +16,6 @@ const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
 }
 
 const TABS: { id: TabId; icon: string; label: string }[] = [
-  { id: 'market', icon: 'store', label: '技能市场' },
   { id: 'myskills', icon: 'folder-edit', label: '我的技能' },
   { id: 'team', icon: 'users', label: '团队技能' },
   { id: 'favorites', icon: 'heart', label: '我的收藏' },
@@ -29,7 +28,7 @@ const TABS: { id: TabId; icon: string; label: string }[] = [
 export default function Sidebar() {
   const { state, dispatch } = useApp()
 
-  const favCount = state.skills.filter((s) => state.favorites.includes(s.id)).length
+  const favCount = resolveFavoriteSkills(state.favorites, state.skills, state.mySkills, state.teamSkills).length
 
   const toggleTheme = () => {
     const isDark = document.documentElement.classList.contains('dark')

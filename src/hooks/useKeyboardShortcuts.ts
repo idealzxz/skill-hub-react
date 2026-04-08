@@ -10,10 +10,7 @@ export function useKeyboardShortcuts() {
 
       if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
         e.preventDefault()
-        dispatch({ type: 'SET_TAB', tab: 'market' })
-        setTimeout(() => {
-          document.querySelector<HTMLInputElement>('[data-search-input]')?.focus()
-        }, 100)
+        dispatch({ type: 'SET_TAB', tab: 'myskills' })
         return
       }
 
@@ -26,7 +23,7 @@ export function useKeyboardShortcuts() {
 
       if (e.altKey && e.key >= '1' && e.key <= '8') {
         e.preventDefault()
-        const tabs: TabId[] = ['market', 'myskills', 'team', 'favorites', 'install', 'dashboard', 'recent', 'settings']
+        const tabs: TabId[] = ['myskills', 'team', 'favorites', 'install', 'dashboard', 'recent', 'settings']
         const idx = parseInt(e.key) - 1
         if (tabs[idx]) dispatch({ type: 'SET_TAB', tab: tabs[idx] })
       }

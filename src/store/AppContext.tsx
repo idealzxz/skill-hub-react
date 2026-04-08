@@ -6,7 +6,7 @@ import { GiteeService } from '../services/gitee'
 import { pushFavoritesToProvider, pushSettingsToProvider, type SyncedSettings } from '../services/sync'
 import type { GitProvider, GitProviderType } from '../services/git-provider'
 
-export type TabId = 'market' | 'favorites' | 'install' | 'settings' | 'dashboard' | 'recent' | 'myskills' | 'editor' | 'team'
+export type TabId = 'favorites' | 'install' | 'settings' | 'dashboard' | 'recent' | 'myskills' | 'editor' | 'team'
 type Theme = 'light' | 'dark' | 'system'
 
 interface RecentView {
@@ -68,6 +68,7 @@ export type Action =
   | { type: 'REMOVE_TEAM_REPO'; repoId: string }
   | { type: 'UPDATE_TEAM_REPO'; repo: TeamRepo }
   | { type: 'SET_TEAM_SKILLS'; skills: TeamSkill[] }
+  | { type: 'UPDATE_TEAM_SKILL'; skill: TeamSkill }
   | { type: 'SET_TEAM_BUNDLES'; bundles: SkillBundle[] }
   | { type: 'SET_TEAM_SYNC_STATUS'; status: 'idle' | 'syncing' | 'error'; message?: string }
   | { type: 'SET_FAV_SYNC_STATUS'; status: 'idle' | 'syncing' | 'error'; message?: string }
@@ -147,6 +148,11 @@ function reducer(state: AppState, action: Action): AppState {
       }
     case 'SET_TEAM_SKILLS':
       return { ...state, teamSkills: action.skills }
+    case 'UPDATE_TEAM_SKILL':
+      return {
+        ...state,
+        teamSkills: state.teamSkills.map((s) => (s.id === action.skill.id ? action.skill : s)),
+      }
     case 'SET_TEAM_BUNDLES':
       return { ...state, teamBundles: action.bundles }
     case 'SET_TEAM_SYNC_STATUS':
@@ -190,7 +196,7 @@ interface AppContextValue {
   getGitHub: () => GitHubService | null
   getProvider: () => GitProvider | null
   getMetas: () => SkillMeta[]
-  syncFavorites: () => Promise<void>
+  syncFavorites: () => Promise<boolean>
 }
 
 const AppContext = createContext<AppContextValue | null>(null)
@@ -203,7 +209,7 @@ export function useApp() {
 
 function loadInitialState(): AppState {
   return {
-    currentTab: 'market',
+    currentTab: 'myskills',
     theme: (localStorage.getItem('sh_theme') as Theme) || 'system',
     skills: generateDemoSkills(),
     favorites: JSON.parse(localStorage.getItem('sh_favorites') || '[]'),
@@ -273,8 +279,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
     }
   }, [state.githubToken, state.gitProviderType])
 
-  const syncFavorites = useCallback(async () => {
-    if (!state.githubToken || !state.githubUser) return
+  const syncFavorites = useCallback(async (): Promise<boolean> => {
+    if (!state.githubToken || !state.githubUser) return false
     let provider: GitProvider
     switch (state.gitProviderType) {
       case 'gitlab': provider = new GitLabService(state.githubToken); break
@@ -286,8 +292,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
       const newSha = await pushFavoritesToProvider(provider, state.githubUser, state.favorites, state.favSha)
       dispatch({ type: 'SET_FAV_SHA', sha: newSha })
       dispatch({ type: 'SET_FAV_SYNC_STATUS', status: 'idle' })
+      return true
     } catch {
       dispatch({ type: 'SET_FAV_SYNC_STATUS', status: 'error', message: '收藏同步失败' })
+      return false
     }
   }, [state.githubToken, state.githubUser, state.gitProviderType, state.favorites, state.favSha])
 

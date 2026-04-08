@@ -1,5 +1,6 @@
 import type { SkillMeta, SkillBundle } from '../data/skills'
 import { type GitProvider, type GitUser, type FileResult, type GitProviderType, DEFAULT_API_URLS, getWebUrl } from './git-provider'
+import { normalizeSkillIndexData, normalizeSkillBundlesData } from './github'
 
 const REPO_NAME = 'cursor-skills'
 
@@ -49,7 +50,7 @@ export class GitLabService implements GitProvider {
         body: JSON.stringify({
           name: REPO_NAME,
           description: 'Cursor Skills 管理仓库 - 由 Skill Hub 自动创建',
-          visibility: 'private',
+          visibility: 'public',
           initialize_with_readme: true,
         }),
       })
@@ -61,15 +62,18 @@ export class GitLabService implements GitProvider {
   }
 
   private async _readFile(pid: string, path: string): Promise<FileResult | null> {
-    const url = `${this.apiUrl}/projects/${pid}/repository/files/${encodePath(path)}?ref=main`
-    const res = await fetch(url, { headers: this.headers() })
-    if (res.status === 404) return null
-    if (!res.ok) throw new Error(`读取文件失败: ${path}`)
-    const data = await res.json()
-    return {
-      content: decodeURIComponent(escape(atob(data.content))),
-      sha: data.blob_id || data.content_sha256 || '',
+    for (const ref of ['main', 'master']) {
+      const url = `${this.apiUrl}/projects/${pid}/repository/files/${encodePath(path)}?ref=${ref}`
+      const res = await fetch(url, { headers: this.headers() })
+      if (res.status === 404) continue
+      if (!res.ok) throw new Error(`读取文件失败: ${path}`)
+      const data = await res.json()
+      return {
+        content: decodeURIComponent(escape(atob(data.content))),
+        sha: data.blob_id || data.content_sha256 || '',
+      }
     }
+    return null
   }
 
   private async _writeFile(
@@ -124,7 +128,12 @@ export class GitLabService implements GitProvider {
   async readIndex(owner: string): Promise<{ data: SkillMeta[]; sha: string } | null> {
     const result = await this.readFile(owner, '.skill-hub/index.json')
     if (!result) return null
-    return { data: JSON.parse(result.content), sha: result.sha }
+    try {
+      const raw = JSON.parse(result.content.replace(/^\uFEFF/, ''))
+      return { data: normalizeSkillIndexData(raw), sha: result.sha }
+    } catch {
+      return { data: [], sha: result.sha }
+    }
   }
 
   async writeIndex(owner: string, data: SkillMeta[], sha?: string): Promise<string> {
@@ -134,7 +143,11 @@ export class GitLabService implements GitProvider {
   async readFavorites(owner: string): Promise<{ data: string[]; sha: string } | null> {
     const result = await this.readFile(owner, '.skill-hub/favorites.json')
     if (!result) return null
-    return { data: JSON.parse(result.content), sha: result.sha }
+    try {
+      return { data: JSON.parse(result.content.replace(/^\uFEFF/, '')) as string[], sha: result.sha }
+    } catch {
+      return { data: [], sha: result.sha }
+    }
   }
 
   async writeFavorites(owner: string, data: string[], sha?: string): Promise<string> {
@@ -148,13 +161,13 @@ export class GitLabService implements GitProvider {
   async readRepoIndex(owner: string, repo: string): Promise<{ data: SkillMeta[]; sha: string } | null> {
     const result = await this.readRepoFile(owner, repo, '.skill-hub/index.json')
     if (!result) return null
-    return { data: JSON.parse(result.content), sha: result.sha }
+    return { data: normalizeSkillIndexData(JSON.parse(result.content)), sha: result.sha }
   }
 
   async readRepoBundles(owner: string, repo: string): Promise<SkillBundle[]> {
     const result = await this.readRepoFile(owner, repo, '.skill-hub/bundles.json')
     if (!result) return []
-    return JSON.parse(result.content)
+    return normalizeSkillBundlesData(JSON.parse(result.content))
   }
 
   async writeRepoFile(owner: string, repo: string, path: string, content: string, sha?: string, message?: string): Promise<string> {
@@ -203,24 +216,45 @@ export class GitLabService implements GitProvider {
   async readSettings(owner: string): Promise<{ data: Record<string, unknown>; sha: string } | null> {
     const result = await this.readFile(owner, '.skill-hub/settings.json')
     if (!result) return null
-    return { data: JSON.parse(result.content), sha: result.sha }
+    try {
+      return { data: JSON.parse(result.content.replace(/^\uFEFF/, '')), sha: result.sha }
+    } catch {
+      return null
+    }
   }
 
   async writeSettings(owner: string, data: Record<string, unknown>, sha?: string): Promise<string> {
     return this.writeFile(owner, '.skill-hub/settings.json', JSON.stringify(data, null, 2), sha, '更新设置')
   }
 
+  async listSkillFolderNames(owner: string): Promise<string[]> {
+    const pid = projectPath(owner, REPO_NAME)
+    for (const ref of ['main', 'master']) {
+      const url = `${this.apiUrl}/projects/${pid}/repository/tree?path=skills&ref=${ref}&per_page=100`
+      const res = await fetch(url, { headers: this.headers() })
+      if (res.status === 404) continue
+      if (!res.ok) continue
+      const data = (await res.json()) as { type: string; name: string }[]
+      if (!Array.isArray(data)) return []
+      return data.filter((e) => e.type === 'tree').map((e) => e.name)
+    }
+    return []
+  }
+
   static async readPublicRepoFile(apiUrl: string, owner: string, repo: string, path: string): Promise<FileResult | null> {
     const base = apiUrl.includes('/api/v4') ? apiUrl : `${apiUrl}/api/v4`
     const pid = encodeURIComponent(`${owner}/${repo}`)
-    const url = `${base}/projects/${pid}/repository/files/${encodePath(path)}?ref=main`
-    const res = await fetch(url)
-    if (res.status === 404) return null
-    if (!res.ok) throw new Error(`读取公开文件失败: ${owner}/${repo}/${path}`)
-    const data = await res.json()
-    return {
-      content: decodeURIComponent(escape(atob(data.content))),
-      sha: data.blob_id || '',
+    for (const ref of ['main', 'master']) {
+      const url = `${base}/projects/${pid}/repository/files/${encodePath(path)}?ref=${ref}`
+      const res = await fetch(url)
+      if (res.status === 404) continue
+      if (!res.ok) throw new Error(`读取公开文件失败: ${owner}/${repo}/${path}`)
+      const data = await res.json()
+      return {
+        content: decodeURIComponent(escape(atob(data.content))),
+        sha: data.blob_id || '',
+      }
     }
+    return null
   }
 }

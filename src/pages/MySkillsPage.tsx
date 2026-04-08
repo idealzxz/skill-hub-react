@@ -2,13 +2,19 @@ import { useState, useRef } from 'react'
 import { Plus, RefreshCw, Cloud, CloudOff, Edit, Trash2, CheckCircle, AlertCircle, GitBranch, Copy, Check, Eye, Upload } from 'lucide-react'
 import { useApp } from '../store/AppContext'
 import { CATEGORIES, CAT_COLORS, type UserSkill, pickColor } from '../data/skills'
-import { createNewSkill } from '../services/sync'
-import { pullFromGitHub, deleteSkillRemote } from '../services/sync'
-import { copyToClipboard } from '../utils'
+import {
+  createNewSkill,
+  pullFromProvider,
+  deleteSkillFromProvider,
+  mergeRemoteMySkills,
+  batchPushPendingSkillsToProvider,
+  type SyncResult,
+} from '../services/sync'
+import { copyToClipboard, formatProviderError } from '../utils'
 import { DEFAULT_WEB_URLS } from '../services/git-provider'
 
 export default function MySkillsPage() {
-  const { state, dispatch, toast, getGitHub, openDetail } = useApp()
+  const { state, dispatch, toast, getProvider, openDetail } = useApp()
   const [showClonePanel, setShowClonePanel] = useState(false)
   const [copiedId, setCopiedId] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -28,18 +34,18 @@ export default function MySkillsPage() {
   const handleDelete = async (skill: UserSkill) => {
     if (!confirm(`确定要删除「${skill.name}」吗？`)) return
 
-    const gh = getGitHub()
-    if (gh && state.githubUser && skill.sha) {
+    const provider = getProvider()
+    if (provider && state.githubUser && skill.sha) {
       try {
         dispatch({ type: 'SET_SYNC_STATUS', status: 'syncing', message: '正在删除...' })
         const metas = state.mySkills
           .filter((s) => s.id !== skill.id)
           .map((s) => ({ id: s.id, name: s.name, author: s.author, description: s.description, category: s.category, tags: s.tags, version: s.version, color: s.color, createdAt: s.updatedAt, updatedAt: s.updatedAt }))
-        const newSha = await deleteSkillRemote(gh, state.githubUser, skill, metas, state.indexSha)
+        const newSha = await deleteSkillFromProvider(provider, state.githubUser, skill, metas, state.indexSha)
         dispatch({ type: 'SET_INDEX_SHA', sha: newSha })
         dispatch({ type: 'SET_SYNC_STATUS', status: 'idle' })
       } catch (err) {
-        dispatch({ type: 'SET_SYNC_STATUS', status: 'error', message: String(err) })
+        dispatch({ type: 'SET_SYNC_STATUS', status: 'error', message: formatProviderError(err, { apiUrl: provider.apiUrl }) })
       }
     }
 
@@ -48,37 +54,84 @@ export default function MySkillsPage() {
   }
 
   const handleSync = async () => {
-    const gh = getGitHub()
-    if (!gh || !state.githubUser) {
-      toast('请先在设置中绑定 GitHub')
+    const provider = getProvider()
+    if (!provider || !state.githubUser) {
+      toast('请先在设置中绑定 Git 平台')
       dispatch({ type: 'SET_TAB', tab: 'settings' })
       return
     }
 
+    dispatch({ type: 'SET_SYNC_STATUS', status: 'syncing', message: '正在从远程拉取...' })
+
+    let mergedSkills = [...state.mySkills]
+    let indexSha = state.indexSha
+    let pullResult: SyncResult | null = null
+
     try {
-      dispatch({ type: 'SET_SYNC_STATUS', status: 'syncing', message: '正在同步...' })
-      const result = await pullFromGitHub(gh, state.githubUser)
-      dispatch({ type: 'SET_MY_SKILLS', skills: result.mySkills })
-      if (result.favorites.length > 0) dispatch({ type: 'SET_FAVORITES', favorites: result.favorites })
-      if (result.indexSha) dispatch({ type: 'SET_INDEX_SHA', sha: result.indexSha })
-      if (result.favSha) dispatch({ type: 'SET_FAV_SHA', sha: result.favSha })
-      if (result.settingsSha) dispatch({ type: 'SET_SETTINGS_SHA', sha: result.settingsSha })
-      if (result.settings) {
-        if (result.settings.theme) dispatch({ type: 'SET_THEME', theme: result.settings.theme })
-        if (result.settings.teamRepos?.length) dispatch({ type: 'SET_TEAM_REPOS', repos: result.settings.teamRepos })
+      pullResult = await pullFromProvider(provider, state.githubUser)
+      mergedSkills = mergeRemoteMySkills(state.mySkills, pullResult.mySkills)
+      if (pullResult.indexSha) indexSha = pullResult.indexSha
+    } catch {
+      dispatch({ type: 'SET_SYNC_STATUS', status: 'syncing', message: '拉取失败，尝试仅推送本地更改...' })
+    }
+
+    const pendingBefore = mergedSkills.filter(
+      (s) => (s.syncStatus === 'local' || s.syncStatus === 'modified') && s.name.trim(),
+    ).length
+    if (!pullResult && pendingBefore === 0) {
+      dispatch({ type: 'SET_SYNC_STATUS', status: 'error', message: '拉取失败' })
+      toast('拉取失败，请检查网络与仓库权限')
+      return
+    }
+
+    dispatch({ type: 'SET_SYNC_STATUS', status: 'syncing', message: '正在推送本地更改...' })
+
+    try {
+      const { skills: finalSkills, newIndexSha, error, failedSkillName } = await batchPushPendingSkillsToProvider(
+        provider,
+        state.githubUser,
+        mergedSkills,
+        indexSha,
+        (cur, total, name) => {
+          dispatch({ type: 'SET_SYNC_STATUS', status: 'syncing', message: `正在推送 ${cur}/${total}: ${name}` })
+        },
+      )
+
+      dispatch({ type: 'SET_MY_SKILLS', skills: finalSkills })
+      if (newIndexSha) dispatch({ type: 'SET_INDEX_SHA', sha: newIndexSha })
+
+      if (pullResult) {
+        if (pullResult.favorites.length > 0) dispatch({ type: 'SET_FAVORITES', favorites: pullResult.favorites })
+        if (pullResult.favSha) dispatch({ type: 'SET_FAV_SHA', sha: pullResult.favSha })
+        if (pullResult.settingsSha) dispatch({ type: 'SET_SETTINGS_SHA', sha: pullResult.settingsSha })
+        if (pullResult.settings) {
+          if (pullResult.settings.theme) dispatch({ type: 'SET_THEME', theme: pullResult.settings.theme })
+          if (pullResult.settings.teamRepos?.length) {
+            dispatch({ type: 'SET_TEAM_REPOS', repos: pullResult.settings.teamRepos })
+          }
+        }
       }
+
+      if (error) {
+        const msg = formatProviderError(error, { apiUrl: provider.apiUrl })
+        dispatch({ type: 'SET_SYNC_STATUS', status: 'error', message: msg })
+        toast(`「${failedSkillName}」推送失败: ` + msg)
+        return
+      }
+
       dispatch({ type: 'SET_SYNC_STATUS', status: 'idle' })
       toast('同步完成')
     } catch (err) {
-      dispatch({ type: 'SET_SYNC_STATUS', status: 'error', message: String(err) })
-      toast('同步失败: ' + String(err))
+      const msg = formatProviderError(err, { apiUrl: provider.apiUrl })
+      dispatch({ type: 'SET_SYNC_STATUS', status: 'error', message: msg })
+      toast('同步失败: ' + msg)
     }
   }
 
   const getCloneAllCommand = (): string | null => {
     if (!state.githubUser) return null
     const webUrl = DEFAULT_WEB_URLS[state.gitProviderType]
-    return `git clone ${webUrl}/${state.githubUser.login}/cursor-skills.git ~/.cursor/skills/${state.githubUser.login}-cursor-skills`
+    return `mkdir -p ~/.cursor/skills && cd ~/.cursor/skills && git clone ${webUrl}/${state.githubUser.login}/cursor-skills.git "${state.githubUser.login}-cursor-skills"`
   }
 
   const handleCopyCommand = async (cmd: string, id: string) => {
@@ -103,7 +156,7 @@ export default function MySkillsPage() {
   const generateInstallCommand = (skill: UserSkill): string => {
     if (state.githubUser) {
       const webUrl = DEFAULT_WEB_URLS[state.gitProviderType]
-      return `git clone ${webUrl}/${state.githubUser.login}/cursor-skills.git ~/.cursor/skills-sync && cp -r ~/.cursor/skills-sync/skills/${skill.name} ~/.cursor/skills/${skill.name}`
+      return `mkdir -p ~/.cursor/skills && git clone ${webUrl}/${state.githubUser.login}/cursor-skills.git ~/.cursor/skills-sync && cp -r ~/.cursor/skills-sync/skills/${skill.name} ~/.cursor/skills/${skill.name}`
     }
     return `# 请先绑定 Git 平台后再获取安装命令`
   }
@@ -138,7 +191,49 @@ export default function MySkillsPage() {
     if (!files?.length) return
 
     let imported = 0
-    for (const file of Array.from(files)) {
+    let skipped = 0
+    let failed = 0
+    const allFiles = Array.from(files)
+
+    // Prefer folder import: each skill folder should contain SKILL.md,
+    // and the skill name is the folder name.
+    const folderSkillEntries = allFiles.filter((file) => {
+      const rel = (file as File & { webkitRelativePath?: string }).webkitRelativePath || ''
+      if (!rel) return false
+      const parts = rel.split('/').filter(Boolean)
+      return parts.length >= 2 && /^SKILL\.md$/i.test(parts[parts.length - 1])
+    })
+
+    if (folderSkillEntries.length > 0) {
+      for (const file of folderSkillEntries) {
+        try {
+          const rel = (file as File & { webkitRelativePath?: string }).webkitRelativePath || ''
+          const parts = rel.split('/').filter(Boolean)
+          const folderName = parts[parts.length - 2] || file.name.replace(/\.md$/i, '')
+          const safeName = folderName.replace(/[^a-zA-Z0-9_-]/g, '-')
+          const exists = state.mySkills.some((s) => s.name === safeName)
+          if (exists) {
+            skipped++
+            continue
+          }
+
+          const text = await file.text()
+          const skill = buildSkillFromRaw({
+            name: safeName,
+            description: text.slice(0, 120).replace(/^#.*\n+/, '').trim(),
+            skillMdContent: text,
+          }, imported)
+          dispatch({ type: 'ADD_MY_SKILL', skill })
+          imported++
+        } catch {
+          failed++
+        }
+      }
+    }
+
+    // Backward compatibility: support importing plain .md/.json files
+    for (const file of allFiles) {
+      if (folderSkillEntries.includes(file)) continue
       try {
         const text = await file.text()
 
@@ -149,6 +244,11 @@ export default function MySkillsPage() {
             description: text.slice(0, 120).replace(/^#.*\n+/, '').trim(),
             skillMdContent: text,
           }, imported)
+          const exists = state.mySkills.some((s) => s.name === skill.name)
+          if (exists) {
+            skipped++
+            continue
+          }
           dispatch({ type: 'ADD_MY_SKILL', skill })
           imported++
           continue
@@ -164,11 +264,17 @@ export default function MySkillsPage() {
           imported++
         }
       } catch {
-        toast(`导入文件 ${file.name} 失败，请检查格式`)
+        failed++
       }
     }
 
-    if (imported > 0) toast(`成功导入 ${imported} 个技能`)
+    if (imported > 0 || skipped > 0 || failed > 0) {
+      const parts = []
+      if (imported > 0) parts.push(`成功导入 ${imported} 个技能`)
+      if (skipped > 0) parts.push(`跳过 ${skipped} 个重名技能`)
+      if (failed > 0) parts.push(`${failed} 个导入失败`)
+      toast(parts.join('，'))
+    }
     if (fileInputRef.current) fileInputRef.current.value = ''
   }
 
@@ -187,8 +293,8 @@ export default function MySkillsPage() {
   return (
     <div className="fade-in">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex items-center justify-between mb-8">
-          <div>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+          <div className="min-w-0">
             <h2 className="text-2xl font-bold">我的技能</h2>
             <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
               {state.mySkills.length} 个自建技能
@@ -199,7 +305,7 @@ export default function MySkillsPage() {
               )}
             </p>
           </div>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2 shrink-0 justify-end">
             <button onClick={() => setShowClonePanel(!showClonePanel)} className={`flex items-center gap-2 px-4 py-2 rounded-2xl text-sm cursor-pointer transition-all duration-300 ${showClonePanel ? 'glass-subtle !border-primary/30 text-primary' : 'glass-subtle hover:bg-white/40 dark:hover:bg-white/10'}`}>
               <GitBranch className="w-4 h-4" />
               <span className="hidden sm:inline">安装到本地</span>
@@ -210,9 +316,16 @@ export default function MySkillsPage() {
             </button>
             <button onClick={() => fileInputRef.current?.click()} className="flex items-center gap-2 px-4 py-2 rounded-2xl glass-subtle hover:bg-white/40 dark:hover:bg-white/10 text-sm cursor-pointer transition-all">
               <Upload className="w-4 h-4" />
-              <span className="hidden sm:inline">导入</span>
+              <span className="hidden sm:inline">导入技能文件夹</span>
             </button>
-            <input ref={fileInputRef} type="file" accept=".json,.md" multiple className="hidden" onChange={handleImport} />
+            <input
+              ref={fileInputRef}
+              type="file"
+              multiple
+              className="hidden"
+              onChange={handleImport}
+              {...({ webkitdirectory: '', directory: '' } as unknown as Record<string, string>)}
+            />
             <button onClick={handleNew} className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-primary/90 backdrop-blur-sm text-white text-sm cursor-pointer hover:bg-primary transition-all shadow-lg shadow-primary/20">
               <Plus className="w-4 h-4" />新建技能
             </button>
