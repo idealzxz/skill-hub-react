@@ -265,7 +265,7 @@ export class GitHubService implements GitProvider {
     return null
   }
 
-  async writeFile(owner: string, path: string, content: string, sha?: string, message?: string): Promise<string> {
+  async writeFile(owner: string, path: string, content: string, _sha?: string, message?: string): Promise<string> {
     const encoded = btoa(unescape(encodeURIComponent(content)))
     const url = `${this.apiUrl}/repos/${owner}/${REPO_NAME}/contents/${encodeContentsPath(path)}`
     const headers = { ...this.headers(), 'Content-Type': 'application/json' }
